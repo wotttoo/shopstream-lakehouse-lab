@@ -214,7 +214,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 31.
   - Hoàn thành khi: từ trạng thái sạch, chạy đến đợt 2 tạo được `results/progress/batch_02.json` có số dòng ba tầng.
 
-- [ ] **33. Thêm so sánh ngưỡng 20 phút vào vòng lặp**
+- [x] **33. Thêm so sánh ngưỡng 20 phút vào vòng lặp**
   - Việc cần làm: `--compare-wm20` chạy thêm một Gold `--watermark "20 minutes" --suffix _wm20` ở MỖI đợt. Không chạy một lần sau cùng, vì khi đó toàn bộ Silver vào một batch và sẽ không có dòng nào bị loại, phép so sánh mất ý nghĩa.
   - File: `streaming/run_all_batches.py`.
   - Phụ thuộc: 32.
