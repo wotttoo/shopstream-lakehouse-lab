@@ -2,84 +2,84 @@
   "bronze": [
     {
       "version": 0,
-      "timestamp": "2026-11-04T17:11:31.402000",
+      "timestamp": "2026-11-04T17:53:20.279000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "0",
       "rows_written": "138"
     },
     {
       "version": 1,
-      "timestamp": "2026-11-04T17:13:03.382000",
+      "timestamp": "2026-11-04T17:54:51.231000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "1",
       "rows_written": "215"
     },
     {
       "version": 2,
-      "timestamp": "2026-11-04T17:14:21.582000",
+      "timestamp": "2026-11-04T17:56:12.087000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "2",
       "rows_written": "166"
     },
     {
       "version": 3,
-      "timestamp": "2026-11-04T17:15:41.014000",
+      "timestamp": "2026-11-04T17:57:35.076000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "3",
       "rows_written": "169"
     },
     {
       "version": 4,
-      "timestamp": "2026-11-04T17:16:58.454000",
+      "timestamp": "2026-11-04T17:58:54.483000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "4",
       "rows_written": "171"
     },
     {
       "version": 5,
-      "timestamp": "2026-11-04T17:18:18.268000",
+      "timestamp": "2026-11-04T18:00:16.500000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "5",
       "rows_written": "192"
     },
     {
       "version": 6,
-      "timestamp": "2026-11-04T17:19:43.946000",
+      "timestamp": "2026-11-04T18:01:43.613000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "6",
       "rows_written": "184"
     },
     {
       "version": 7,
-      "timestamp": "2026-11-04T17:21:04.146000",
+      "timestamp": "2026-11-04T18:03:03.171000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "7",
       "rows_written": "186"
     },
     {
       "version": 8,
-      "timestamp": "2026-11-04T17:22:25.409000",
+      "timestamp": "2026-11-04T18:04:21.975000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "8",
       "rows_written": "177"
     },
     {
       "version": 9,
-      "timestamp": "2026-11-04T17:23:47.991000",
+      "timestamp": "2026-11-04T18:05:41.327000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "9",
       "rows_written": "186"
     },
     {
       "version": 10,
-      "timestamp": "2026-11-04T17:25:12.451000",
+      "timestamp": "2026-11-04T18:07:07.347000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "10",
       "rows_written": "193"
     },
     {
       "version": 11,
-      "timestamp": "2026-11-04T17:26:41.159000",
+      "timestamp": "2026-11-04T18:08:40.299000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "11",
       "rows_written": "224"
@@ -88,91 +88,91 @@
   "silver": [
     {
       "version": 0,
-      "timestamp": "2026-11-04T17:11:48.322000",
+      "timestamp": "2026-11-04T17:53:37.535000",
       "operation": "WRITE",
       "epoch_id": null,
       "rows_written": "0"
     },
     {
       "version": 1,
-      "timestamp": "2026-11-04T17:11:59.262000",
+      "timestamp": "2026-11-04T17:53:47.439000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "133"
     },
     {
       "version": 2,
-      "timestamp": "2026-11-04T17:13:23.498000",
+      "timestamp": "2026-11-04T17:55:11.451000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "195"
     },
     {
       "version": 3,
-      "timestamp": "2026-11-04T17:14:40.730000",
+      "timestamp": "2026-11-04T17:56:33.175000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "151"
     },
     {
       "version": 4,
-      "timestamp": "2026-11-04T17:16:01.078000",
+      "timestamp": "2026-11-04T17:57:55.716000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "152"
     },
     {
       "version": 5,
-      "timestamp": "2026-11-04T17:17:18.798000",
+      "timestamp": "2026-11-04T17:59:15.683000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "153"
     },
     {
       "version": 6,
-      "timestamp": "2026-11-04T17:18:38.526000",
+      "timestamp": "2026-11-04T18:00:36.795000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "177"
     },
     {
       "version": 7,
-      "timestamp": "2026-11-04T17:20:03.727000",
+      "timestamp": "2026-11-04T18:02:03.952000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "171"
     },
     {
       "version": 8,
-      "timestamp": "2026-11-04T17:21:25.555000",
+      "timestamp": "2026-11-04T18:03:22.231000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "166"
     },
     {
       "version": 9,
-      "timestamp": "2026-11-04T17:22:45.583000",
+      "timestamp": "2026-11-04T18:04:42.035000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "159"
     },
     {
       "version": 10,
-      "timestamp": "2026-11-04T17:24:08.859000",
+      "timestamp": "2026-11-04T18:06:01.219000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "169"
     },
     {
       "version": 11,
-      "timestamp": "2026-11-04T17:25:35.671000",
+      "timestamp": "2026-11-04T18:07:31.995000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "171"
     },
     {
       "version": 12,
-      "timestamp": "2026-11-04T17:27:01.717000",
+      "timestamp": "2026-11-04T18:09:02.907000",
       "operation": "MERGE",
       "epoch_id": null,
       "rows_written": "204"
@@ -181,168 +181,168 @@
   "gold": [
     {
       "version": 0,
-      "timestamp": "2026-11-04T17:12:20.934000",
+      "timestamp": "2026-11-04T17:54:07.203000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "0",
       "rows_written": "0"
     },
     {
       "version": 1,
-      "timestamp": "2026-11-04T17:12:23.488000",
+      "timestamp": "2026-11-04T17:54:09.799000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "1",
       "rows_written": "0"
     },
     {
       "version": 2,
-      "timestamp": "2026-11-04T17:13:42.238000",
+      "timestamp": "2026-11-04T17:55:31.847000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "2",
       "rows_written": "0"
     },
     {
       "version": 3,
-      "timestamp": "2026-11-04T17:13:44.242000",
+      "timestamp": "2026-11-04T17:55:34.012000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "3",
       "rows_written": "0"
     },
     {
       "version": 4,
-      "timestamp": "2026-11-04T17:14:59.526000",
+      "timestamp": "2026-11-04T17:56:52.215000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "4",
       "rows_written": "0"
     },
     {
       "version": 5,
-      "timestamp": "2026-11-04T17:15:01.526000",
+      "timestamp": "2026-11-04T17:56:54.640000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "5",
       "rows_written": "0"
     },
     {
       "version": 6,
-      "timestamp": "2026-11-04T17:16:18.906000",
+      "timestamp": "2026-11-04T17:58:14.235000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "6",
       "rows_written": "0"
     },
     {
       "version": 7,
-      "timestamp": "2026-11-04T17:16:20.934000",
+      "timestamp": "2026-11-04T17:58:16.497000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "7",
       "rows_written": "1"
     },
     {
       "version": 8,
-      "timestamp": "2026-11-04T17:17:38.178000",
+      "timestamp": "2026-11-04T17:59:34.992000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "8",
       "rows_written": "0"
     },
     {
       "version": 9,
-      "timestamp": "2026-11-04T17:17:40.424000",
+      "timestamp": "2026-11-04T17:59:37.167000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "9",
       "rows_written": "1"
     },
     {
       "version": 10,
-      "timestamp": "2026-11-04T17:18:57.692000",
+      "timestamp": "2026-11-04T18:00:56.135000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "10",
       "rows_written": "0"
     },
     {
       "version": 11,
-      "timestamp": "2026-11-04T17:19:02.682000",
+      "timestamp": "2026-11-04T18:01:01.436000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "11",
       "rows_written": "1"
     },
     {
       "version": 12,
-      "timestamp": "2026-11-04T17:20:21.531000",
+      "timestamp": "2026-11-04T18:02:22.407000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "12",
       "rows_written": "0"
     },
     {
       "version": 13,
-      "timestamp": "2026-11-04T17:20:23.668000",
+      "timestamp": "2026-11-04T18:02:24.723000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "13",
       "rows_written": "1"
     },
     {
       "version": 14,
-      "timestamp": "2026-11-04T17:21:44.271000",
+      "timestamp": "2026-11-04T18:03:40.763000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "14",
       "rows_written": "0"
     },
     {
       "version": 15,
-      "timestamp": "2026-11-04T17:21:46.519000",
+      "timestamp": "2026-11-04T18:03:43.041000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "15",
       "rows_written": "1"
     },
     {
       "version": 16,
-      "timestamp": "2026-11-04T17:23:04.903000",
+      "timestamp": "2026-11-04T18:05:00.948000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "16",
       "rows_written": "0"
     },
     {
       "version": 17,
-      "timestamp": "2026-11-04T17:23:07.191000",
+      "timestamp": "2026-11-04T18:05:03.021000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "17",
       "rows_written": "1"
     },
     {
       "version": 18,
-      "timestamp": "2026-11-04T17:24:31.167000",
+      "timestamp": "2026-11-04T18:06:23.400000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "18",
       "rows_written": "0"
     },
     {
       "version": 19,
-      "timestamp": "2026-11-04T17:24:33.475000",
+      "timestamp": "2026-11-04T18:06:25.568000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "19",
       "rows_written": "1"
     },
     {
       "version": 20,
-      "timestamp": "2026-11-04T17:25:53.727000",
+      "timestamp": "2026-11-04T18:07:51.303000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "20",
       "rows_written": "0"
     },
     {
       "version": 21,
-      "timestamp": "2026-11-04T17:25:58.651000",
+      "timestamp": "2026-11-04T18:07:56.911000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "21",
       "rows_written": "1"
     },
     {
       "version": 22,
-      "timestamp": "2026-11-04T17:27:19.979000",
+      "timestamp": "2026-11-04T18:09:22.907000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "22",
       "rows_written": "0"
     },
     {
       "version": 23,
-      "timestamp": "2026-11-04T17:27:22.343000",
+      "timestamp": "2026-11-04T18:09:25.363000",
       "operation": "STREAMING UPDATE",
       "epoch_id": "23",
       "rows_written": "4"

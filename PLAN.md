@@ -308,7 +308,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 46.
   - Hoàn thành khi: `grep -c '^|' results/run_report.md` lớn hơn 0 và `python verify/check_report.py --markdown` thoát với mã 0.
 
-- [ ] **48. Hoàn thiện `README.md`**
+- [x] **48. Hoàn thiện `README.md`**
   - Việc cần làm: cài đặt, cách chạy, cách test, khắc phục lỗi thường gặp, gồm các lỗi đã gặp thật.
   - File: `README.md`.
   - Phụ thuộc: 47.

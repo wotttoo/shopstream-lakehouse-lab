@@ -282,8 +282,8 @@ def main(argv=None):
         {"layer": layer, "item": item, "expected": expected, "actual": actual, "ok": ok}
         for layer, item, expected, actual, ok in table.rows
     ]
-    # Chỉ lưu lần kiểm tra đầy đủ (mọi tầng, đủ 12 đợt) để báo cáo đọc lại
-    if args.layer in ("all", "gold") and args.up_to_batch == config.BATCH_COUNT:
+    # Chỉ lưu lần kiểm tra đầy đủ (mọi tầng, đủ 12 đợt, có so sánh ngưỡng) để báo cáo đọc lại
+    if args.layer == "all" and args.up_to_batch == config.BATCH_COUNT and args.watermark_suffix:
         CHECK_RESULTS_FILE.write_text(json.dumps(saved, ensure_ascii=False, indent=2, default=str) + "\n",
                                       encoding="utf-8")
         print(f"Đã lưu {CHECK_RESULTS_FILE.relative_to(PROJECT_DIR)}")
