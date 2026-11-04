@@ -302,7 +302,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 39, 43, 44, 45.
   - Hoàn thành khi: `python verify/build_report.py` rồi `python verify/check_report.py` thoát với mã 0.
 
-- [ ] **47. Sinh `run_report.md`**
+- [x] **47. Sinh `run_report.md`**
   - Việc cần làm: dựng các bảng 4, 9, 10 và bảng phần III.4 của reading từ `run_report.json`.
   - File: `verify/build_report.py`, `results/run_report.md`.
   - Phụ thuộc: 46.
