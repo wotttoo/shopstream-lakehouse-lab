@@ -266,3 +266,58 @@ def test_watermark_simulation_window_totals_and_close_batch():
 def test_watermark_simulation_wider_threshold_drops_nothing():
     simulated, _ = gen.simulate_watermark(hand_example(), 20, 5, batch_count=4)
     assert not simulated["dropped_by_watermark"].any()
+
+
+# ---------------------------------------------------------------- task 15
+@pytest.fixture(scope="module")
+def golden(output_dir):
+    with open(output_dir / "golden_answer.json", encoding="utf-8") as golden_file:
+        return json.load(golden_file)
+
+
+def test_golden_answer_record_counts_are_consistent(golden, lines):
+    assert golden["total_records_sent"] == len(lines)
+    assert golden["unique_event_ids"] == len({line["event_id"] for line in lines})
+    # Tổng = số event_id duy nhất + số bản trùng (sự kiện đẩy watermark được tính trong cả hai)
+    assert golden["total_records_sent"] == golden["unique_event_ids"] + golden["duplicate_records"]
+    assert golden["duplicate_records"] == (golden["duplicate_identical_records"]
+                                           + golden["duplicate_shifted_records"])
+    assert golden["business_unique_events"] == golden["unique_event_ids"] - 1
+
+
+def test_golden_answer_records_push_event_and_excludes_it(golden, lines):
+    push = golden["watermark_push_event"]
+    assert push["batch_no"] == 12
+    assert push["event_type"] == "view"
+    assert any(line["event_id"] == push["event_id"] for line in lines)
+    assert sum(golden["event_type_counts"].values()) == golden["business_unique_events"]
+
+
+def test_golden_answer_late_counts_match_spec(golden):
+    business = golden["business_unique_events"]
+    assert 0.13 <= golden["late_within_count"] / business <= 0.17
+    assert 0.02 <= golden["late_beyond_count_wm10"] / business <= 0.03
+    assert golden["late_beyond_purchases_wm10"] >= 15
+    assert golden["silver_rows_dropped_by_watermark"] == 0
+
+
+def test_golden_answer_effective_event_time_is_first_sent(lines):
+    frame = gen.load_records_frame(lines)
+    uniques = gen.first_copies(frame)
+    first_seen = {}
+    for line in lines:
+        first_seen.setdefault(line["event_id"], pd.Timestamp(line["event_time"]))
+    for row in uniques.itertuples():
+        assert row.event_time == first_seen[row.event_id]
+
+
+def test_golden_answer_revenue_is_sum_of_unique_purchases(golden, lines):
+    seen = set()
+    revenue = 0
+    for line in lines:
+        if line["event_id"] in seen:
+            continue
+        seen.add(line["event_id"])
+        if line["event_type"] == "purchase":
+            revenue += line["amount"]
+    assert golden["revenue_absolute"] == revenue

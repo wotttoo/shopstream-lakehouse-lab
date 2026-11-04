@@ -111,7 +111,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Lưu ý cần xác nhận ở task 34: (a) tính max trên MỌI loại sự kiện, vì view đẩy watermark phải có tác dụng; (b) với aggregation theo cửa sổ, nhiều khả năng Spark loại dòng theo `window_end <= watermark`, không phải theo event time của dòng, nên mô phỏng theo cửa sổ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k watermark_simulation` pass với ví dụ nhỏ tính tay.
 
-- [ ] **15. Tính thống kê tổng của đáp án vàng**
+- [x] **15. Tính thống kê tổng của đáp án vàng**
   - Việc cần làm: mọi con số tổng ở mục 8 của `CLAUDE.md`. Với bản trùng lệch thời gian, event_time có hiệu lực là của bản gửi trước.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/events.jsonl`, `data/golden_answer.json`, và `pytest tests/test_generate_events.py -k golden_answer` pass.
 
