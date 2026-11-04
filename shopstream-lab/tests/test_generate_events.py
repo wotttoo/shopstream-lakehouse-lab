@@ -321,3 +321,46 @@ def test_golden_answer_revenue_is_sum_of_unique_purchases(golden, lines):
         if line["event_type"] == "purchase":
             revenue += line["amount"]
     assert golden["revenue_absolute"] == revenue
+
+
+# ---------------------------------------------------------------- task 16
+@pytest.fixture(scope="module")
+def golden_windows(output_dir):
+    return pd.read_csv(output_dir / "golden_windows.csv")
+
+
+def test_golden_windows_cover_twelve_five_minute_windows(golden_windows):
+    starts = pd.to_datetime(golden_windows["window_start"], utc=True)
+    ends = pd.to_datetime(golden_windows["window_end"], utc=True)
+    expected_starts = [START + pd.Timedelta(minutes=5 * i) for i in range(12)]
+    assert list(starts) == expected_starts
+    assert ((ends - starts) == pd.Timedelta(minutes=5)).all()
+
+
+def test_golden_windows_absolute_totals_match_golden(golden_windows, golden):
+    assert golden_windows["revenue_absolute"].sum() == golden["revenue_absolute"]
+    assert golden_windows["orders_absolute"].sum() == golden["purchases_unique"]
+
+
+def test_golden_windows_wm10_equals_absolute_minus_dropped(golden_windows, golden):
+    orders_lost = golden_windows["orders_absolute"] - golden_windows["orders_wm10"]
+    assert (orders_lost == golden_windows["dropped_purchases_wm10"]).all()
+    assert golden_windows["dropped_purchases_wm10"].sum() == golden["late_beyond_purchases_wm10"]
+    assert golden_windows["revenue_wm10"].sum() == golden["gold_wm10"]["revenue_total"]
+
+
+def test_golden_windows_wm20_closer_to_absolute(golden_windows):
+    gap_wm10 = (golden_windows["revenue_absolute"] - golden_windows["revenue_wm10"]).sum()
+    gap_wm20 = (golden_windows["revenue_absolute"] - golden_windows["revenue_wm20"]).sum()
+    assert gap_wm10 > 0
+    assert gap_wm20 < gap_wm10
+
+
+def test_golden_windows_all_emitted_with_close_batch(golden_windows, golden):
+    for minutes in (10, 20):
+        assert golden_windows[f"emitted_wm{minutes}"].all()
+        close = golden_windows[f"close_batch_wm{minutes}"]
+        assert close.between(1, 12).all()
+        # Cửa sổ sau chốt muộn hơn hoặc cùng đợt với cửa sổ trước
+        assert close.is_monotonic_increasing
+    assert golden["gold_wm10"]["emitted_window_count"] == len(golden_windows)

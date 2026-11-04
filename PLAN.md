@@ -115,7 +115,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: mọi con số tổng ở mục 8 của `CLAUDE.md`. Với bản trùng lệch thời gian, event_time có hiệu lực là của bản gửi trước.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/events.jsonl`, `data/golden_answer.json`, và `pytest tests/test_generate_events.py -k golden_answer` pass.
 
-- [ ] **16. Tính đáp án vàng theo cửa sổ**
+- [x] **16. Tính đáp án vàng theo cửa sổ**
   - Việc cần làm: doanh thu và số đơn tuyệt đối, kỳ vọng ngưỡng 10 phút, kỳ vọng ngưỡng 20 phút, danh sách cửa sổ được xuất, đợt chốt mỗi cửa sổ.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/golden_windows.csv`, và `pytest tests/test_generate_events.py -k golden_windows` pass.
 
