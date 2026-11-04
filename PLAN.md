@@ -189,7 +189,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 27.
   - Hoàn thành khi: dùng một checkpoint thử, `FAIL_AT_BATCH=0 python streaming/02_bronze_to_silver.py --suffix _failtest` thoát với mã khác 0. Không đặt biến thì thoát với mã 0.
 
-- [ ] **29. Thêm kiểm tra Silver**
+- [x] **29. Thêm kiểm tra Silver**
   - Việc cần làm: so số dòng với số event_id duy nhất đến đợt chỉ định, kiểm tra không có event_id trùng.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 27.

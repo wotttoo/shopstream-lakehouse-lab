@@ -64,6 +64,15 @@ def check_bronze(spark, golden, up_to_batch, table):
     table.add("bronze", f"số dòng (= số message đến đợt {up_to_batch})", expected, bronze.count())
 
 
+def check_silver(spark, golden, up_to_batch, table):
+    expected = cumulative(golden, "new_unique_events", up_to_batch)
+    silver = spark.read.format("delta").load(str(config.table_path(config.SILVER_TABLE)))
+    row_count = silver.count()
+    distinct_ids = silver.select("event_id").distinct().count()
+    table.add("silver", f"số dòng (= số event_id duy nhất đến đợt {up_to_batch})", expected, row_count)
+    table.add("silver", "số event_id bị trùng", 0, row_count - distinct_ids)
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Đối chiếu kết quả với đáp án vàng")
     parser.add_argument("--layer", choices=LAYERS + ("all",), default="all")
@@ -81,6 +90,8 @@ def main(argv=None):
     layers = LAYERS if args.layer == "all" else (args.layer,)
     if "bronze" in layers:
         check_bronze(spark, golden, args.up_to_batch, table)
+    if "silver" in layers:
+        check_silver(spark, golden, args.up_to_batch, table)
     spark.stop()
 
     print()
