@@ -238,11 +238,12 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 35.
   - Hoàn thành khi: `python verify/check_results.py --watermark-suffix _wm20` thoát với mã 0, và chênh lệch của 20 phút nhỏ hơn của 10 phút.
 
-- [ ] **37. Kiểm tra chạy lại tái lập được**
+- [x] **37. Kiểm tra chạy lại tái lập được**
   - Việc cần làm: lưu bảng Gold đã sắp xếp, chạy lại từ trạng thái sạch, so sánh.
   - File: không thêm file mới, chỉ chạy.
   - Phụ thuộc: 36.
   - Hoàn thành khi: hai lần chạy cho cùng một `sha256sum` trên bản CSV của Gold. Lưu ý sinh bản CSV có sắp xếp theo `window_start`.
+  - Kết quả: hai lần chạy từ trạng thái sạch cho cùng sha256: Gold 10 phút `15b8d045…ece574`, Gold 20 phút `9522238…cc6280`; số dòng, watermark và số dòng bị loại theo từng đợt cũng giống hệt.
 
 ### Giai đoạn 6: Giám sát
 

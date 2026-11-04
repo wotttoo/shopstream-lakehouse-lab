@@ -10,23 +10,23 @@
       ],
       "progress": [
         {
-          "id": "5c7328bb-d166-4622-8e30-4861807e0633",
-          "runId": "af59ed1d-f32e-4528-81cb-9103d3f6ea4d",
+          "id": "b39030cc-7ac1-4916-9d08-f6a01a1fa7d9",
+          "runId": "d4fe0b8c-838c-40c7-9d7d-69f2defd9aa8",
           "name": "bronze",
-          "timestamp": "2026-11-04T17:14:13.850Z",
+          "timestamp": "2026-11-04T17:37:23.393Z",
           "batchId": 2,
-          "batchDuration": 7993,
+          "batchDuration": 7634,
           "numInputRows": 166,
           "inputRowsPerSecond": 0.0,
-          "processedRowsPerSecond": 20.8,
+          "processedRowsPerSecond": 21.7,
           "durationMs": {
-            "addBatch": 7095,
-            "commitOffsets": 45,
-            "getBatch": 3,
-            "latestOffset": 427,
-            "queryPlanning": 356,
-            "triggerExecution": 7990,
-            "walCommit": 47
+            "addBatch": 6692,
+            "commitOffsets": 35,
+            "getBatch": 2,
+            "latestOffset": 484,
+            "queryPlanning": 339,
+            "triggerExecution": 7631,
+            "walCommit": 58
           },
           "stateOperators": [],
           "sources": [
@@ -55,7 +55,7 @@
               },
               "numInputRows": 166,
               "inputRowsPerSecond": 0.0,
-              "processedRowsPerSecond": 20.8,
+              "processedRowsPerSecond": 21.7,
               "metrics": {
                 "avgOffsetsBehindLatest": "0.0",
                 "maxOffsetsBehindLatest": "0",
@@ -80,23 +80,23 @@
       ],
       "progress": [
         {
-          "id": "4de46de2-9eae-46d2-85b9-8b37aeea77c9",
-          "runId": "6442025c-17f5-418b-b879-e76d275435e7",
+          "id": "3472134f-01e6-4c54-8b1e-94611b14d9fc",
+          "runId": "3061e512-5b20-49ce-bc11-96aeff34d599",
           "name": "silver",
-          "timestamp": "2026-11-04T17:14:32.554Z",
+          "timestamp": "2026-11-04T17:37:41.933Z",
           "batchId": 4,
-          "batchDuration": 8561,
+          "batchDuration": 9114,
           "numInputRows": 166,
           "inputRowsPerSecond": 0.0,
-          "processedRowsPerSecond": 19.4,
+          "processedRowsPerSecond": 18.2,
           "durationMs": {
-            "addBatch": 7831,
-            "commitOffsets": 34,
-            "getBatch": 26,
+            "addBatch": 8205,
+            "commitOffsets": 102,
+            "getBatch": 35,
             "latestOffset": 90,
-            "queryPlanning": 505,
-            "triggerExecution": 8556,
-            "walCommit": 50
+            "queryPlanning": 600,
+            "triggerExecution": 9109,
+            "walCommit": 54
           },
           "eventTime": {
             "avg": "2026-01-15T10:12:01.734Z",
@@ -109,10 +109,10 @@
               "operatorName": "dedupeWithinWatermark",
               "numRowsTotal": 479,
               "numRowsUpdated": 155,
-              "allUpdatesTimeMs": 194,
+              "allUpdatesTimeMs": 201,
               "numRowsRemoved": 0,
-              "allRemovalsTimeMs": 6,
-              "commitTimeMs": 375,
+              "allRemovalsTimeMs": 10,
+              "commitTimeMs": 451,
               "memoryUsedBytes": 123776,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -134,14 +134,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/bronze]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "07797205-e6c0-4dff-a719-9a589401dc49",
+                "reservoirId": "36253bc6-0d5b-49f8-b52a-7dce4bead063",
                 "reservoirVersion": 2,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "07797205-e6c0-4dff-a719-9a589401dc49",
+                "reservoirId": "36253bc6-0d5b-49f8-b52a-7dce4bead063",
                 "reservoirVersion": 3,
                 "index": -1,
                 "isStartingVersion": false
@@ -149,7 +149,7 @@
               "latestOffset": null,
               "numInputRows": 166,
               "inputRowsPerSecond": 0.0,
-              "processedRowsPerSecond": 19.4
+              "processedRowsPerSecond": 18.2
             }
           ],
           "sink": {
@@ -164,23 +164,23 @@
           }
         },
         {
-          "id": "4de46de2-9eae-46d2-85b9-8b37aeea77c9",
-          "runId": "6442025c-17f5-418b-b879-e76d275435e7",
+          "id": "3472134f-01e6-4c54-8b1e-94611b14d9fc",
+          "runId": "3061e512-5b20-49ce-bc11-96aeff34d599",
           "name": "silver",
-          "timestamp": "2026-11-04T17:14:41.130Z",
+          "timestamp": "2026-11-04T17:37:51.062Z",
           "batchId": 5,
-          "batchDuration": 353,
+          "batchDuration": 331,
           "numInputRows": 0,
           "inputRowsPerSecond": 0.0,
           "processedRowsPerSecond": 0.0,
           "durationMs": {
-            "addBatch": 253,
-            "commitOffsets": 43,
+            "addBatch": 240,
+            "commitOffsets": 31,
             "getBatch": 1,
-            "latestOffset": 2,
-            "queryPlanning": 16,
-            "triggerExecution": 353,
-            "walCommit": 35
+            "latestOffset": 1,
+            "queryPlanning": 21,
+            "triggerExecution": 331,
+            "walCommit": 34
           },
           "eventTime": {
             "watermark": "2026-01-15T09:44:52.000Z"
@@ -193,7 +193,7 @@
               "allUpdatesTimeMs": 0,
               "numRowsRemoved": 0,
               "allRemovalsTimeMs": 0,
-              "commitTimeMs": 536,
+              "commitTimeMs": 559,
               "memoryUsedBytes": 137464,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -215,14 +215,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/bronze]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "07797205-e6c0-4dff-a719-9a589401dc49",
+                "reservoirId": "36253bc6-0d5b-49f8-b52a-7dce4bead063",
                 "reservoirVersion": 3,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "07797205-e6c0-4dff-a719-9a589401dc49",
+                "reservoirId": "36253bc6-0d5b-49f8-b52a-7dce4bead063",
                 "reservoirVersion": 3,
                 "index": -1,
                 "isStartingVersion": false
@@ -256,23 +256,23 @@
       ],
       "progress": [
         {
-          "id": "afd3575d-a9fe-46b7-a95d-9bb623f29225",
-          "runId": "e7b755c8-4929-480d-882f-aaf1e6184791",
+          "id": "79de7bb0-b91f-42d9-8152-2d9e7165ca2f",
+          "runId": "bf684abe-d25f-438f-84d3-371dbe0f5852",
           "name": "gold",
-          "timestamp": "2026-11-04T17:14:52.094Z",
+          "timestamp": "2026-11-04T17:38:02.088Z",
           "batchId": 4,
-          "batchDuration": 7610,
+          "batchDuration": 7438,
           "numInputRows": 151,
           "inputRowsPerSecond": 0.0,
-          "processedRowsPerSecond": 19.8,
+          "processedRowsPerSecond": 20.3,
           "durationMs": {
-            "addBatch": 6685,
-            "commitOffsets": 32,
-            "getBatch": 34,
-            "latestOffset": 99,
-            "queryPlanning": 683,
-            "triggerExecution": 7607,
-            "walCommit": 59
+            "addBatch": 6597,
+            "commitOffsets": 30,
+            "getBatch": 28,
+            "latestOffset": 102,
+            "queryPlanning": 596,
+            "triggerExecution": 7436,
+            "walCommit": 56
           },
           "eventTime": {
             "avg": "2026-01-15T10:12:03.947Z",
@@ -285,10 +285,10 @@
               "operatorName": "stateStoreSave",
               "numRowsTotal": 3,
               "numRowsUpdated": 2,
-              "allUpdatesTimeMs": 103,
+              "allUpdatesTimeMs": 122,
               "numRowsRemoved": 0,
-              "allRemovalsTimeMs": 252,
-              "commitTimeMs": 342,
+              "allRemovalsTimeMs": 276,
+              "commitTimeMs": 429,
               "memoryUsedBytes": 2560,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -309,14 +309,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/silver]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 3,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
@@ -324,7 +324,7 @@
               "latestOffset": null,
               "numInputRows": 151,
               "inputRowsPerSecond": 0.0,
-              "processedRowsPerSecond": 19.8
+              "processedRowsPerSecond": 20.3
             }
           ],
           "sink": {
@@ -333,23 +333,23 @@
           }
         },
         {
-          "id": "afd3575d-a9fe-46b7-a95d-9bb623f29225",
-          "runId": "e7b755c8-4929-480d-882f-aaf1e6184791",
+          "id": "79de7bb0-b91f-42d9-8152-2d9e7165ca2f",
+          "runId": "bf684abe-d25f-438f-84d3-371dbe0f5852",
           "name": "gold",
-          "timestamp": "2026-11-04T17:14:59.721Z",
+          "timestamp": "2026-11-04T17:38:09.544Z",
           "batchId": 5,
-          "batchDuration": 1909,
+          "batchDuration": 1964,
           "numInputRows": 0,
           "inputRowsPerSecond": 0.0,
           "processedRowsPerSecond": 0.0,
           "durationMs": {
-            "addBatch": 1810,
-            "commitOffsets": 31,
+            "addBatch": 1859,
+            "commitOffsets": 34,
             "getBatch": 0,
-            "latestOffset": 2,
-            "queryPlanning": 31,
-            "triggerExecution": 1909,
-            "walCommit": 30
+            "latestOffset": 1,
+            "queryPlanning": 32,
+            "triggerExecution": 1964,
+            "walCommit": 35
           },
           "eventTime": {
             "watermark": "2026-01-15T10:04:52.000Z"
@@ -359,10 +359,10 @@
               "operatorName": "stateStoreSave",
               "numRowsTotal": 3,
               "numRowsUpdated": 0,
-              "allUpdatesTimeMs": 3,
+              "allUpdatesTimeMs": 1,
               "numRowsRemoved": 0,
-              "allRemovalsTimeMs": 71,
-              "commitTimeMs": 514,
+              "allRemovalsTimeMs": 91,
+              "commitTimeMs": 509,
               "memoryUsedBytes": 2512,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -383,14 +383,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/silver]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
@@ -418,23 +418,23 @@
       ],
       "progress": [
         {
-          "id": "158fd656-693f-44ca-ba1b-0f76fba4d5a6",
-          "runId": "94fc4d4a-9716-44e8-bd3a-5b0b1bfede54",
+          "id": "2155572a-a799-4a2f-b6b1-5b74d429a37c",
+          "runId": "045c1f98-c84d-4d99-8dac-7e29fabce9af",
           "name": "gold_wm20",
-          "timestamp": "2026-11-04T17:15:12.208Z",
+          "timestamp": "2026-11-04T17:38:21.685Z",
           "batchId": 4,
-          "batchDuration": 7895,
+          "batchDuration": 7137,
           "numInputRows": 151,
           "inputRowsPerSecond": 0.0,
-          "processedRowsPerSecond": 19.1,
+          "processedRowsPerSecond": 21.2,
           "durationMs": {
-            "addBatch": 6996,
-            "commitOffsets": 34,
-            "getBatch": 31,
-            "latestOffset": 111,
-            "queryPlanning": 643,
-            "triggerExecution": 7892,
-            "walCommit": 56
+            "addBatch": 6265,
+            "commitOffsets": 32,
+            "getBatch": 33,
+            "latestOffset": 96,
+            "queryPlanning": 629,
+            "triggerExecution": 7135,
+            "walCommit": 59
           },
           "eventTime": {
             "avg": "2026-01-15T10:12:03.947Z",
@@ -447,10 +447,10 @@
               "operatorName": "stateStoreSave",
               "numRowsTotal": 3,
               "numRowsUpdated": 2,
-              "allUpdatesTimeMs": 90,
+              "allUpdatesTimeMs": 94,
               "numRowsRemoved": 0,
-              "allRemovalsTimeMs": 314,
-              "commitTimeMs": 548,
+              "allRemovalsTimeMs": 271,
+              "commitTimeMs": 396,
               "memoryUsedBytes": 2560,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -471,14 +471,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/silver]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 3,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
@@ -486,7 +486,7 @@
               "latestOffset": null,
               "numInputRows": 151,
               "inputRowsPerSecond": 0.0,
-              "processedRowsPerSecond": 19.1
+              "processedRowsPerSecond": 21.2
             }
           ],
           "sink": {
@@ -495,23 +495,23 @@
           }
         },
         {
-          "id": "158fd656-693f-44ca-ba1b-0f76fba4d5a6",
-          "runId": "94fc4d4a-9716-44e8-bd3a-5b0b1bfede54",
+          "id": "2155572a-a799-4a2f-b6b1-5b74d429a37c",
+          "runId": "045c1f98-c84d-4d99-8dac-7e29fabce9af",
           "name": "gold_wm20",
-          "timestamp": "2026-11-04T17:15:20.121Z",
+          "timestamp": "2026-11-04T17:38:28.839Z",
           "batchId": 5,
-          "batchDuration": 2127,
+          "batchDuration": 1866,
           "numInputRows": 0,
           "inputRowsPerSecond": 0.0,
           "processedRowsPerSecond": 0.0,
           "durationMs": {
-            "addBatch": 2005,
-            "commitOffsets": 34,
-            "getBatch": 1,
-            "latestOffset": 1,
-            "queryPlanning": 42,
-            "triggerExecution": 2127,
-            "walCommit": 39
+            "addBatch": 1756,
+            "commitOffsets": 37,
+            "getBatch": 0,
+            "latestOffset": 2,
+            "queryPlanning": 30,
+            "triggerExecution": 1865,
+            "walCommit": 35
           },
           "eventTime": {
             "watermark": "2026-01-15T09:54:52.000Z"
@@ -521,10 +521,10 @@
               "operatorName": "stateStoreSave",
               "numRowsTotal": 3,
               "numRowsUpdated": 0,
-              "allUpdatesTimeMs": 4,
+              "allUpdatesTimeMs": 5,
               "numRowsRemoved": 0,
-              "allRemovalsTimeMs": 72,
-              "commitTimeMs": 485,
+              "allRemovalsTimeMs": 44,
+              "commitTimeMs": 492,
               "memoryUsedBytes": 2512,
               "numRowsDroppedByWatermark": 0,
               "numShufflePartitions": 4,
@@ -545,14 +545,14 @@
               "description": "DeltaSource[file:/home/user/repo/shopstream-lab/lakehouse/silver]",
               "startOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
               },
               "endOffset": {
                 "sourceVersion": 1,
-                "reservoirId": "a87a18fb-d472-4b38-b226-7233aca40a36",
+                "reservoirId": "32e0cc8d-6d90-48a7-9b88-8088893065e1",
                 "reservoirVersion": 4,
                 "index": -1,
                 "isStartingVersion": false
