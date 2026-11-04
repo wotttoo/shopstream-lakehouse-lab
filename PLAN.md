@@ -273,7 +273,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 40.
   - Hoàn thành khi: `pytest tests/test_lab_utils.py` pass, có test xác nhận không dọn được đường dẫn ngoài `exp_*`.
 
-- [ ] **42. Viết thí nghiệm A** (nhóm E)
+- [x] **42. Viết thí nghiệm A** (nhóm E)
   - Việc cần làm: gây lỗi ở một batch Silver, chạy lại cùng checkpoint, ghi idempotent.
   - File: `experiments/exp_a_rerun_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_a.json`, và chênh lệch bằng 0 hoặc đã ghi vào Vướng mắc nếu khác.
