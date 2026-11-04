@@ -146,7 +146,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 20.
   - Hoàn thành khi: `python producer/produce.py --batch 1` thoát với mã 0 và in đúng số bản ghi của đợt 1.
 
-- [ ] **22. Thêm lệnh đếm message và chạy thử trọn vẹn**
+- [x] **22. Thêm lệnh đếm message và chạy thử trọn vẹn**
   - Việc cần làm: `--count` in tổng message trong topic. Chạy thử bằng cách xóa, tạo lại topic rồi gửi `--all`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 21.

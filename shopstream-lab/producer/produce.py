@@ -130,6 +130,20 @@ def send_lines(lines, topic=config.TOPIC_NAME, bootstrap=config.KAFKA_BOOTSTRAP_
     return len(lines)
 
 
+def count_messages(topic=config.TOPIC_NAME, bootstrap=config.KAFKA_BOOTSTRAP_SERVERS):
+    """Tổng số message trong topic = tổng (offset cuối - offset đầu) của mọi partition."""
+    from kafka import KafkaConsumer, TopicPartition
+
+    consumer = KafkaConsumer(bootstrap_servers=bootstrap)
+    partitions = consumer.partitions_for_topic(topic) or set()
+    topic_partitions = [TopicPartition(topic, partition) for partition in sorted(partitions)]
+    beginning = consumer.beginning_offsets(topic_partitions)
+    end = consumer.end_offsets(topic_partitions)
+    consumer.close()
+    per_partition = {tp.partition: end[tp] - beginning[tp] for tp in topic_partitions}
+    return sum(per_partition.values()), per_partition
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Gửi sự kiện ShopStream vào Kafka")
     parser.add_argument("--create-topic", action="store_true", help="tạo topic 3 partition")
@@ -137,6 +151,7 @@ def parse_args(argv=None):
     parser.add_argument("--recreate-topic", action="store_true", help="xóa rồi tạo lại topic")
     parser.add_argument("--batch", type=int, help="gửi một đợt (1 đến 12)")
     parser.add_argument("--all", action="store_true", help="gửi toàn bộ file")
+    parser.add_argument("--count", action="store_true", help="in tổng số message trong topic")
     parser.add_argument("--topic", default=config.TOPIC_NAME)
     parser.add_argument("--events-file", default=str(config.EVENTS_FILE))
     return parser.parse_args(argv)
@@ -157,6 +172,11 @@ def main(argv=None):
         sent_count = send_lines(selected, args.topic)
         label = "toàn bộ" if args.all else f"đợt {args.batch}"
         print(f"Đã gửi {sent_count} bản ghi ({label}) vào topic {args.topic}")
+    if args.count:
+        total, per_partition = count_messages(args.topic)
+        print(f"Theo partition: {per_partition}", file=sys.stderr)
+        # Chỉ in con số ra stdout để dễ so sánh bằng shell
+        print(total)
 
 
 if __name__ == "__main__":
