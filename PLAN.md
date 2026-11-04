@@ -166,7 +166,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 23.
   - Hoàn thành khi: `python verify/check_results.py --layer bronze --up-to-batch 1` thoát với mã 0.
 
-- [ ] **25. Viết phần parse và lọc của Silver**
+- [x] **25. Viết phần parse và lọc của Silver**
   - Việc cần làm: parse JSON theo schema, đổi event_time sang timestamp, lọc bản ghi lỗi và ghi số bị loại vào log. Tách thành hàm để test được.
   - File: `common/transforms.py`, `tests/test_transforms.py`.
   - Phụ thuộc: 8.
