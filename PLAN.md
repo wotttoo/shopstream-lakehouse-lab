@@ -177,7 +177,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - File: `common/transforms.py`, `tests/test_transforms.py`.
   - Hoàn thành khi: `pytest tests/test_transforms.py -k dedup` pass.
 
-- [ ] **27. Viết truy vấn Silver với MERGE**
+- [x] **27. Viết truy vấn Silver với MERGE**
   - Việc cần làm: watermark 30 phút, `dropDuplicatesWithinWatermark`, foreachBatch MERGE chỉ chèn, tạo bảng nếu chưa có.
   - File: `streaming/02_bronze_to_silver.py`.
   - Phụ thuộc: 23, 25, 26.
