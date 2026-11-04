@@ -42,7 +42,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `shopstream-lab/.gitignore`.
   - Hoàn thành khi (chạy ở thư mục gốc): `git check-ignore shopstream-lab/lakehouse/x shopstream-lab/checkpoints/x shopstream-lab/.venv/x` in đủ ba dòng.
 
-- [ ] **2. Cài môi trường Python và Java**
+- [x] **2. Cài môi trường Python và Java**
   - Việc cần làm: viết `requirements.txt` có ghim phiên bản, tạo `.venv` theo mục 3 của `CLAUDE.md`.
   - File: `requirements.txt`.
   - Hoàn thành khi: `java -version` là 17, `python --version` là 3.11, và `python -c "import pyspark, delta; print(pyspark.__version__)"` in `4.1.0`.

@@ -1,0 +1,7 @@
+# Bộ phiên bản đã chạy thật (xem README.md)
+pyspark==4.1.0
+delta-spark==4.1.0
+kafka-python==2.2.15
+pandas==2.3.3
+numpy==2.3.5
+pytest==8.4.2
