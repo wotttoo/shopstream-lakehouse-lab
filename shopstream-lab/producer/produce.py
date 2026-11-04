@@ -108,11 +108,35 @@ def recreate_topic(topic=config.TOPIC_NAME):
     create_topic(topic)
 
 
+# ---------------------------------------------------------------------------
+# Gửi
+# ---------------------------------------------------------------------------
+def send_lines(lines, topic=config.TOPIC_NAME, bootstrap=config.KAFKA_BOOTSTRAP_SERVERS):
+    """Gửi các dòng theo đúng thứ tự trong file, chờ broker xác nhận hết."""
+    from kafka import KafkaProducer
+
+    producer = KafkaProducer(
+        bootstrap_servers=bootstrap,
+        acks="all",
+        # Một request mỗi lần để giữ đúng thứ tự gửi trong từng partition
+        max_in_flight_requests_per_connection=1,
+        retries=5,
+    )
+    for line in lines:
+        key, value = to_kafka_message(line)
+        producer.send(topic, key=key, value=value)
+    producer.flush()
+    producer.close()
+    return len(lines)
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Gửi sự kiện ShopStream vào Kafka")
     parser.add_argument("--create-topic", action="store_true", help="tạo topic 3 partition")
     parser.add_argument("--delete-topic", action="store_true", help="xóa topic")
     parser.add_argument("--recreate-topic", action="store_true", help="xóa rồi tạo lại topic")
+    parser.add_argument("--batch", type=int, help="gửi một đợt (1 đến 12)")
+    parser.add_argument("--all", action="store_true", help="gửi toàn bộ file")
     parser.add_argument("--topic", default=config.TOPIC_NAME)
     parser.add_argument("--events-file", default=str(config.EVENTS_FILE))
     return parser.parse_args(argv)
@@ -124,6 +148,15 @@ def main(argv=None):
         delete_topic(args.topic)
     if args.create_topic or args.recreate_topic:
         create_topic(args.topic)
+    if args.batch is not None or args.all:
+        lines = load_events(args.events_file)
+        selected = select_batch(lines, None if args.all else args.batch)
+        if not selected:
+            print(f"Không có bản ghi nào cho đợt {args.batch}")
+            sys.exit(1)
+        sent_count = send_lines(selected, args.topic)
+        label = "toàn bộ" if args.all else f"đợt {args.batch}"
+        print(f"Đã gửi {sent_count} bản ghi ({label}) vào topic {args.topic}")
 
 
 if __name__ == "__main__":

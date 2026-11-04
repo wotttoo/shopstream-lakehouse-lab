@@ -140,7 +140,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 19.
   - Hoàn thành khi: sau `python producer/produce.py --create-topic`, lệnh `docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic shop_events` cho thấy 3 partition.
 
-- [ ] **21. Thêm lệnh gửi theo đợt**
+- [x] **21. Thêm lệnh gửi theo đợt**
   - Việc cần làm: `--batch N` và `--all`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 20.
