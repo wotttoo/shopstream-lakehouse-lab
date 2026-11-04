@@ -289,7 +289,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - File: `experiments/exp_b_non_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_b.json` ghi rõ batch nào, bao nhiêu dòng, và có hai file bằng chứng. Số dòng dư được so với số dòng của batch chạy lại, lệch thì ghi vào Vướng mắc.
 
-- [ ] **45. Viết thí nghiệm C** (nhóm E)
+- [x] **45. Viết thí nghiệm C** (nhóm E)
   - Việc cần làm: chạy xong, xóa `checkpoints/exp_c/bronze`, chạy lại Bronze, đo số dòng, rồi chạy Silver và đo. Ghi nhận xét theo số đo thật.
   - File: `experiments/exp_c_delete_checkpoint.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_c.json` có số dòng Bronze và Silver trước và sau. Bronze gấp đôi hoặc đã ghi vào Vướng mắc nếu khác.
