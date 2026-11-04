@@ -104,6 +104,27 @@ def make_merge_batch(silver_path):
     return merge_batch
 
 
+def make_append_batch(silver_path):
+    """Biến thể KHÔNG idempotent, chỉ dùng cho thí nghiệm B: ghi append thẳng, không MERGE, không txnAppId.
+
+    Nếu batch bị chạy lại sau lỗi, dữ liệu của batch đó được ghi thêm lần nữa.
+    """
+
+    def append_batch(batch_df, batch_id):
+        if batch_df.isEmpty():
+            print(f"[silver] batch {batch_id}: không có dữ liệu mới")
+            return
+        source = dedup_within_batch(batch_df).persist()
+        row_count = source.count()
+        # Ghi append thường: Delta không biết batch này đã từng được ghi hay chưa
+        source.write.format("delta").mode("append").save(str(silver_path))
+        source.unpersist()
+        print(f"[silver] batch {batch_id}: append {row_count} dòng (không idempotent)")
+        fail_if_requested(batch_id)
+
+    return append_batch
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Bronze -> Silver")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
@@ -113,6 +134,8 @@ def parse_args(argv=None):
     parser.add_argument("--checkpoint-dir", default=str(config.CHECKPOINT_DIR),
                         help="thư mục gốc chứa checkpoint (thí nghiệm dùng checkpoints/exp_*)")
     parser.add_argument("--suffix", default="", help="hậu tố cho thư mục bảng Silver và checkpoint")
+    parser.add_argument("--append-only", action="store_true",
+                        help="biến thể không idempotent cho thí nghiệm B: append thay vì MERGE")
     return parser.parse_args(argv)
 
 
@@ -127,7 +150,7 @@ def main(argv=None):
     writer = (
         build_silver_stream(spark, bronze_path)
         .writeStream.queryName(QUERY_NAME)
-        .foreachBatch(make_merge_batch(silver_path))
+        .foreachBatch(make_append_batch(silver_path) if args.append_only else make_merge_batch(silver_path))
         # Checkpoint riêng: lưu phiên bản Bronze đã đọc và state của dropDuplicatesWithinWatermark
         .option("checkpointLocation", str(checkpoint))
     )

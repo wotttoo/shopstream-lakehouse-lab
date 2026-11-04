@@ -284,7 +284,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 42.
   - Hoàn thành khi: có `results/evidence/exp_a_before.txt` và `exp_a_after.txt`, trong đó `before` có offsets của batch lỗi nhưng không có commits tương ứng.
 
-- [ ] **44. Viết thí nghiệm B** (nhóm E)
+- [x] **44. Viết thí nghiệm B** (nhóm E)
   - Việc cần làm: biến thể Silver append thẳng, không MERGE, không txnAppId, gây lỗi rồi chạy lại, kèm chụp bằng chứng như task 43.
   - File: `experiments/exp_b_non_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_b.json` ghi rõ batch nào, bao nhiêu dòng, và có hai file bằng chứng. Số dòng dư được so với số dòng của batch chạy lại, lệch thì ghi vào Vướng mắc.
