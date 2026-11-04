@@ -90,7 +90,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
 
 Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/test_generate_events.py`, không cần Spark hay Kafka.
 
-- [ ] **10. Sinh sự kiện gốc**
+- [x] **10. Sinh sự kiện gốc**
   - Việc cần làm: khoảng 2.000 sự kiện, 50 user, 20 sản phẩm, tỷ lệ 70/20/10, amount đúng luật, event_id tất định theo seed 42.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k base_events` pass.
 
