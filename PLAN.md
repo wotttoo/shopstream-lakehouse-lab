@@ -226,7 +226,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 33.
   - Hoàn thành khi: `python streaming/run_all_batches.py --compare-wm20` rồi `python verify/check_results.py --layer gold` thoát với mã 0.
 
-- [ ] **35. Đối chiếu số dòng bị loại vì quá muộn**
+- [x] **35. Đối chiếu số dòng bị loại vì quá muộn**
   - Việc cần làm: lấy `numRowsDroppedByWatermark` từ tiến trình, so với số purchase bị loại trong đáp án vàng. Metric này chỉ đếm dòng tới toán tử có trạng thái, nên so với purchase, không so với mọi sự kiện.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 34.

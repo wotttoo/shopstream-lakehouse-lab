@@ -484,6 +484,12 @@ def compute_golden(lines):
             "purchases_dropped_wm20": int(
                 ((compare_sim["batch_no"] == batch_no) & compare_sim["dropped_by_watermark"]
                  & (compare_sim["event_type"] == "purchase")).sum()),
+            # numRowsDroppedByWatermark đếm dòng ở đầu vào toán tử có trạng thái, tức SAU partial
+            # aggregation và shuffle: mỗi cửa sổ quá muộn trong một đợt chỉ còn một dòng
+            "late_windows_wm10": int(gold_sim[(gold_sim["batch_no"] == batch_no)
+                                              & gold_sim["dropped_by_watermark"]]["window_start"].nunique()),
+            "late_windows_wm20": int(compare_sim[(compare_sim["batch_no"] == batch_no)
+                                                 & compare_sim["dropped_by_watermark"]]["window_start"].nunique()),
             "gold_watermark_before_wm10": iso(gold_batch["watermark_before"]),
             "gold_watermark_after_wm10": iso(gold_batch["watermark_after"]),
             "gold_watermark_after_wm20": iso(compare_batch["watermark_after"]),

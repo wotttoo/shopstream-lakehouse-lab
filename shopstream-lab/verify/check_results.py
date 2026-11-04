@@ -167,6 +167,52 @@ def check_gold_close_batches(spark, golden_windows, up_to_batch, table, suffix="
     return close
 
 
+def dropped_rows_by_batch(query_name, up_to_batch):
+    """Tổng numRowsDroppedByWatermark của mọi micro-batch trong mỗi đợt, đọc từ results/progress."""
+    dropped = {}
+    for batch_no in range(1, up_to_batch + 1):
+        progress_file = config.PROGRESS_DIR / f"batch_{batch_no:02d}.json"
+        if not progress_file.exists():
+            return None
+        record = json.loads(progress_file.read_text(encoding="utf-8"))
+        if query_name not in record["queries"]:
+            return None
+        total = 0
+        for progress in record["queries"][query_name]["progress"]:
+            for operator in progress.get("stateOperators", []):
+                total += operator.get("numRowsDroppedByWatermark", 0)
+        dropped[batch_no] = total
+    return dropped
+
+
+def check_dropped(golden, golden_windows, gold_actual, up_to_batch, table, suffix=""):
+    """Số dòng bị loại vì quá muộn: từ tiến trình truy vấn và từ bảng Gold, so với đáp án vàng."""
+    minutes = watermark_minutes_for_suffix(suffix)
+    layer = f"gold{suffix}"
+    # 1) Số purchase bị mất ở Gold = số đơn tuyệt đối - số đơn trong bảng Gold (chỉ khi đã chốt đủ cửa sổ)
+    if up_to_batch == config.BATCH_COUNT:
+        orders_absolute = int(golden_windows["orders_absolute"].sum())
+        orders_in_gold = sum(values[0][1] for values in gold_actual.values())
+        table.add(layer, "số purchase bị loại vì quá muộn (tính từ bảng Gold)",
+                  golden[f"late_beyond_purchases_wm{minutes}"], orders_absolute - orders_in_gold)
+    # 2) numRowsDroppedByWatermark: đếm ở đầu vào toán tử có trạng thái (sau partial aggregation),
+    #    nên mỗi cửa sổ quá muộn trong một đợt chỉ tính là một dòng
+    dropped = dropped_rows_by_batch(layer, up_to_batch)
+    if dropped is None:
+        table.add(layer, "numRowsDroppedByWatermark (thiếu file results/progress)", "-", "-", ok=False)
+        return
+    for row in golden["per_batch"]:
+        batch_no = row["batch_no"]
+        if batch_no > up_to_batch:
+            continue
+        expected = row[f"late_windows_wm{minutes}"]
+        if expected or dropped[batch_no]:
+            table.add(layer, f"numRowsDroppedByWatermark đợt {batch_no} (= số cửa sổ quá muộn)",
+                      expected, dropped[batch_no])
+    table.add(layer, "numRowsDroppedByWatermark tổng",
+              cumulative(golden, f"late_windows_wm{minutes}", up_to_batch), sum(dropped.values()))
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Đối chiếu kết quả với đáp án vàng")
     parser.add_argument("--layer", choices=LAYERS + ("all",), default="all")
@@ -192,6 +238,7 @@ def main(argv=None):
         _, gold_actual = check_gold(spark, golden_windows, args.up_to_batch, table)
         close = check_gold_close_batches(spark, golden_windows, args.up_to_batch, table)
         saved["gold"][""] = {"windows": gold_actual, "close": close}
+        check_dropped(golden, golden_windows, gold_actual, args.up_to_batch, table)
     spark.stop()
 
     print()
