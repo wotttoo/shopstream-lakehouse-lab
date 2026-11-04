@@ -70,7 +70,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
 
 ### Giai đoạn 2: Phần dùng chung
 
-- [ ] **7. Viết file cấu hình** (nhóm B)
+- [x] **7. Viết file cấu hình** (nhóm B)
   - Việc cần làm: đường dẫn, tên topic, ngưỡng watermark Gold và Silver, kích thước cửa sổ, seed. Đường dẫn tính theo vị trí file, không phụ thuộc thư mục đang đứng.
   - File: `common/config.py`, `tests/test_config.py`.
   - Hoàn thành khi: `pytest tests/test_config.py` pass, kiểm tra được 5 phút, 10 phút, 30 phút và `shop_events`.
