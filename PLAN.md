@@ -278,7 +278,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - File: `experiments/exp_a_rerun_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_a.json`, và chênh lệch bằng 0 hoặc đã ghi vào Vướng mắc nếu khác.
 
-- [ ] **43. Lưu bằng chứng thí nghiệm A**
+- [x] **43. Lưu bằng chứng thí nghiệm A**
   - Việc cần làm: chụp checkpoint và `_delta_log` trước và sau khi chạy lại.
   - File: `experiments/exp_a_rerun_idempotent.py`.
   - Phụ thuộc: 42.
