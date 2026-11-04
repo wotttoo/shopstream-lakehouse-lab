@@ -6,6 +6,7 @@ Cách chạy:
 """
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -21,6 +22,21 @@ from common.spark_session import get_spark  # noqa: E402
 from common.transforms import SILVER_COLUMNS, dedup_within_batch, keep_valid, parse_events  # noqa: E402
 
 QUERY_NAME = "silver"
+# Biến môi trường chèn lỗi có chủ đích (mặc định tắt), dùng cho thí nghiệm lỗi
+FAIL_AT_BATCH_ENV = "FAIL_AT_BATCH"
+
+
+class InjectedFailure(RuntimeError):
+    """Lỗi chèn có chủ đích: sink đã nhận dữ liệu nhưng Spark chưa ghi commits."""
+
+
+def fail_if_requested(batch_id):
+    """Ném lỗi nếu FAIL_AT_BATCH bằng batch_id hiện tại."""
+    fail_at = os.environ.get(FAIL_AT_BATCH_ENV)
+    if fail_at is not None and fail_at.strip() != "" and int(fail_at) == batch_id:
+        raise InjectedFailure(
+            f"FAIL_AT_BATCH={fail_at}: lỗi chèn sau khi đã ghi batch {batch_id}, trước khi foreachBatch kết thúc"
+        )
 OBSERVATION_NAME = "silver_parse"
 
 
@@ -65,6 +81,7 @@ def make_merge_batch(silver_path):
         # Lọc trùng event_id bên trong batch trước khi MERGE
         source = dedup_within_batch(batch_df)
         target = DeltaTable.forPath(spark, str(silver_path))
+        version_before = target.history(1).collect()[0]["version"]
         # MERGE chỉ chèn khi event_id chưa có: chạy lại cùng batch không sinh dòng thừa.
         # Không có nhánh UPDATE vì Gold đọc Silver dạng stream (bảng phải chỉ thêm dữ liệu).
         (
@@ -73,8 +90,15 @@ def make_merge_batch(silver_path):
             .whenNotMatchedInsertAll()
             .execute()
         )
-        metrics = target.history(1).select("operationMetrics").collect()[0][0] or {}
-        print(f"[silver] batch {batch_id}: chèn {metrics.get('numTargetRowsInserted', '?')} dòng")
+        last_commit = target.history(1).collect()[0]
+        if last_commit["version"] == version_before:
+            # Không có dòng mới thì Delta không tạo phiên bản mới
+            inserted = 0
+        else:
+            inserted = (last_commit["operationMetrics"] or {}).get("numTargetRowsInserted", "?")
+        print(f"[silver] batch {batch_id}: chèn {inserted} dòng (phiên bản bảng {last_commit['version']})")
+        # Điểm chèn lỗi: dữ liệu đã nằm trong Silver nhưng batch chưa được ghi vào commits/
+        fail_if_requested(batch_id)
 
     return merge_batch
 
@@ -82,6 +106,7 @@ def make_merge_batch(silver_path):
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Bronze -> Silver")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
+    parser.add_argument("--suffix", default="", help="hậu tố cho thư mục bảng Silver và checkpoint")
     return parser.parse_args(argv)
 
 
@@ -89,8 +114,8 @@ def main(argv=None):
     args = parse_args(argv)
     spark = get_spark("02_bronze_to_silver")
     bronze_path = config.table_path(config.BRONZE_TABLE)
-    silver_path = config.table_path(config.SILVER_TABLE)
-    checkpoint = config.checkpoint_path(QUERY_NAME)
+    silver_path = config.table_path(config.SILVER_TABLE, args.suffix)
+    checkpoint = config.checkpoint_path(QUERY_NAME, args.suffix)
     ensure_silver_table(spark, silver_path)
 
     writer = (

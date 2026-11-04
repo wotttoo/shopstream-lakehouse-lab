@@ -183,7 +183,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 23, 25, 26.
   - Hoàn thành khi: `python streaming/02_bronze_to_silver.py` thoát với mã 0 và `lakehouse/silver/_delta_log` tồn tại.
 
-- [ ] **28. Thêm điểm chèn lỗi FAIL_AT_BATCH**
+- [x] **28. Thêm điểm chèn lỗi FAIL_AT_BATCH**
   - Việc cần làm: ném ngoại lệ sau khi MERGE xong, trước khi foreachBatch kết thúc, mặc định tắt.
   - File: `streaming/02_bronze_to_silver.py`.
   - Phụ thuộc: 27.
