@@ -63,7 +63,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - Phụ thuộc: 3, 4.
   - Hoàn thành khi: `python verify/smoke_env.py --kafka` thoát với mã 0 và in lại đúng message.
 
-- [ ] **6. Ghi bộ phiên bản chạy được**
+- [x] **6. Ghi bộ phiên bản chạy được**
   - Việc cần làm: tạo `README.md` bản đầu với bộ phiên bản đã chạy thật. Nếu phải lùi về Spark 4.0.1 thì cập nhật cả `requirements.txt` và mục 2 của `CLAUDE.md`.
   - File: `README.md`, `requirements.txt`.
   - Hoàn thành khi: `grep -F "$(python -c 'import pyspark; print(pyspark.__version__)')" README.md` tìm thấy.
