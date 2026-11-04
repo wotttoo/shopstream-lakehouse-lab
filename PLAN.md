@@ -123,7 +123,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: kiểm tra bằng code rằng nhóm quá ngưỡng thực sự rơi vào cửa sổ đã chốt, chạy lại cho cùng kết quả, thêm tùy chọn in tóm tắt.
   - Hoàn thành khi: `pytest tests/test_generate_events.py` pass và `python data/generate_events.py --summary` in đủ thống kê.
 
-- [ ] **18. ĐIỂM DỪNG: người dùng duyệt thống kê**
+- [x] **18. ĐIỂM DỪNG: người dùng duyệt thống kê**
   - Việc cần làm: tóm tắt thống kê cho người dùng. Không làm task nào từ 19 trở đi khi chưa được duyệt.
   - Hoàn thành khi: người dùng xác nhận đồng ý (không kiểm chứng bằng lệnh được).
 
