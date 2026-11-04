@@ -3,6 +3,7 @@
 Cách chạy:
     python verify/check_results.py                      # mọi tầng, sau đủ 12 đợt
     python verify/check_results.py --layer bronze --up-to-batch 1
+    python verify/check_results.py --watermark-suffix _wm20   # thêm Gold 20 phút và so sánh hai ngưỡng
 """
 
 import argparse
@@ -213,10 +214,33 @@ def check_dropped(golden, golden_windows, gold_actual, up_to_batch, table, suffi
               cumulative(golden, f"late_windows_wm{minutes}", up_to_batch), sum(dropped.values()))
 
 
+def revenue_gap(golden, gold_actual):
+    """Chênh lệch doanh thu của bảng Gold so với đáp án tuyệt đối."""
+    revenue_in_gold = sum(values[0][0] for values in gold_actual.values())
+    return golden["revenue_absolute"] - revenue_in_gold
+
+
+def check_threshold_comparison(golden, gold_by_suffix, table, compare_suffix):
+    gap_main = revenue_gap(golden, gold_by_suffix[""])
+    gap_compare = revenue_gap(golden, gold_by_suffix[compare_suffix])
+    minutes = watermark_minutes_for_suffix(compare_suffix)
+    print(f"\nDoanh thu tuyệt đối: {golden['revenue_absolute']:,} đồng")
+    print(f"Chênh lệch ngưỡng {config.GOLD_WATERMARK_MINUTES} phút: {gap_main:,} đồng")
+    print(f"Chênh lệch ngưỡng {minutes} phút: {gap_compare:,} đồng")
+    table.add("so sánh", f"chênh lệch doanh thu ngưỡng {config.GOLD_WATERMARK_MINUTES} phút (đồng)",
+              golden["revenue_absolute"] - golden["gold_wm10"]["revenue_total"], gap_main)
+    table.add("so sánh", f"chênh lệch doanh thu ngưỡng {minutes} phút (đồng)",
+              golden["revenue_absolute"] - golden["gold_wm20"]["revenue_total"], gap_compare)
+    table.add("so sánh", f"{minutes} phút gần đáp án tuyệt đối hơn", True, gap_compare < gap_main)
+    return {"gap_wm10": gap_main, f"gap_wm{minutes}": gap_compare}
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Đối chiếu kết quả với đáp án vàng")
     parser.add_argument("--layer", choices=LAYERS + ("all",), default="all")
     parser.add_argument("--up-to-batch", type=int, default=config.BATCH_COUNT)
+    parser.add_argument("--watermark-suffix", default=None,
+                        help="kiểm tra thêm bảng Gold có hậu tố này (ví dụ _wm20) và so sánh hai ngưỡng")
     return parser.parse_args(argv)
 
 
@@ -239,6 +263,15 @@ def main(argv=None):
         close = check_gold_close_batches(spark, golden_windows, args.up_to_batch, table)
         saved["gold"][""] = {"windows": gold_actual, "close": close}
         check_dropped(golden, golden_windows, gold_actual, args.up_to_batch, table)
+        if args.watermark_suffix:
+            suffix = args.watermark_suffix
+            _, compare_actual = check_gold(spark, golden_windows, args.up_to_batch, table, suffix)
+            compare_close = check_gold_close_batches(spark, golden_windows, args.up_to_batch, table, suffix)
+            check_dropped(golden, golden_windows, compare_actual, args.up_to_batch, table, suffix)
+            saved["gold"][suffix] = {"windows": compare_actual, "close": compare_close}
+            if args.up_to_batch == config.BATCH_COUNT:
+                saved["comparison"] = check_threshold_comparison(
+                    golden, {"": gold_actual, suffix: compare_actual}, table, suffix)
     spark.stop()
 
     print()
@@ -250,7 +283,7 @@ def main(argv=None):
         for layer, item, expected, actual, ok in table.rows
     ]
     # Chỉ lưu lần kiểm tra đầy đủ (mọi tầng, đủ 12 đợt) để báo cáo đọc lại
-    if args.layer == "all" and args.up_to_batch == config.BATCH_COUNT:
+    if args.layer in ("all", "gold") and args.up_to_batch == config.BATCH_COUNT:
         CHECK_RESULTS_FILE.write_text(json.dumps(saved, ensure_ascii=False, indent=2, default=str) + "\n",
                                       encoding="utf-8")
         print(f"Đã lưu {CHECK_RESULTS_FILE.relative_to(PROJECT_DIR)}")

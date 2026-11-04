@@ -232,7 +232,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 34.
   - Hoàn thành khi: `python verify/check_results.py` chạy đủ các tầng và thoát với mã 0.
 
-- [ ] **36. So sánh kết quả ngưỡng 10 phút và 20 phút**
+- [x] **36. So sánh kết quả ngưỡng 10 phút và 20 phút**
   - Việc cần làm: tham số `--watermark-suffix`, in chênh lệch doanh thu mỗi ngưỡng so với đáp án tuyệt đối.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 35.
