@@ -1,5 +1,6 @@
-"""Các hàm biến đổi dùng cho Silver: parse JSON, lọc bản ghi lỗi."""
+"""Các hàm biến đổi dùng cho Silver: parse JSON, lọc bản ghi lỗi, lọc trùng trong batch."""
 
+from pyspark.sql import Window
 from pyspark.sql import functions as F
 
 from common.schema import EVENT_SCHEMA
@@ -58,3 +59,15 @@ def count_rejected(parsed_df):
     """Số bản ghi bị loại vì lỗi (dùng cho DataFrame tĩnh, ví dụ trong test)."""
     return parsed_df.filter(~F.col("is_valid")).count()
 
+
+def dedup_within_batch(batch_df):
+    """Giữ một dòng cho mỗi event_id: bản đến Kafka sớm nhất (partition, offset nhỏ nhất).
+
+    Dùng trước MERGE để một batch không có hai dòng cùng event_id.
+    """
+    first_arrival = Window.partitionBy("event_id").orderBy("kafka_partition", "kafka_offset")
+    return (
+        batch_df.withColumn("arrival_rank", F.row_number().over(first_arrival))
+        .filter(F.col("arrival_rank") == 1)
+        .drop("arrival_rank")
+    )

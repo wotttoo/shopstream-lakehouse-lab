@@ -172,7 +172,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 8.
   - Hoàn thành khi: `pytest tests/test_transforms.py -k parse` pass. Test này được phép dùng Spark local, là ngoại lệ duy nhất của quy ước unit test.
 
-- [ ] **26. Viết hàm lọc trùng trong batch** (nhóm C)
+- [x] **26. Viết hàm lọc trùng trong batch** (nhóm C)
   - Việc cần làm: hàm trên DataFrame giữ một dòng cho mỗi event_id, dùng trước MERGE.
   - File: `common/transforms.py`, `tests/test_transforms.py`.
   - Hoàn thành khi: `pytest tests/test_transforms.py -k dedup` pass.

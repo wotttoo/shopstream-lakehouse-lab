@@ -9,7 +9,7 @@ import datetime as dt
 import pytest
 from pyspark.sql import SparkSession
 
-from common.transforms import count_rejected, keep_valid, parse_events
+from common.transforms import count_rejected, dedup_within_batch, keep_valid, parse_events
 
 
 @pytest.fixture(scope="module")
@@ -58,3 +58,21 @@ def test_parse_flags_missing_id_and_bad_time_as_rejected(spark):
     assert [row.event_id for row in valid.collect()] == ["e1"]
     assert "is_valid" not in valid.columns
 
+
+def test_dedup_within_batch_keeps_first_arrival(spark):
+    rows = [
+        ("e1", "2026-01-15 10:00:05", 0, 7),
+        ("e1", "2026-01-15 10:00:01", 0, 3),  # đến sớm hơn (offset nhỏ hơn)
+        ("e2", "2026-01-15 10:01:00", 1, 4),
+    ]
+    frame = spark.createDataFrame(rows, "event_id string, event_time string, kafka_partition int, kafka_offset long")
+    result = {row.event_id: row for row in dedup_within_batch(frame).collect()}
+    assert set(result) == {"e1", "e2"}
+    assert result["e1"].kafka_offset == 3
+    assert result["e1"].event_time == "2026-01-15 10:00:01"
+
+
+def test_dedup_within_batch_no_duplicates_unchanged(spark):
+    rows = [("a", 0, 1), ("b", 0, 2), ("c", 1, 1)]
+    frame = spark.createDataFrame(rows, "event_id string, kafka_partition int, kafka_offset long")
+    assert dedup_within_batch(frame).count() == 3
