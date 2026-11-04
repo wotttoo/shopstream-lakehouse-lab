@@ -47,7 +47,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `requirements.txt`.
   - Hoàn thành khi: `java -version` là 17, `python --version` là 3.11, và `python -c "import pyspark, delta; print(pyspark.__version__)"` in `4.1.0`.
 
-- [ ] **3. Dựng Kafka bằng Docker Compose** (nhóm A)
+- [x] **3. Dựng Kafka bằng Docker Compose** (nhóm A)
   - Việc cần làm: một broker KRaft, advertised listener qua `localhost:9092`.
   - File: `docker-compose.yml`.
   - Hoàn thành khi: `docker compose up -d` rồi `docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list` thoát với mã 0.
