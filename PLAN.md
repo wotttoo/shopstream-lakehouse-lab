@@ -94,7 +94,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: khoảng 2.000 sự kiện, 50 user, 20 sản phẩm, tỷ lệ 70/20/10, amount đúng luật, event_id tất định theo seed 42.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k base_events` pass.
 
-- [ ] **11. Cài bẫy trùng lặp**
+- [x] **11. Cài bẫy trùng lặp**
   - Việc cần làm: thêm khoảng 10% bản trùng, trong đó khoảng 1/5 lệch event_time vài giây, giữ nguyên event_id.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k duplicates` pass.
 

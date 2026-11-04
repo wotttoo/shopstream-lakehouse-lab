@@ -87,3 +87,50 @@ def test_base_events_ids_are_seeded_unique_uuids(base_events):
         assert str(uuid.UUID(event_id)) == event_id
     again = gen.generate_base_events(np.random.default_rng(42))
     assert again == base_events
+
+
+# ---------------------------------------------------------------- task 11
+def split_originals_and_duplicates(records):
+    originals = [record for record in records
+                 if not record["is_duplicate"] and record["delay_group"] != "watermark_push"]
+    duplicates = [record for record in records if record["is_duplicate"]]
+    return originals, duplicates
+
+
+def test_duplicates_rate_about_10_percent(records):
+    originals, duplicates = split_originals_and_duplicates(records)
+    rate = len(duplicates) / len(originals)
+    assert 0.09 <= rate <= 0.11
+    # Mỗi event_id trùng tối đa một bản thêm
+    duplicate_ids = [record["event_id"] for record in duplicates]
+    assert len(set(duplicate_ids)) == len(duplicate_ids)
+
+
+def test_duplicates_about_one_fifth_shifted_by_few_seconds(records):
+    originals, duplicates = split_originals_and_duplicates(records)
+    by_id = {record["event_id"]: record for record in originals}
+    shifted = [record for record in duplicates
+               if record["event_time_ms"] != by_id[record["event_id"]]["event_time_ms"]]
+    share = len(shifted) / len(duplicates)
+    assert 0.15 <= share <= 0.25
+    for record in shifted:
+        shift_ms = abs(record["event_time_ms"] - by_id[record["event_id"]]["event_time_ms"])
+        assert 1_000 <= shift_ms <= 5_000
+
+
+def test_duplicates_keep_event_id_and_other_fields(records):
+    originals, duplicates = split_originals_and_duplicates(records)
+    by_id = {record["event_id"]: record for record in originals}
+    for record in duplicates:
+        original = by_id[record["event_id"]]
+        for field in ("user_id", "event_type", "product_id", "amount"):
+            assert record[field] == original[field]
+
+
+def test_duplicates_sent_after_original(records):
+    position = {}
+    for index, record in enumerate(records):
+        position.setdefault(record["event_id"], index)
+    for index, record in enumerate(records):
+        if record["is_duplicate"]:
+            assert position[record["event_id"]] < index
