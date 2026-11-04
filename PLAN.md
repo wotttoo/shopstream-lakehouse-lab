@@ -119,7 +119,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: doanh thu và số đơn tuyệt đối, kỳ vọng ngưỡng 10 phút, kỳ vọng ngưỡng 20 phút, danh sách cửa sổ được xuất, đợt chốt mỗi cửa sổ.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/golden_windows.csv`, và `pytest tests/test_generate_events.py -k golden_windows` pass.
 
-- [ ] **17. Kiểm tra toàn bộ dữ liệu sinh ra**
+- [x] **17. Kiểm tra toàn bộ dữ liệu sinh ra**
   - Việc cần làm: kiểm tra bằng code rằng nhóm quá ngưỡng thực sự rơi vào cửa sổ đã chốt, chạy lại cho cùng kết quả, thêm tùy chọn in tóm tắt.
   - Hoàn thành khi: `pytest tests/test_generate_events.py` pass và `python data/generate_events.py --summary` in đủ thống kê.
 

@@ -364,3 +364,48 @@ def test_golden_windows_all_emitted_with_close_batch(golden_windows, golden):
         # Cửa sổ sau chốt muộn hơn hoặc cùng đợt với cửa sổ trước
         assert close.is_monotonic_increasing
     assert golden["gold_wm10"]["emitted_window_count"] == len(golden_windows)
+
+
+# ---------------------------------------------------------------- task 17
+def test_generated_data_passes_all_checks(golden):
+    assert golden["data_checks"] == []
+    assert golden["late_beyond_designed_all_in_closed_windows"] is True
+
+
+def test_generated_late_beyond_arrive_after_their_window_closed(lines, golden_windows):
+    close_batch = dict(zip(golden_windows["window_start"], golden_windows["close_batch_wm10"]))
+    seen = set()
+    beyond_count = 0
+    for line in lines:
+        if line["event_id"] in seen:
+            continue
+        seen.add(line["event_id"])
+        delay = pd.Timestamp(line["send_time"]) - pd.Timestamp(line["event_time"])
+        if pd.Timedelta(minutes=12) <= delay <= pd.Timedelta(minutes=20):
+            beyond_count += 1
+            window_start = pd.Timestamp(line["event_time"]).floor("5min")
+            key = window_start.strftime("%Y-%m-%dT%H:%M:%SZ")
+            # Cửa sổ đã được chốt ở một đợt TRƯỚC đợt sự kiện đến
+            assert close_batch[key] < line["batch_no"]
+    assert beyond_count > 0
+
+
+def test_generated_twice_with_seed_42_is_identical(tmp_path):
+    first = tmp_path / "first"
+    second = tmp_path / "second"
+    gen.write_outputs(first, 42)
+    gen.write_outputs(second, 42)
+    for name in ("events.jsonl", "golden_answer.json", "golden_windows.csv"):
+        assert (first / name).read_bytes() == (second / name).read_bytes()
+
+
+def test_generated_summary_prints_main_statistics(output_dir, capsys):
+    with open(output_dir / "golden_answer.json", encoding="utf-8") as golden_file:
+        golden_data = json.load(golden_file)
+    windows = pd.read_csv(output_dir / "golden_windows.csv")
+    gen.print_summary(golden_data, windows)
+    printed = capsys.readouterr().out
+    for key in ("total_records_sent", "unique_event_ids", "duplicate_shifted_records",
+                "late_within_count", "late_beyond_purchases_wm10", "revenue_absolute",
+                "gold_wm10", "gold_wm20", "Theo đợt", "Theo cửa sổ"):
+        assert key in printed
