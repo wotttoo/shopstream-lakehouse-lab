@@ -220,7 +220,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 32.
   - Hoàn thành khi: từ trạng thái sạch, chạy với `--compare-wm20 --up-to-batch 2` tạo được `lakehouse/gold_wm20/_delta_log`.
 
-- [ ] **34. Chạy đủ 12 đợt và đối chiếu Gold từng cửa sổ**
+- [x] **34. Chạy đủ 12 đợt và đối chiếu Gold từng cửa sổ**
   - Việc cần làm: thêm kiểm tra Gold vào `check_results.py` (cửa sổ thiếu, thừa, lệch). Chạy trọn từ trạng thái sạch. Xác nhận hai lưu ý ở task 14, và rằng cửa sổ cuối được chốt khi `availableNow` kết thúc ở đợt 12. Nếu không, ghi vào Vướng mắc.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 33.
@@ -326,3 +326,13 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
 - Đã thử: in plan đã tối ưu của micro-batch có dữ liệu. Code viết `withWatermark` rồi mới `filter(event_type = 'purchase')`, nhưng plan tối ưu là `EventTimeWatermark` nằm TRÊN `Filter (event_type = purchase)`. Quy tắc `PushPredicateThroughNonJoin` của Spark đẩy mọi điều kiện tất định không tham chiếu cột event time xuống dưới `EventTimeWatermark`.
 - Kết quả: lưu ý ở task 30 ("đặt withWatermark TRƯỚC khi lọc purchase") không đủ trên Spark 4.1.0. Watermark chỉ tính trên purchase, view đẩy watermark mất tác dụng.
 - Cách xử lý: bỏ filter trước khi tổng hợp, đưa điều kiện purchase vào hàm tổng hợp (`sum(when(purchase, amount))`, `count(when(purchase, 1))`), rồi lọc `orders > 0` sau khi tổng hợp. Thiết kế giữ nguyên (chỉ tính purchase, watermark 10 phút, cửa sổ 5 phút). Sau khi sửa, watermark sau đợt 1 là 09:54:57, khớp mô phỏng. Hệ quả phụ: `numRowsDroppedByWatermark` giờ đếm cả dòng không phải purchase (xem task 35).
+
+### V2. Xác nhận hai lưu ý của task 14 và việc chốt cửa sổ cuối (task 34)
+- Hiện tượng cần xác nhận: (a) watermark tính trên mọi loại sự kiện, (b) Spark loại dòng theo `window_end <= watermark`, (c) cửa sổ cuối được chốt khi `availableNow` kết thúc ở đợt 12.
+- Kết quả chạy thật: (a) đúng sau khi sửa V1, watermark Gold sau từng đợt khớp mô phỏng. (b) đúng: doanh thu, số đơn và đợt chốt của cả 12 cửa sổ khớp mô phỏng theo `window_end`. (c) đúng: mỗi lần chạy `availableNow` gồm hai micro-batch (một có dữ liệu, một không dữ liệu để dọn state theo watermark mới), nên 4 cửa sổ cuối được ghi ngay trong lần chạy đợt 12.
+- Không cần xử lý thêm.
+
+### V3. numRowsDroppedByWatermark không bằng số sự kiện bị loại (task 35)
+- Hiện tượng: theo đáp án vàng có 50 sự kiện quá ngưỡng (18 purchase), nhưng tổng `numRowsDroppedByWatermark` của Gold là 8.
+- Nguyên nhân (đã dự đoán trước khi chạy từ physical plan, rồi đo khớp): metric đếm dòng ở đầu vào toán tử có trạng thái `StateStoreRestore`, nằm sau partial aggregation và shuffle. Mỗi cửa sổ quá muộn trong một micro-batch chỉ còn một dòng. Đáp án vàng ghi `late_windows_wm10` theo từng đợt (8 đợt, mỗi đợt 1 cửa sổ) và khớp từng đợt.
+- Cách xử lý: `check_results.py` đối chiếu metric này với số cửa sổ quá muộn, và đo số purchase bị loại bằng cách so bảng Gold với đáp án tuyệt đối (18, khớp).
