@@ -108,6 +108,10 @@ def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Bronze -> Silver")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
     parser.add_argument("--progress-file", help="ghi tiến trình của lần chạy này ra file JSON")
+    parser.add_argument("--lakehouse-dir", default=str(config.LAKEHOUSE_DIR),
+                        help="thư mục gốc chứa các bảng Delta (thí nghiệm dùng lakehouse/exp_*)")
+    parser.add_argument("--checkpoint-dir", default=str(config.CHECKPOINT_DIR),
+                        help="thư mục gốc chứa checkpoint (thí nghiệm dùng checkpoints/exp_*)")
     parser.add_argument("--suffix", default="", help="hậu tố cho thư mục bảng Silver và checkpoint")
     return parser.parse_args(argv)
 
@@ -115,9 +119,9 @@ def parse_args(argv=None):
 def main(argv=None):
     args = parse_args(argv)
     spark = get_spark("02_bronze_to_silver")
-    bronze_path = config.table_path(config.BRONZE_TABLE)
-    silver_path = config.table_path(config.SILVER_TABLE, args.suffix)
-    checkpoint = config.checkpoint_path(QUERY_NAME, args.suffix)
+    bronze_path = config.table_path(config.BRONZE_TABLE, lakehouse_dir=args.lakehouse_dir)
+    silver_path = config.table_path(config.SILVER_TABLE, args.suffix, lakehouse_dir=args.lakehouse_dir)
+    checkpoint = config.checkpoint_path(QUERY_NAME, args.suffix, checkpoint_dir=args.checkpoint_dir)
     ensure_silver_table(spark, silver_path)
 
     writer = (

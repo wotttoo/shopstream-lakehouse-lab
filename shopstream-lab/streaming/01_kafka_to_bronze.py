@@ -49,14 +49,18 @@ def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Kafka -> Bronze")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
     parser.add_argument("--progress-file", help="ghi tiến trình của lần chạy này ra file JSON")
+    parser.add_argument("--lakehouse-dir", default=str(config.LAKEHOUSE_DIR),
+                        help="thư mục gốc chứa các bảng Delta (thí nghiệm dùng lakehouse/exp_*)")
+    parser.add_argument("--checkpoint-dir", default=str(config.CHECKPOINT_DIR),
+                        help="thư mục gốc chứa checkpoint (thí nghiệm dùng checkpoints/exp_*)")
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
     spark = get_spark("01_kafka_to_bronze")
-    bronze_path = config.table_path(config.BRONZE_TABLE)
-    checkpoint = config.checkpoint_path(QUERY_NAME)
+    bronze_path = config.table_path(config.BRONZE_TABLE, lakehouse_dir=args.lakehouse_dir)
+    checkpoint = config.checkpoint_path(QUERY_NAME, checkpoint_dir=args.checkpoint_dir)
 
     writer = (
         build_bronze_stream(spark)

@@ -261,7 +261,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với b, c) để không chạm vào kết quả chuẩn. Topic được tạo lại ở đầu mỗi thí nghiệm, nên muốn chạy lại luồng chuẩn sau đó phải chạy từ trạng thái sạch.
 
-- [ ] **40. Cho truy vấn nhận thư mục gốc của thí nghiệm**
+- [x] **40. Cho truy vấn nhận thư mục gốc của thí nghiệm**
   - Việc cần làm: thêm tham số chọn thư mục bảng và checkpoint vào ba truy vấn, giá trị mặc định giữ nguyên hành vi cũ.
   - File: ba file truy vấn.
   - Phụ thuộc: 37.
