@@ -18,6 +18,7 @@ if str(PROJECT_DIR) not in sys.path:
 from pyspark.sql import functions as F  # noqa: E402
 
 from common import config  # noqa: E402
+from common.progress import save_query_progress  # noqa: E402
 from common.spark_session import get_spark  # noqa: E402
 
 QUERY_NAME = "bronze"
@@ -47,6 +48,7 @@ def build_bronze_stream(spark, topic=config.TOPIC_NAME):
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Kafka -> Bronze")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
+    parser.add_argument("--progress-file", help="ghi tiến trình của lần chạy này ra file JSON")
     return parser.parse_args(argv)
 
 
@@ -74,6 +76,7 @@ def main(argv=None):
     query.awaitTermination()
     row_count = spark.read.format("delta").load(str(bronze_path)).count()
     print(f"[bronze] số dòng trong bảng: {row_count}")
+    save_query_progress(query, args.progress_file, QUERY_NAME, row_count)
     spark.stop()
 
 

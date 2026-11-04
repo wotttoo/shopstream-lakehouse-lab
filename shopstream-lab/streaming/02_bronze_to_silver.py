@@ -18,6 +18,7 @@ from delta.tables import DeltaTable  # noqa: E402
 from pyspark.sql import functions as F  # noqa: E402
 
 from common import config  # noqa: E402
+from common.progress import save_query_progress  # noqa: E402
 from common.spark_session import get_spark  # noqa: E402
 from common.transforms import SILVER_COLUMNS, dedup_within_batch, keep_valid, parse_events  # noqa: E402
 
@@ -106,6 +107,7 @@ def make_merge_batch(silver_path):
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Bronze -> Silver")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
+    parser.add_argument("--progress-file", help="ghi tiến trình của lần chạy này ra file JSON")
     parser.add_argument("--suffix", default="", help="hậu tố cho thư mục bảng Silver và checkpoint")
     return parser.parse_args(argv)
 
@@ -139,6 +141,7 @@ def main(argv=None):
                   f"bị loại vì lỗi {observed['rejected_rows']} dòng")
     row_count = spark.read.format("delta").load(str(silver_path)).count()
     print(f"[silver] số dòng trong bảng: {row_count}")
+    save_query_progress(query, args.progress_file, QUERY_NAME + args.suffix, row_count)
     spark.stop()
 
 

@@ -17,6 +17,7 @@ if str(PROJECT_DIR) not in sys.path:
 from pyspark.sql import functions as F  # noqa: E402
 
 from common import config  # noqa: E402
+from common.progress import save_query_progress  # noqa: E402
 from common.spark_session import get_spark  # noqa: E402
 
 QUERY_NAME = "gold"
@@ -52,6 +53,7 @@ def build_gold_stream(spark, silver_path, watermark):
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Silver -> Gold")
     parser.add_argument("--continuous", action="store_true", help="chạy liên tục thay vì availableNow")
+    parser.add_argument("--progress-file", help="ghi tiến trình của lần chạy này ra file JSON")
     parser.add_argument("--watermark", default=config.GOLD_WATERMARK, help='ví dụ "10 minutes"')
     parser.add_argument("--suffix", default="", help="hậu tố cho thư mục bảng Gold và checkpoint")
     return parser.parse_args(argv)
@@ -87,6 +89,7 @@ def main(argv=None):
               f"bị loại vì quá muộn {state.get('numRowsDroppedByWatermark')}")
     row_count = spark.read.format("delta").load(str(gold_path)).count()
     print(f"[gold{args.suffix}] số cửa sổ trong bảng: {row_count}")
+    save_query_progress(query, args.progress_file, QUERY_NAME + args.suffix, row_count)
     spark.stop()
 
 

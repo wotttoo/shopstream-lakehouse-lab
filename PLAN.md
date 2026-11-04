@@ -208,7 +208,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 30.
   - Hoàn thành khi: từ trạng thái sạch, `python streaming/run_all_batches.py --up-to-batch 2` thoát với mã 0 và `python verify/check_results.py --layer silver --up-to-batch 2` thoát với mã 0.
 
-- [ ] **32. Ghi số dòng và tiến trình theo đợt**
+- [x] **32. Ghi số dòng và tiến trình theo đợt**
   - Việc cần làm: mỗi truy vấn lưu `lastProgress` của mọi micro-batch, vòng lặp gom thành file của đợt. Ghi cả số micro-batch thực tế của mỗi lần chạy, vì có thể có thêm batch không dữ liệu.
   - File: `streaming/run_all_batches.py`, ba file truy vấn.
   - Phụ thuộc: 31.

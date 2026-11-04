@@ -9,9 +9,11 @@ Cách chạy:
 """
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -70,6 +72,29 @@ def query_steps(compare_wm20):
     return steps
 
 
+def run_batch(batch_no, compare_wm20):
+    """Gửi một đợt rồi chạy các truy vấn; gom tiến trình vào results/progress/batch_XX.json."""
+    print(f"=== Đợt {batch_no} ===")
+    run_step(f"gửi đợt {batch_no}", [str(PRODUCER), "--batch", str(batch_no)])
+    batch_record = {"batch_no": batch_no, "queries": {}}
+    with tempfile.TemporaryDirectory() as raw_dir:
+        for query_name, command in query_steps(compare_wm20):
+            progress_file = Path(raw_dir) / f"{query_name}.json"
+            run_step(query_name, command + ["--progress-file", str(progress_file)])
+            batch_record["queries"][query_name] = json.loads(progress_file.read_text(encoding="utf-8"))
+    batch_record["row_counts"] = {
+        name: record["row_count"] for name, record in batch_record["queries"].items()
+    }
+    batch_record["micro_batch_counts"] = {
+        name: record["micro_batch_count"] for name, record in batch_record["queries"].items()
+    }
+    config.PROGRESS_DIR.mkdir(parents=True, exist_ok=True)
+    output_file = config.PROGRESS_DIR / f"batch_{batch_no:02d}.json"
+    output_file.write_text(json.dumps(batch_record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"  số dòng: {batch_record['row_counts']}, số micro-batch: {batch_record['micro_batch_counts']}")
+    return batch_record
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Chạy 12 đợt qua Bronze, Silver, Gold")
     parser.add_argument("--up-to-batch", type=int, default=config.BATCH_COUNT)
@@ -86,10 +111,7 @@ def main(argv=None):
     if args.reset:
         reset_standard_state()
     for batch_no in range(args.from_batch, args.up_to_batch + 1):
-        print(f"=== Đợt {batch_no} ===")
-        run_step(f"gửi đợt {batch_no}", [str(PRODUCER), "--batch", str(batch_no)])
-        for query_name, command in query_steps(args.compare_wm20):
-            run_step(query_name, command)
+        run_batch(batch_no, args.compare_wm20)
 
 
 if __name__ == "__main__":
