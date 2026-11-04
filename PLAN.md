@@ -75,7 +75,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `common/config.py`, `tests/test_config.py`.
   - Hoàn thành khi: `pytest tests/test_config.py` pass, kiểm tra được 5 phút, 10 phút, 30 phút và `shop_events`.
 
-- [ ] **8. Viết schema sự kiện** (nhóm B)
+- [x] **8. Viết schema sự kiện** (nhóm B)
   - Việc cần làm: schema Spark của sáu trường sự kiện, `event_time` để dạng chuỗi.
   - File: `common/schema.py`, `tests/test_schema.py`.
   - Hoàn thành khi: `pytest tests/test_schema.py` pass.
