@@ -129,7 +129,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 ### Giai đoạn 4: Producer
 
-- [ ] **19. Viết hàm tạo value gửi Kafka** (nhóm C)
+- [x] **19. Viết hàm tạo value gửi Kafka** (nhóm C)
   - Việc cần làm: hàm thuần tách `batch_no`, `send_time` khỏi value, key là user_id, lọc theo đợt.
   - File: `producer/produce.py`, `tests/test_produce.py`.
   - Hoàn thành khi: `pytest tests/test_produce.py` pass.
