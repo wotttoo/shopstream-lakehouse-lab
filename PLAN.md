@@ -314,10 +314,11 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 47.
   - Hoàn thành khi: `grep -c 'Khắc phục' README.md` lớn hơn 0 và mọi lệnh trong README đã được chạy ít nhất một lần.
 
-- [ ] **49. Chạy nghiệm thu từ bản sao sạch**
+- [x] **49. Chạy nghiệm thu từ bản sao sạch**
   - Việc cần làm: `git clone` repo sang thư mục mới, làm theo `README.md`, không dùng file ngoài repo.
   - Phụ thuộc: 48.
   - Hoàn thành khi: trong bản sao, `pytest tests/` pass và `python verify/check_results.py` thoát với mã 0. So sánh `run_report.json` với bản gốc: số liệu dữ liệu và Gold phải giống hệt.
+  - Kết quả: bản sao từ commit `a0d872e`, làm theo README (tạo `.venv`, `pytest` 69 test pass, `smoke_env.py --delta --kafka` OK, sinh dữ liệu cho cùng sha256 `ed6703a6…`, `run_all_batches.py --reset --compare-wm20`, `check_results.py --watermark-suffix _wm20` thoát mã 0, `build_report.py`, `check_report.py --markdown` OK). Các mục `versions`, `dataset`, `watermark_comparison`, `per_batch`, `experiments`, `checks` của `run_report.json` giống hệt bản gốc.
 
 ## 5. Vướng mắc
 
