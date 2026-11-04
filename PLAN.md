@@ -160,7 +160,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 9, 22.
   - Hoàn thành khi: sau khi gửi đợt 1, `python streaming/01_kafka_to_bronze.py` thoát với mã 0 và `lakehouse/bronze/_delta_log` tồn tại.
 
-- [ ] **24. Thêm kiểm tra Bronze**
+- [x] **24. Thêm kiểm tra Bronze**
   - Việc cần làm: so số dòng với số bản ghi đến đợt chỉ định.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 23.
