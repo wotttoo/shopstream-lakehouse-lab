@@ -195,7 +195,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 27.
   - Hoàn thành khi: `python verify/check_results.py --layer silver --up-to-batch 1` thoát với mã 0.
 
-- [ ] **30. Viết truy vấn Gold**
+- [x] **30. Viết truy vấn Gold**
   - Việc cần làm: tumbling window 5 phút, `revenue`, `orders`, append, tách `window_start`, `window_end`, tham số `--watermark`, `--suffix`.
   - Lưu ý: đặt `withWatermark` TRƯỚC khi lọc purchase. Nếu lọc trước, view đẩy watermark bị loại trước khi tới toán tử watermark, các cửa sổ cuối sẽ không được chốt.
   - File: `streaming/03_silver_to_gold.py`.
@@ -320,3 +320,9 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
 
 ## 5. Vướng mắc
 
+
+### V1. Optimizer đẩy filter purchase xuống dưới watermark ở Gold (đã giải quyết, task 30)
+- Hiện tượng: chạy Gold sau đợt 1, Spark báo watermark 09:53:59, mô phỏng tính 09:54:57. Event time lớn nhất trong Silver là 10:04:57 (một view), còn purchase lớn nhất là 10:03:59.
+- Đã thử: in plan đã tối ưu của micro-batch có dữ liệu. Code viết `withWatermark` rồi mới `filter(event_type = 'purchase')`, nhưng plan tối ưu là `EventTimeWatermark` nằm TRÊN `Filter (event_type = purchase)`. Quy tắc `PushPredicateThroughNonJoin` của Spark đẩy mọi điều kiện tất định không tham chiếu cột event time xuống dưới `EventTimeWatermark`.
+- Kết quả: lưu ý ở task 30 ("đặt withWatermark TRƯỚC khi lọc purchase") không đủ trên Spark 4.1.0. Watermark chỉ tính trên purchase, view đẩy watermark mất tác dụng.
+- Cách xử lý: bỏ filter trước khi tổng hợp, đưa điều kiện purchase vào hàm tổng hợp (`sum(when(purchase, amount))`, `count(when(purchase, 1))`), rồi lọc `orders > 0` sau khi tổng hợp. Thiết kế giữ nguyên (chỉ tính purchase, watermark 10 phút, cửa sổ 5 phút). Sau khi sửa, watermark sau đợt 1 là 09:54:57, khớp mô phỏng. Hệ quả phụ: `numRowsDroppedByWatermark` giờ đếm cả dòng không phải purchase (xem task 35).
