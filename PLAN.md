@@ -106,7 +106,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: sắp theo send_time, gán `batch_no` 1 đến 12, thêm một view khoảng 11:30 ở đợt 12.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k batches` pass.
 
-- [ ] **14. Viết hàm mô phỏng watermark theo đợt**
+- [x] **14. Viết hàm mô phỏng watermark theo đợt**
   - Việc cần làm: watermark của một đợt bằng event time lớn nhất ở các đợt TRƯỚC trừ ngưỡng.
   - Lưu ý cần xác nhận ở task 34: (a) tính max trên MỌI loại sự kiện, vì view đẩy watermark phải có tác dụng; (b) với aggregation theo cửa sổ, nhiều khả năng Spark loại dòng theo `window_end <= watermark`, không phải theo event time của dòng, nên mô phỏng theo cửa sổ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k watermark_simulation` pass với ví dụ nhỏ tính tay.

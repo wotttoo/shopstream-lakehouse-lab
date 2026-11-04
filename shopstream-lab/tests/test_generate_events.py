@@ -198,3 +198,71 @@ def test_batches_watermark_push_event_in_last_batch(lines):
     assert push[0]["batch_no"] == 12
     push_time = pd.Timestamp(push[0]["event_time"])
     assert abs(push_time - pd.Timestamp("2026-01-15T11:30:00Z")) <= pd.Timedelta(minutes=5)
+
+
+# ---------------------------------------------------------------- task 14
+def hand_example():
+    """Ví dụ tính tay, ngưỡng 10 phút, cửa sổ 5 phút.
+
+    Đợt 1: view 10:00, purchase 10:02 (100), view 10:14  -> watermark sau = 10:04
+    Đợt 2: purchase 10:03 (200): cửa sổ kết thúc 10:05 > 10:04, giữ.
+           view 10:19                                     -> watermark sau = 10:09
+           (view đẩy watermark: nếu chỉ tính purchase thì watermark chỉ là 09:53)
+    Đợt 3: purchase 10:04 (300): cửa sổ kết thúc 10:05 <= 10:09, LOẠI.
+           purchase 10:07 (400): cửa sổ kết thúc 10:10 > 10:09, GIỮ
+           (nếu loại theo event time thì 10:07 <= 10:09 sẽ bị loại)
+                                                          -> watermark sau = 10:09
+    Đợt 4: view 10:30                                     -> watermark sau = 10:20
+    Kết quả: [10:00, 10:05) doanh thu 300, 2 đơn, chốt ở đợt 2;
+             [10:05, 10:10) doanh thu 400, 1 đơn, chốt ở đợt 4.
+    """
+    rows = [
+        (1, "view", None, "10:00:00"),
+        (1, "purchase", 100, "10:02:00"),
+        (1, "view", None, "10:14:00"),
+        (2, "purchase", 200, "10:03:00"),
+        (2, "view", None, "10:19:00"),
+        (3, "purchase", 300, "10:04:00"),
+        (3, "purchase", 400, "10:07:00"),
+        (4, "view", None, "10:30:00"),
+    ]
+    return pd.DataFrame(
+        {
+            "batch_no": [row[0] for row in rows],
+            "event_type": [row[1] for row in rows],
+            "amount": [row[2] for row in rows],
+            "event_time": pd.to_datetime([f"2026-01-15T{row[3]}Z" for row in rows], utc=True),
+        }
+    )
+
+
+def t(clock):
+    return pd.Timestamp(f"2026-01-15T{clock}Z")
+
+
+def test_watermark_simulation_batch_watermarks():
+    _, batch_watermarks = gen.simulate_watermark(hand_example(), 10, 5, batch_count=4)
+    assert pd.isna(batch_watermarks["watermark_before"].iloc[0])
+    assert list(batch_watermarks["watermark_after"]) == [t("10:04:00"), t("10:09:00"),
+                                                         t("10:09:00"), t("10:20:00")]
+
+
+def test_watermark_simulation_drops_by_window_end():
+    simulated, _ = gen.simulate_watermark(hand_example(), 10, 5, batch_count=4)
+    dropped = simulated[simulated["dropped_by_watermark"]]
+    assert list(dropped["amount"]) == [300]
+
+
+def test_watermark_simulation_window_totals_and_close_batch():
+    simulated, batch_watermarks = gen.simulate_watermark(hand_example(), 10, 5, batch_count=4)
+    windows = gen.aggregate_gold(simulated, batch_watermarks)
+    assert list(windows.index) == [t("10:00:00"), t("10:05:00")]
+    assert list(windows["revenue"]) == [300, 400]
+    assert list(windows["orders"]) == [2, 1]
+    assert list(windows["close_batch"]) == [2, 4]
+    assert list(windows["dropped_purchases"]) == [1, 0]
+
+
+def test_watermark_simulation_wider_threshold_drops_nothing():
+    simulated, _ = gen.simulate_watermark(hand_example(), 20, 5, batch_count=4)
+    assert not simulated["dropped_by_watermark"].any()
