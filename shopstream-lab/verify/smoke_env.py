@@ -9,40 +9,17 @@ Cách chạy:
 import argparse
 import shutil
 import sys
-from pathlib import Path
 
-from delta import configure_spark_with_delta_pip
-from pyspark.sql import SparkSession
+from common import config
+from common.spark_session import get_spark
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
 # Đường dẫn có dấu cách và ký tự "→" để thử Spark xử lý được tên thư mục lạ
-SMOKE_DELTA_DIR = PROJECT_DIR / "lakehouse" / "_smoke" / "bảng thử → delta"
+SMOKE_DELTA_DIR = config.LAKEHOUSE_DIR / "_smoke" / "bảng thử → delta"
 SMOKE_ROW_COUNT = 10
 
-SMOKE_BOOTSTRAP = "localhost:9092"
+SMOKE_BOOTSTRAP = config.KAFKA_BOOTSTRAP_SERVERS
 SMOKE_TOPIC = "smoke_test_tmp"
 SMOKE_MESSAGE = '{"hello": "shopstream"}'
-
-KAFKA_PACKAGE ="org.apache.spark:spark-sql-kafka-0-10_2.13:4.1.0"
-
-
-def build_spark():
-    builder = (
-        SparkSession.builder.appName("smoke_env")
-        .master("local[*]")
-        .config("spark.sql.session.timeZone", "UTC")
-        .config("spark.sql.shuffle.partitions", "4")
-        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-        .config(
-            "spark.sql.catalog.spark_catalog",
-            "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-        )
-    )
-    spark = configure_spark_with_delta_pip(
-        builder, extra_packages=[KAFKA_PACKAGE]
-    ).getOrCreate()
-    spark.sparkContext.setLogLevel("WARN")
-    return spark
 
 
 def check_delta(spark):
@@ -103,8 +80,10 @@ def main():
     if not (args.delta or args.kafka):
         parser.error("chọn ít nhất một trong --delta, --kafka")
 
-    spark = build_spark()
+    spark = get_spark("smoke_env")
     print(f"[spark] phiên bản {spark.version}")
+    print(f"[spark] spark.sql.session.timeZone = {spark.conf.get('spark.sql.session.timeZone')}")
+    print(f"[spark] spark.sql.shuffle.partitions = {spark.conf.get('spark.sql.shuffle.partitions')}")
     all_ok = True
     if args.delta:
         all_ok = check_delta(spark) and all_ok

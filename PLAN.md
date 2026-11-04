@@ -80,7 +80,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `common/schema.py`, `tests/test_schema.py`.
   - Hoàn thành khi: `pytest tests/test_schema.py` pass.
 
-- [ ] **9. Viết hàm tạo SparkSession dùng chung**
+- [x] **9. Viết hàm tạo SparkSession dùng chung**
   - Việc cần làm: múi giờ UTC, 4 partition shuffle, hai cấu hình Delta, jar Kafka. Chuyển `smoke_env.py` sang dùng hàm này.
   - File: `common/spark_session.py`, `verify/smoke_env.py`.
   - Phụ thuộc: 7.
