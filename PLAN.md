@@ -57,7 +57,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `verify/smoke_env.py`.
   - Hoàn thành khi: `python verify/smoke_env.py --delta` thoát với mã 0 và in đúng số dòng đã ghi.
 
-- [ ] **5. Kiểm tra Spark đọc được Kafka**
+- [x] **5. Kiểm tra Spark đọc được Kafka**
   - Việc cần làm: thêm chế độ gửi một message vào topic tạm, đọc lại bằng Spark, xóa topic tạm.
   - File: `verify/smoke_env.py`.
   - Phụ thuộc: 3, 4.

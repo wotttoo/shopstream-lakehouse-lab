@@ -19,7 +19,11 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 SMOKE_DELTA_DIR = PROJECT_DIR / "lakehouse" / "_smoke" / "bảng thử → delta"
 SMOKE_ROW_COUNT = 10
 
-KAFKA_PACKAGE = "org.apache.spark:spark-sql-kafka-0-10_2.13:4.1.0"
+SMOKE_BOOTSTRAP = "localhost:9092"
+SMOKE_TOPIC = "smoke_test_tmp"
+SMOKE_MESSAGE = '{"hello": "shopstream"}'
+
+KAFKA_PACKAGE ="org.apache.spark:spark-sql-kafka-0-10_2.13:4.1.0"
 
 
 def build_spark():
@@ -52,6 +56,45 @@ def check_delta(spark):
     return read_count == SMOKE_ROW_COUNT
 
 
+def check_kafka(spark):
+    """Gửi một message vào topic tạm, đọc lại bằng Spark, rồi xóa topic tạm."""
+    from kafka import KafkaProducer
+    from kafka.admin import KafkaAdminClient, NewTopic
+    from kafka.errors import TopicAlreadyExistsError, UnknownTopicOrPartitionError
+
+    admin = KafkaAdminClient(bootstrap_servers=SMOKE_BOOTSTRAP)
+    try:
+        admin.create_topics([NewTopic(SMOKE_TOPIC, num_partitions=1, replication_factor=1)])
+    except TopicAlreadyExistsError:
+        pass
+
+    producer = KafkaProducer(bootstrap_servers=SMOKE_BOOTSTRAP)
+    producer.send(SMOKE_TOPIC, key=b"smoke", value=SMOKE_MESSAGE.encode("utf-8"))
+    producer.flush()
+    producer.close()
+
+    # Đọc batch (không phải stream) từ đầu đến cuối topic tạm
+    rows = (
+        spark.read.format("kafka")
+        .option("kafka.bootstrap.servers", SMOKE_BOOTSTRAP)
+        .option("subscribe", SMOKE_TOPIC)
+        .option("startingOffsets", "earliest")
+        .option("endingOffsets", "latest")
+        .load()
+        .selectExpr("CAST(value AS STRING) AS value")
+        .collect()
+    )
+    values = [row.value for row in rows]
+    print(f"[kafka] đọc lại {len(values)} message: {values}")
+
+    try:
+        admin.delete_topics([SMOKE_TOPIC])
+    except UnknownTopicOrPartitionError:
+        pass
+    admin.close()
+    return values == [SMOKE_MESSAGE]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--delta", action="store_true", help="thử ghi đọc Delta")
@@ -65,6 +108,8 @@ def main():
     all_ok = True
     if args.delta:
         all_ok = check_delta(spark) and all_ok
+    if args.kafka:
+        all_ok = check_kafka(spark) and all_ok
     spark.stop()
     print("KẾT QUẢ:", "OK" if all_ok else "LỖI")
     sys.exit(0 if all_ok else 1)
