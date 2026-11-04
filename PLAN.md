@@ -296,7 +296,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
 
 ### Giai đoạn 8: Báo cáo và bàn giao
 
-- [ ] **46. Tổng hợp `run_report.json`**
+- [x] **46. Tổng hợp `run_report.json`**
   - Việc cần làm: gom bộ phiên bản, thống kê dữ liệu, so sánh hai ngưỡng, ba thí nghiệm, mẫu checkpoint và `_delta_log`, bất thường. Mọi số đọc từ file kết quả, không gõ tay. Viết `verify/check_report.py` kiểm tra đủ khóa.
   - File: `verify/build_report.py`, `verify/check_report.py`, `results/run_report.json`.
   - Phụ thuộc: 39, 43, 44, 45.
@@ -337,3 +337,10 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
 - Hiện tượng: theo đáp án vàng có 50 sự kiện quá ngưỡng (18 purchase), nhưng tổng `numRowsDroppedByWatermark` của Gold là 8.
 - Nguyên nhân (đã dự đoán trước khi chạy từ physical plan, rồi đo khớp): metric đếm dòng ở đầu vào toán tử có trạng thái `StateStoreRestore`, nằm sau partial aggregation và shuffle. Mỗi cửa sổ quá muộn trong một micro-batch chỉ còn một dòng. Đáp án vàng ghi `late_windows_wm10` theo từng đợt (8 đợt, mỗi đợt 1 cửa sổ) và khớp từng đợt.
 - Cách xử lý: `check_results.py` đối chiếu metric này với số cửa sổ quá muộn, và đo số purchase bị loại bằng cách so bảng Gold với đáp án tuyệt đối (18, khớp).
+
+### V4. Độ trễ của nhóm muộn quá ngưỡng thực tế là 16 đến 20 phút (thiết kế dữ liệu, đã báo người dùng ở điểm dừng task 18)
+- Hiện tượng: watermark chỉ cập nhật giữa các đợt 5 phút và Spark loại dòng theo `window_end <= watermark`, nên sự kiện ở cửa sổ thứ k chỉ bị loại khi được gửi từ đợt k+4 trở đi. Sự kiện trễ 12 đến 15 phút thường KHÔNG rơi vào cửa sổ đã chốt.
+- Cách xử lý: bộ sinh chọn độ trễ trong [max(12, 20 − vị trí trong cửa sổ) + 5 giây, 20] phút, vẫn nằm trong 12 đến 20 phút của đặc tả. Độ trễ thực tế của 50 sự kiện là 16,04 đến 19,99 phút, thuộc 8 cửa sổ đầu (10:00 đến 10:40). Người dùng đã duyệt.
+
+### V5. Thí nghiệm C: Silver không thay đổi dù Bronze gấp đôi (quan sát, không phải lỗi)
+- Quan sát: Silver đọc 2201 dòng bản sao trong một micro-batch; 2200 dòng bị watermark Silver (11:00) loại như dữ liệu quá muộn, 1 dòng (sự kiện đẩy watermark 11:30) bị loại vì event_id còn trong state. foreachBatch nhận batch rỗng, Silver giữ nguyên 2001 dòng. Chi tiết trong `results/exp_c.json`.
