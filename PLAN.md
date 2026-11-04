@@ -102,7 +102,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: khoảng 15% muộn 1 đến 4 phút, khoảng 2 đến 3% muộn 12 đến 20 phút với ít nhất 15 purchase, send_time bằng event time cộng độ trễ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k late` pass.
 
-- [ ] **13. Chia đợt và thêm sự kiện đẩy watermark**
+- [x] **13. Chia đợt và thêm sự kiện đẩy watermark**
   - Việc cần làm: sắp theo send_time, gán `batch_no` 1 đến 12, thêm một view khoảng 11:30 ở đợt 12.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k batches` pass.
 

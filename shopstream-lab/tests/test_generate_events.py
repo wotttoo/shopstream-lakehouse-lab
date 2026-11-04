@@ -168,3 +168,33 @@ def test_late_on_time_events_have_delay_under_one_minute(records):
     for record in originals_only(records):
         if record["delay_group"] == "on_time":
             assert 0 <= record["delay_ms"] < 60_000
+
+
+# ---------------------------------------------------------------- task 13
+def test_batches_cover_1_to_12_and_match_send_window(lines):
+    assert {line["batch_no"] for line in lines} == set(range(1, 13))
+    for line in lines:
+        send_time = pd.Timestamp(line["send_time"])
+        batch_start = START + pd.Timedelta(minutes=5 * (line["batch_no"] - 1))
+        assert batch_start <= send_time < batch_start + pd.Timedelta(minutes=5)
+
+
+def test_batches_lines_sorted_by_send_time(lines):
+    send_times = [pd.Timestamp(line["send_time"]) for line in lines]
+    assert send_times == sorted(send_times)
+
+
+def test_batches_lines_have_exactly_eight_fields(lines):
+    expected = {"event_id", "user_id", "event_type", "product_id", "amount",
+                "event_time", "batch_no", "send_time"}
+    for line in lines:
+        assert set(line) == expected
+
+
+def test_batches_watermark_push_event_in_last_batch(lines):
+    push = [line for line in lines if pd.Timestamp(line["event_time"]) >= END]
+    assert len(push) == 1
+    assert push[0]["event_type"] == "view"
+    assert push[0]["batch_no"] == 12
+    push_time = pd.Timestamp(push[0]["event_time"])
+    assert abs(push_time - pd.Timestamp("2026-01-15T11:30:00Z")) <= pd.Timedelta(minutes=5)
