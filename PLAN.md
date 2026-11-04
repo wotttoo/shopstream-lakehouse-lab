@@ -246,7 +246,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 ### Giai đoạn 6: Giám sát
 
-- [ ] **38. In tiến trình truy vấn** (nhóm D)
+- [x] **38. In tiến trình truy vấn** (nhóm D)
   - Việc cần làm: số dòng đầu vào, tốc độ, watermark, số dòng trong state, số dòng bị loại.
   - File: `verify/inspect_progress.py`.
   - Hoàn thành khi: `python verify/inspect_progress.py --progress` thoát với mã 0 và lưu `results/progress_summary.json`.
