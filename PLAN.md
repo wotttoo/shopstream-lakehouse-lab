@@ -267,7 +267,7 @@ Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với
   - Phụ thuộc: 37.
   - Hoàn thành khi: `python verify/check_results.py` vẫn thoát với mã 0 sau khi chạy lại `python streaming/run_all_batches.py --compare-wm20` từ trạng thái sạch.
 
-- [ ] **41. Viết tiện ích dùng chung cho thí nghiệm**
+- [x] **41. Viết tiện ích dùng chung cho thí nghiệm**
   - Việc cần làm: dọn trạng thái của thí nghiệm, tạo lại topic, chụp nội dung `offsets`, `commits`, `_delta_log` ra file văn bản, ghi ba con số kỳ vọng, thực tế, chênh lệch. Việc dọn chỉ được chạm vào thư mục `exp_*`.
   - File: `experiments/lab_utils.py`, `tests/test_lab_utils.py`.
   - Phụ thuộc: 40.
