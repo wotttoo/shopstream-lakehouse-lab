@@ -37,7 +37,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
 
 ### Giai đoạn 1: Môi trường
 
-- [ ] **1. Khởi tạo repo và khung thư mục**
+- [x] **1. Khởi tạo repo và khung thư mục**
   - Việc cần làm: `git init` ở thư mục gốc, tạo `shopstream-lab/` với các thư mục con, viết `.gitignore`.
   - File: `shopstream-lab/.gitignore`.
   - Hoàn thành khi (chạy ở thư mục gốc): `git check-ignore shopstream-lab/lakehouse/x shopstream-lab/checkpoints/x shopstream-lab/.venv/x` in đủ ba dòng.

@@ -1,0 +1,14 @@
+# Bảng Delta và checkpoint sinh ra khi chạy, tái tạo được
+lakehouse/
+checkpoints/
+
+# Môi trường Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Thư mục làm việc tạm của Spark
+spark-warehouse/
+metastore_db/
+derby.log
