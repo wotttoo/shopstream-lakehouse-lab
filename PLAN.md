@@ -134,7 +134,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - File: `producer/produce.py`, `tests/test_produce.py`.
   - Hoàn thành khi: `pytest tests/test_produce.py` pass.
 
-- [ ] **20. Thêm lệnh tạo và xóa topic**
+- [x] **20. Thêm lệnh tạo và xóa topic**
   - Việc cần làm: `--create-topic` với 3 partition, `--delete-topic`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 19.

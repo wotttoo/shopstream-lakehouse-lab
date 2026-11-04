@@ -46,3 +46,85 @@ def to_kafka_message(line):
     key = line["user_id"].encode("utf-8")
     value = json.dumps(event, ensure_ascii=False).encode("utf-8")
     return key, value
+
+
+# ---------------------------------------------------------------------------
+# Quản lý topic
+# ---------------------------------------------------------------------------
+def create_topic(topic=config.TOPIC_NAME, partitions=config.TOPIC_PARTITIONS,
+                 bootstrap=config.KAFKA_BOOTSTRAP_SERVERS, timeout_seconds=60):
+    """Tạo topic. Nếu topic vừa bị xóa và Kafka chưa dọn xong thì thử lại."""
+    import time
+
+    from kafka.admin import KafkaAdminClient, NewTopic
+    from kafka.errors import TopicAlreadyExistsError
+
+    admin = KafkaAdminClient(bootstrap_servers=bootstrap)
+    deadline = time.time() + timeout_seconds
+    try:
+        while True:
+            try:
+                admin.create_topics([NewTopic(topic, num_partitions=partitions,
+                                              replication_factor=config.TOPIC_REPLICATION_FACTOR)])
+                print(f"Đã tạo topic {topic} với {partitions} partition")
+                return True
+            except TopicAlreadyExistsError:
+                # Topic vừa bị xóa nhưng Kafka chưa dọn xong thì không có trong danh sách
+                if topic in admin.list_topics() or time.time() > deadline:
+                    print(f"Topic {topic} đã tồn tại")
+                    return False
+                time.sleep(1)
+    finally:
+        admin.close()
+
+
+def delete_topic(topic=config.TOPIC_NAME, bootstrap=config.KAFKA_BOOTSTRAP_SERVERS,
+                 timeout_seconds=60):
+    """Xóa topic để chạy lại từ đầu; chờ đến khi topic biến mất khỏi danh sách."""
+    import time
+
+    from kafka.admin import KafkaAdminClient
+    from kafka.errors import UnknownTopicOrPartitionError
+
+    admin = KafkaAdminClient(bootstrap_servers=bootstrap)
+    try:
+        try:
+            admin.delete_topics([topic])
+        except UnknownTopicOrPartitionError:
+            print(f"Topic {topic} không tồn tại, bỏ qua")
+            return False
+        deadline = time.time() + timeout_seconds
+        while topic in admin.list_topics() and time.time() < deadline:
+            time.sleep(0.5)
+        print(f"Đã xóa topic {topic}")
+        return True
+    finally:
+        admin.close()
+
+
+def recreate_topic(topic=config.TOPIC_NAME):
+    """Xóa (nếu có) rồi tạo lại topic rỗng."""
+    delete_topic(topic)
+    create_topic(topic)
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Gửi sự kiện ShopStream vào Kafka")
+    parser.add_argument("--create-topic", action="store_true", help="tạo topic 3 partition")
+    parser.add_argument("--delete-topic", action="store_true", help="xóa topic")
+    parser.add_argument("--recreate-topic", action="store_true", help="xóa rồi tạo lại topic")
+    parser.add_argument("--topic", default=config.TOPIC_NAME)
+    parser.add_argument("--events-file", default=str(config.EVENTS_FILE))
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    if args.delete_topic or args.recreate_topic:
+        delete_topic(args.topic)
+    if args.create_topic or args.recreate_topic:
+        create_topic(args.topic)
+
+
+if __name__ == "__main__":
+    main()
