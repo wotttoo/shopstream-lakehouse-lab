@@ -134,3 +134,37 @@ def test_duplicates_sent_after_original(records):
     for index, record in enumerate(records):
         if record["is_duplicate"]:
             assert position[record["event_id"]] < index
+
+
+# ---------------------------------------------------------------- task 12
+def originals_only(records):
+    return [record for record in records
+            if not record["is_duplicate"] and record["delay_group"] != "watermark_push"]
+
+
+def test_late_within_rate_and_delay_range(records):
+    originals = originals_only(records)
+    within = [record for record in originals if record["delay_group"] == "late_within"]
+    assert 0.13 <= len(within) / len(originals) <= 0.17
+    for record in within:
+        assert 60_000 <= record["delay_ms"] <= 240_000
+
+
+def test_late_beyond_rate_delay_and_purchases(records):
+    originals = originals_only(records)
+    beyond = [record for record in originals if record["delay_group"] == "late_beyond"]
+    assert 0.02 <= len(beyond) / len(originals) <= 0.03
+    assert sum(record["event_type"] == "purchase" for record in beyond) >= 15
+    for record in beyond:
+        assert 12 * 60_000 <= record["delay_ms"] <= 20 * 60_000
+
+
+def test_late_send_time_is_event_time_plus_delay(records):
+    for record in originals_only(records):
+        assert record["send_time_ms"] == record["event_time_ms"] + record["delay_ms"]
+
+
+def test_late_on_time_events_have_delay_under_one_minute(records):
+    for record in originals_only(records):
+        if record["delay_group"] == "on_time":
+            assert 0 <= record["delay_ms"] < 60_000

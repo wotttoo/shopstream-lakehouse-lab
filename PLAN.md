@@ -98,7 +98,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Việc cần làm: thêm khoảng 10% bản trùng, trong đó khoảng 1/5 lệch event_time vài giây, giữ nguyên event_id.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k duplicates` pass.
 
-- [ ] **12. Cài bẫy đến muộn và tính send_time**
+- [x] **12. Cài bẫy đến muộn và tính send_time**
   - Việc cần làm: khoảng 15% muộn 1 đến 4 phút, khoảng 2 đến 3% muộn 12 đến 20 phút với ít nhất 15 purchase, send_time bằng event time cộng độ trễ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k late` pass.
 
