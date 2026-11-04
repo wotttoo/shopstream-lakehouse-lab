@@ -202,7 +202,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - Phụ thuộc: 27.
   - Hoàn thành khi: `python streaming/03_silver_to_gold.py` thoát với mã 0 và `lakehouse/gold/_delta_log` tồn tại.
 
-- [ ] **31. Viết vòng lặp chạy một đợt**
+- [x] **31. Viết vòng lặp chạy một đợt**
   - Việc cần làm: gửi một đợt rồi chạy Bronze, Silver, Gold bằng subprocess, có `--up-to-batch`.
   - File: `streaming/run_all_batches.py`.
   - Phụ thuộc: 30.
