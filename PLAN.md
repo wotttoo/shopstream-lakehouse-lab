@@ -154,7 +154,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 ### Giai đoạn 5: Ba truy vấn streaming
 
-- [ ] **23. Viết truy vấn Bronze**
+- [x] **23. Viết truy vấn Bronze**
   - Việc cần làm: đọc Kafka earliest, giữ value chuỗi kèm partition, offset, timestamp, thời điểm nạp, ghi append, có `--continuous`.
   - File: `streaming/01_kafka_to_bronze.py`.
   - Phụ thuộc: 9, 22.
