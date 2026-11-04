@@ -52,7 +52,7 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
   - File: `docker-compose.yml`.
   - Hoàn thành khi: `docker compose up -d` rồi `docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list` thoát với mã 0.
 
-- [ ] **4. Kiểm tra Spark ghi đọc được Delta** (nhóm A)
+- [x] **4. Kiểm tra Spark ghi đọc được Delta** (nhóm A)
   - Việc cần làm: script ghi rồi đọc một bảng Delta nhỏ trong thư mục project. Đây cũng là phép thử đường dẫn có dấu cách và ký tự `→`.
   - File: `verify/smoke_env.py`.
   - Hoàn thành khi: `python verify/smoke_env.py --delta` thoát với mã 0 và in đúng số dòng đã ghi.
