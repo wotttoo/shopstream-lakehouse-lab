@@ -1,7 +1,9 @@
-"""Xem tiến trình truy vấn streaming.
+"""Xem tiến trình truy vấn streaming và lịch sử bảng Delta.
 
 Cách chạy:
     python verify/inspect_progress.py --progress   # tiến trình, lưu results/progress_summary.json
+    python verify/inspect_progress.py --history    # DESCRIBE HISTORY và time travel, lưu results/delta_history.json
+    python verify/inspect_progress.py              # cả hai
 """
 
 import argparse
@@ -16,6 +18,7 @@ if str(PROJECT_DIR) not in sys.path:
 from common import config  # noqa: E402
 
 PROGRESS_SUMMARY_FILE = config.RESULTS_DIR / "progress_summary.json"
+DELTA_HISTORY_FILE = config.RESULTS_DIR / "delta_history.json"
 
 
 def load_batch_records():
@@ -87,11 +90,66 @@ def show_progress():
     return True
 
 
+def show_history():
+    from common.spark_session import get_spark
+
+    spark = get_spark("inspect_history")
+    result = {}
+    for table_name in (config.BRONZE_TABLE, config.SILVER_TABLE, config.GOLD_TABLE):
+        table_path = config.table_path(table_name)
+        # Mỗi micro-batch có dữ liệu tạo một phiên bản mới của bảng Delta
+        history = spark.sql(f"DESCRIBE HISTORY delta.`{table_path}`").orderBy("version")
+        rows = history.select("version", "timestamp", "operation", "operationParameters",
+                              "operationMetrics").collect()
+        result[table_name] = [
+            {
+                "version": row.version,
+                "timestamp": row.timestamp.isoformat(),
+                "operation": row.operation,
+                "epoch_id": (row.operationParameters or {}).get("epochId"),
+                "rows_written": (row.operationMetrics or {}).get(
+                    "numTargetRowsInserted", (row.operationMetrics or {}).get("numOutputRows")),
+            }
+            for row in rows
+        ]
+        print(f"=== DESCRIBE HISTORY {table_name}: {len(rows)} phiên bản ===")
+        for item in result[table_name]:
+            print(f"  v{item['version']:<3} {item['operation']:<18} epochId={item['epoch_id']}, "
+                  f"số dòng ghi {item['rows_written']}")
+
+    # Time travel: đọc Silver ở một phiên bản cũ
+    silver_path = str(config.table_path(config.SILVER_TABLE))
+    latest_version = result[config.SILVER_TABLE][-1]["version"]
+    old_version = 1
+    old_count = spark.read.format("delta").option("versionAsOf", old_version).load(silver_path).count()
+    latest_count = spark.read.format("delta").load(silver_path).count()
+    result["time_travel"] = {
+        "table": config.SILVER_TABLE,
+        "old_version": old_version,
+        "old_row_count": old_count,
+        "latest_version": latest_version,
+        "latest_row_count": latest_count,
+    }
+    print(f"\n=== Time travel Silver ===\n  phiên bản {old_version}: {old_count} dòng"
+          f"\n  phiên bản mới nhất {latest_version}: {latest_count} dòng")
+    spark.stop()
+    DELTA_HISTORY_FILE.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"Đã lưu {DELTA_HISTORY_FILE.relative_to(PROJECT_DIR)}")
+    return old_count < latest_count
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Xem tiến trình truy vấn và lịch sử Delta")
     parser.add_argument("--progress", action="store_true")
+    parser.add_argument("--history", action="store_true")
     args = parser.parse_args(argv)
-    sys.exit(0 if show_progress() else 1)
+    run_all = not (args.progress or args.history)
+    ok = True
+    if args.progress or run_all:
+        ok = show_progress() and ok
+    if args.history or run_all:
+        ok = show_history() and ok
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":

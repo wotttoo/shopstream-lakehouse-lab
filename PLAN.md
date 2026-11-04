@@ -251,7 +251,7 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
   - File: `verify/inspect_progress.py`.
   - Hoàn thành khi: `python verify/inspect_progress.py --progress` thoát với mã 0 và lưu `results/progress_summary.json`.
 
-- [ ] **39. Minh họa lịch sử Delta và time travel** (nhóm D)
+- [x] **39. Minh họa lịch sử Delta và time travel** (nhóm D)
   - Việc cần làm: in `DESCRIBE HISTORY`, đọc Silver ở một phiên bản cũ.
   - File: `verify/inspect_progress.py`.
   - Hoàn thành khi: `python verify/inspect_progress.py --history` in số dòng Silver ở phiên bản cũ nhỏ hơn phiên bản mới nhất.
