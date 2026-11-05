@@ -1,0 +1,909 @@
+{
+  "layer": "all",
+  "up_to_batch": 12,
+  "gold": {
+    "": {
+      "windows": {
+        "2026-01-15T10:35:00Z": [
+          [
+            3710000,
+            14
+          ]
+        ],
+        "2026-01-15T10:30:00Z": [
+          [
+            5192000,
+            16
+          ]
+        ],
+        "2026-01-15T10:05:00Z": [
+          [
+            4405000,
+            15
+          ]
+        ],
+        "2026-01-15T10:25:00Z": [
+          [
+            4778000,
+            21
+          ]
+        ],
+        "2026-01-15T10:00:00Z": [
+          [
+            3494000,
+            17
+          ]
+        ],
+        "2026-01-15T10:20:00Z": [
+          [
+            4004000,
+            14
+          ]
+        ],
+        "2026-01-15T10:10:00Z": [
+          [
+            5540000,
+            20
+          ]
+        ],
+        "2026-01-15T10:45:00Z": [
+          [
+            4867000,
+            19
+          ]
+        ],
+        "2026-01-15T10:15:00Z": [
+          [
+            2629000,
+            11
+          ]
+        ],
+        "2026-01-15T10:50:00Z": [
+          [
+            3291000,
+            11
+          ]
+        ],
+        "2026-01-15T10:40:00Z": [
+          [
+            3587000,
+            12
+          ]
+        ],
+        "2026-01-15T10:55:00Z": [
+          [
+            5301000,
+            20
+          ]
+        ]
+      },
+      "close": {
+        "2026-01-15T10:00:00Z": {
+          "delta_version": 7,
+          "epoch_id": 7,
+          "batch_no": 4
+        },
+        "2026-01-15T10:05:00Z": {
+          "delta_version": 9,
+          "epoch_id": 9,
+          "batch_no": 5
+        },
+        "2026-01-15T10:10:00Z": {
+          "delta_version": 11,
+          "epoch_id": 11,
+          "batch_no": 6
+        },
+        "2026-01-15T10:15:00Z": {
+          "delta_version": 13,
+          "epoch_id": 13,
+          "batch_no": 7
+        },
+        "2026-01-15T10:20:00Z": {
+          "delta_version": 15,
+          "epoch_id": 15,
+          "batch_no": 8
+        },
+        "2026-01-15T10:25:00Z": {
+          "delta_version": 17,
+          "epoch_id": 17,
+          "batch_no": 9
+        },
+        "2026-01-15T10:30:00Z": {
+          "delta_version": 19,
+          "epoch_id": 19,
+          "batch_no": 10
+        },
+        "2026-01-15T10:35:00Z": {
+          "delta_version": 21,
+          "epoch_id": 21,
+          "batch_no": 11
+        },
+        "2026-01-15T10:40:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:45:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:50:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:55:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        }
+      }
+    },
+    "_wm20": {
+      "windows": {
+        "2026-01-15T10:00:00Z": [
+          [
+            3598000,
+            18
+          ]
+        ],
+        "2026-01-15T10:05:00Z": [
+          [
+            4700000,
+            16
+          ]
+        ],
+        "2026-01-15T10:15:00Z": [
+          [
+            3564000,
+            15
+          ]
+        ],
+        "2026-01-15T10:20:00Z": [
+          [
+            4004000,
+            14
+          ]
+        ],
+        "2026-01-15T10:25:00Z": [
+          [
+            5819000,
+            25
+          ]
+        ],
+        "2026-01-15T10:10:00Z": [
+          [
+            6269000,
+            23
+          ]
+        ],
+        "2026-01-15T10:45:00Z": [
+          [
+            4867000,
+            19
+          ]
+        ],
+        "2026-01-15T10:50:00Z": [
+          [
+            3291000,
+            11
+          ]
+        ],
+        "2026-01-15T10:40:00Z": [
+          [
+            3587000,
+            12
+          ]
+        ],
+        "2026-01-15T10:30:00Z": [
+          [
+            5774000,
+            18
+          ]
+        ],
+        "2026-01-15T10:35:00Z": [
+          [
+            4848000,
+            17
+          ]
+        ],
+        "2026-01-15T10:55:00Z": [
+          [
+            5301000,
+            20
+          ]
+        ]
+      },
+      "close": {
+        "2026-01-15T10:00:00Z": {
+          "delta_version": 11,
+          "epoch_id": 11,
+          "batch_no": 6
+        },
+        "2026-01-15T10:05:00Z": {
+          "delta_version": 13,
+          "epoch_id": 13,
+          "batch_no": 7
+        },
+        "2026-01-15T10:10:00Z": {
+          "delta_version": 15,
+          "epoch_id": 15,
+          "batch_no": 8
+        },
+        "2026-01-15T10:15:00Z": {
+          "delta_version": 17,
+          "epoch_id": 17,
+          "batch_no": 9
+        },
+        "2026-01-15T10:20:00Z": {
+          "delta_version": 19,
+          "epoch_id": 19,
+          "batch_no": 10
+        },
+        "2026-01-15T10:25:00Z": {
+          "delta_version": 21,
+          "epoch_id": 21,
+          "batch_no": 11
+        },
+        "2026-01-15T10:30:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:35:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:40:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:45:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:50:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        },
+        "2026-01-15T10:55:00Z": {
+          "delta_version": 23,
+          "epoch_id": 23,
+          "batch_no": 12
+        }
+      }
+    }
+  },
+  "comparison": {
+    "gap_wm10": 4824000,
+    "gap_wm20": 0
+  },
+  "all_ok": true,
+  "rows": [
+    {
+      "layer": "bronze",
+      "item": "số dòng (= số message đến đợt 12)",
+      "expected": 2201,
+      "actual": 2201,
+      "ok": true
+    },
+    {
+      "layer": "silver",
+      "item": "số dòng (= số event_id duy nhất đến đợt 12)",
+      "expected": 2001,
+      "actual": 2001,
+      "ok": true
+    },
+    {
+      "layer": "silver",
+      "item": "số event_id bị trùng",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "số cửa sổ (ngưỡng 10 phút, đến đợt 12)",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:00 (doanh thu, số đơn)",
+      "expected": [
+        3494000,
+        17
+      ],
+      "actual": [
+        3494000,
+        17
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:05 (doanh thu, số đơn)",
+      "expected": [
+        4405000,
+        15
+      ],
+      "actual": [
+        4405000,
+        15
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:10 (doanh thu, số đơn)",
+      "expected": [
+        5540000,
+        20
+      ],
+      "actual": [
+        5540000,
+        20
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:15 (doanh thu, số đơn)",
+      "expected": [
+        2629000,
+        11
+      ],
+      "actual": [
+        2629000,
+        11
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:20 (doanh thu, số đơn)",
+      "expected": [
+        4004000,
+        14
+      ],
+      "actual": [
+        4004000,
+        14
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:25 (doanh thu, số đơn)",
+      "expected": [
+        4778000,
+        21
+      ],
+      "actual": [
+        4778000,
+        21
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:30 (doanh thu, số đơn)",
+      "expected": [
+        5192000,
+        16
+      ],
+      "actual": [
+        5192000,
+        16
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:35 (doanh thu, số đơn)",
+      "expected": [
+        3710000,
+        14
+      ],
+      "actual": [
+        3710000,
+        14
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:40 (doanh thu, số đơn)",
+      "expected": [
+        3587000,
+        12
+      ],
+      "actual": [
+        3587000,
+        12
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:45 (doanh thu, số đơn)",
+      "expected": [
+        4867000,
+        19
+      ],
+      "actual": [
+        4867000,
+        19
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:50 (doanh thu, số đơn)",
+      "expected": [
+        3291000,
+        11
+      ],
+      "actual": [
+        3291000,
+        11
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:55 (doanh thu, số đơn)",
+      "expected": [
+        5301000,
+        20
+      ],
+      "actual": [
+        5301000,
+        20
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:00 chốt ở đợt",
+      "expected": 4,
+      "actual": 4,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:05 chốt ở đợt",
+      "expected": 5,
+      "actual": 5,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:10 chốt ở đợt",
+      "expected": 6,
+      "actual": 6,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:15 chốt ở đợt",
+      "expected": 7,
+      "actual": 7,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:20 chốt ở đợt",
+      "expected": 8,
+      "actual": 8,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:25 chốt ở đợt",
+      "expected": 9,
+      "actual": 9,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:30 chốt ở đợt",
+      "expected": 10,
+      "actual": 10,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:35 chốt ở đợt",
+      "expected": 11,
+      "actual": 11,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:40 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:45 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:50 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "cửa sổ 10:55 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "số purchase bị loại vì quá muộn (tính từ bảng Gold)",
+      "expected": 18,
+      "actual": 18,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 5 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 6 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 7 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 8 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 9 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 10 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 11 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark đợt 12 (= số cửa sổ quá muộn)",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "layer": "gold",
+      "item": "numRowsDroppedByWatermark tổng",
+      "expected": 8,
+      "actual": 8,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "số cửa sổ (ngưỡng 20 phút, đến đợt 12)",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:00 (doanh thu, số đơn)",
+      "expected": [
+        3598000,
+        18
+      ],
+      "actual": [
+        3598000,
+        18
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:05 (doanh thu, số đơn)",
+      "expected": [
+        4700000,
+        16
+      ],
+      "actual": [
+        4700000,
+        16
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:10 (doanh thu, số đơn)",
+      "expected": [
+        6269000,
+        23
+      ],
+      "actual": [
+        6269000,
+        23
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:15 (doanh thu, số đơn)",
+      "expected": [
+        3564000,
+        15
+      ],
+      "actual": [
+        3564000,
+        15
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:20 (doanh thu, số đơn)",
+      "expected": [
+        4004000,
+        14
+      ],
+      "actual": [
+        4004000,
+        14
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:25 (doanh thu, số đơn)",
+      "expected": [
+        5819000,
+        25
+      ],
+      "actual": [
+        5819000,
+        25
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:30 (doanh thu, số đơn)",
+      "expected": [
+        5774000,
+        18
+      ],
+      "actual": [
+        5774000,
+        18
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:35 (doanh thu, số đơn)",
+      "expected": [
+        4848000,
+        17
+      ],
+      "actual": [
+        4848000,
+        17
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:40 (doanh thu, số đơn)",
+      "expected": [
+        3587000,
+        12
+      ],
+      "actual": [
+        3587000,
+        12
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:45 (doanh thu, số đơn)",
+      "expected": [
+        4867000,
+        19
+      ],
+      "actual": [
+        4867000,
+        19
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:50 (doanh thu, số đơn)",
+      "expected": [
+        3291000,
+        11
+      ],
+      "actual": [
+        3291000,
+        11
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:55 (doanh thu, số đơn)",
+      "expected": [
+        5301000,
+        20
+      ],
+      "actual": [
+        5301000,
+        20
+      ],
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:00 chốt ở đợt",
+      "expected": 6,
+      "actual": 6,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:05 chốt ở đợt",
+      "expected": 7,
+      "actual": 7,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:10 chốt ở đợt",
+      "expected": 8,
+      "actual": 8,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:15 chốt ở đợt",
+      "expected": 9,
+      "actual": 9,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:20 chốt ở đợt",
+      "expected": 10,
+      "actual": 10,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:25 chốt ở đợt",
+      "expected": 11,
+      "actual": 11,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:30 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:35 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:40 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:45 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:50 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "cửa sổ 10:55 chốt ở đợt",
+      "expected": 12,
+      "actual": 12,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "số purchase bị loại vì quá muộn (tính từ bảng Gold)",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "layer": "gold_wm20",
+      "item": "numRowsDroppedByWatermark tổng",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "layer": "so sánh",
+      "item": "chênh lệch doanh thu ngưỡng 10 phút (đồng)",
+      "expected": 4824000,
+      "actual": 4824000,
+      "ok": true
+    },
+    {
+      "layer": "so sánh",
+      "item": "chênh lệch doanh thu ngưỡng 20 phút (đồng)",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "layer": "so sánh",
+      "item": "20 phút gần đáp án tuyệt đối hơn",
+      "expected": true,
+      "actual": true,
+      "ok": true
+    }
+  ]
+}

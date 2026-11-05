@@ -1,0 +1,83 @@
+{
+  "experiment": "exp_b",
+  "expected_rows": 2001,
+  "actual_rows": 2178,
+  "difference": 177,
+  "layer": "silver",
+  "bronze_rows": 2201,
+  "expected_bronze_rows": 2201,
+  "fail_round": 6,
+  "failed_batch_id": 10,
+  "delta_version_written_by_failed_batch": 6,
+  "new_delta_versions_by_failed_run": 1,
+  "rows_written_by_failed_batch": 177,
+  "silver_rows_after_failure": 961,
+  "offsets_before_rerun": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "commits_before_rerun": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "offsets_after_rerun": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11"
+  ],
+  "commits_after_rerun": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11"
+  ],
+  "delta_commits_by_rerun": [
+    {
+      "version": 7,
+      "operation": "WRITE",
+      "rows_written": "177"
+    }
+  ],
+  "evidence_files": [
+    "results/evidence/exp_b_before.txt",
+    "results/evidence/exp_b_after.txt"
+  ],
+  "replayed_batch_id": 10,
+  "replayed_batch_rows": 177,
+  "excess_equals_replayed_batch_rows": true,
+  "description": "Silver ghi append (không MERGE, không txnAppId); batch 10 (177 dòng) bị chạy lại nên được ghi hai lần"
+}

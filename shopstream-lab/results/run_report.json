@@ -1,0 +1,1076 @@
+{
+  "versions": {
+    "java": "17.0.20.1",
+    "python": "3.11.18",
+    "pyspark": "4.1.0",
+    "delta_spark": "4.1.0",
+    "delta_jar": "io.delta:delta-spark_4.1_2.13:4.1.0",
+    "kafka_connector": "org.apache.spark:spark-sql-kafka-0-10_2.13:4.1.0",
+    "kafka_image": "apache/kafka:3.9.1",
+    "kafka_python": "2.2.15",
+    "pandas": "2.3.3",
+    "numpy": "2.3.5",
+    "pytest": "8.4.2"
+  },
+  "dataset": [
+    {
+      "key": "total_records_sent",
+      "label": "Tổng số bản ghi gửi đi (kể cả trùng và sự kiện đẩy watermark)",
+      "value": 2201
+    },
+    {
+      "key": "unique_event_ids",
+      "label": "Số event_id duy nhất",
+      "value": 2001
+    },
+    {
+      "key": "business_unique_events",
+      "label": "Số sự kiện nghiệp vụ duy nhất (bỏ sự kiện đẩy watermark)",
+      "value": 2000
+    },
+    {
+      "key": "duplicate_records",
+      "label": "Số bản trùng",
+      "value": 200
+    },
+    {
+      "key": "duplicate_identical_records",
+      "label": "  trong đó giống hệt bản gốc",
+      "value": 160
+    },
+    {
+      "key": "duplicate_shifted_records",
+      "label": "  trong đó event_time lệch vài giây",
+      "value": 40
+    },
+    {
+      "key": "silver_rows_if_dedup_by_event_id_and_time",
+      "label": "Số dòng Silver nếu lọc trùng theo (event_id, event_time)",
+      "value": 2041
+    },
+    {
+      "key": "late_within_count",
+      "label": "Số sự kiện đến muộn trong ngưỡng (1 đến 4 phút)",
+      "value": 300
+    },
+    {
+      "key": "late_beyond_count_wm10",
+      "label": "Số sự kiện đến muộn quá ngưỡng (ngưỡng Gold 10 phút)",
+      "value": 50
+    },
+    {
+      "key": "late_beyond_purchases_wm10",
+      "label": "  trong đó purchase",
+      "value": 18
+    },
+    {
+      "key": "users",
+      "label": "Số user",
+      "value": 50
+    },
+    {
+      "key": "products",
+      "label": "Số sản phẩm",
+      "value": 20
+    },
+    {
+      "key": "purchases_unique",
+      "label": "Số purchase duy nhất",
+      "value": 208
+    },
+    {
+      "key": "revenue_absolute",
+      "label": "Doanh thu tuyệt đối (đồng)",
+      "value": 55622000
+    },
+    {
+      "key": "event_type_add_to_cart",
+      "label": "Số sự kiện add_to_cart",
+      "value": 391
+    },
+    {
+      "key": "event_type_purchase",
+      "label": "Số sự kiện purchase",
+      "value": 208
+    },
+    {
+      "key": "event_type_view",
+      "label": "Số sự kiện view",
+      "value": 1401
+    }
+  ],
+  "dataset_lookup": {
+    "seed": 42,
+    "data_start_time": "2026-01-15T10:00:00Z",
+    "total_records_sent": 2201,
+    "unique_event_ids": 2001,
+    "business_unique_events": 2000,
+    "duplicate_records": 200,
+    "duplicate_shifted_records": 40,
+    "duplicate_identical_records": 160,
+    "duplicate_rate": 0.1,
+    "silver_rows_if_dedup_by_event_id_and_time": 2041,
+    "users": 50,
+    "products": 20,
+    "late_within_count": 300,
+    "late_beyond_designed_count": 50,
+    "late_beyond_designed_purchases": 18,
+    "late_beyond_count_wm10": 50,
+    "late_beyond_purchases_wm10": 18,
+    "late_beyond_count_wm20": 0,
+    "late_beyond_purchases_wm20": 0,
+    "late_beyond_designed_all_in_closed_windows": true,
+    "silver_rows_dropped_by_watermark": 0,
+    "purchases_unique": 208,
+    "revenue_absolute": 55622000
+  },
+  "watermark_comparison": {
+    "wm10": {
+      "watermark_minutes": 10,
+      "late_events_expected": 50,
+      "late_purchases_expected": 18,
+      "late_purchases_actual": 18,
+      "num_rows_dropped_by_watermark_total": 8,
+      "num_rows_dropped_by_watermark_per_batch": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1
+      },
+      "revenue_actual_total": 50798000,
+      "orders_actual_total": 190,
+      "revenue_absolute_total": 55622000,
+      "revenue_gap_to_absolute": 4824000,
+      "revenue_gap_pct": 8.67,
+      "windows": [
+        {
+          "window_start": "2026-01-15T10:00:00Z",
+          "window_end": "2026-01-15T10:05:00Z",
+          "revenue_absolute": 3598000,
+          "orders_absolute": 18,
+          "revenue_expected": 3494000,
+          "orders_expected": 17,
+          "revenue_actual": 3494000,
+          "orders_actual": 17,
+          "dropped_purchases": 1,
+          "close_batch_expected": 4,
+          "close_batch_actual": 4,
+          "close_epoch_id": 7
+        },
+        {
+          "window_start": "2026-01-15T10:05:00Z",
+          "window_end": "2026-01-15T10:10:00Z",
+          "revenue_absolute": 4700000,
+          "orders_absolute": 16,
+          "revenue_expected": 4405000,
+          "orders_expected": 15,
+          "revenue_actual": 4405000,
+          "orders_actual": 15,
+          "dropped_purchases": 1,
+          "close_batch_expected": 5,
+          "close_batch_actual": 5,
+          "close_epoch_id": 9
+        },
+        {
+          "window_start": "2026-01-15T10:10:00Z",
+          "window_end": "2026-01-15T10:15:00Z",
+          "revenue_absolute": 6269000,
+          "orders_absolute": 23,
+          "revenue_expected": 5540000,
+          "orders_expected": 20,
+          "revenue_actual": 5540000,
+          "orders_actual": 20,
+          "dropped_purchases": 3,
+          "close_batch_expected": 6,
+          "close_batch_actual": 6,
+          "close_epoch_id": 11
+        },
+        {
+          "window_start": "2026-01-15T10:15:00Z",
+          "window_end": "2026-01-15T10:20:00Z",
+          "revenue_absolute": 3564000,
+          "orders_absolute": 15,
+          "revenue_expected": 2629000,
+          "orders_expected": 11,
+          "revenue_actual": 2629000,
+          "orders_actual": 11,
+          "dropped_purchases": 4,
+          "close_batch_expected": 7,
+          "close_batch_actual": 7,
+          "close_epoch_id": 13
+        },
+        {
+          "window_start": "2026-01-15T10:20:00Z",
+          "window_end": "2026-01-15T10:25:00Z",
+          "revenue_absolute": 4004000,
+          "orders_absolute": 14,
+          "revenue_expected": 4004000,
+          "orders_expected": 14,
+          "revenue_actual": 4004000,
+          "orders_actual": 14,
+          "dropped_purchases": 0,
+          "close_batch_expected": 8,
+          "close_batch_actual": 8,
+          "close_epoch_id": 15
+        },
+        {
+          "window_start": "2026-01-15T10:25:00Z",
+          "window_end": "2026-01-15T10:30:00Z",
+          "revenue_absolute": 5819000,
+          "orders_absolute": 25,
+          "revenue_expected": 4778000,
+          "orders_expected": 21,
+          "revenue_actual": 4778000,
+          "orders_actual": 21,
+          "dropped_purchases": 4,
+          "close_batch_expected": 9,
+          "close_batch_actual": 9,
+          "close_epoch_id": 17
+        },
+        {
+          "window_start": "2026-01-15T10:30:00Z",
+          "window_end": "2026-01-15T10:35:00Z",
+          "revenue_absolute": 5774000,
+          "orders_absolute": 18,
+          "revenue_expected": 5192000,
+          "orders_expected": 16,
+          "revenue_actual": 5192000,
+          "orders_actual": 16,
+          "dropped_purchases": 2,
+          "close_batch_expected": 10,
+          "close_batch_actual": 10,
+          "close_epoch_id": 19
+        },
+        {
+          "window_start": "2026-01-15T10:35:00Z",
+          "window_end": "2026-01-15T10:40:00Z",
+          "revenue_absolute": 4848000,
+          "orders_absolute": 17,
+          "revenue_expected": 3710000,
+          "orders_expected": 14,
+          "revenue_actual": 3710000,
+          "orders_actual": 14,
+          "dropped_purchases": 3,
+          "close_batch_expected": 11,
+          "close_batch_actual": 11,
+          "close_epoch_id": 21
+        },
+        {
+          "window_start": "2026-01-15T10:40:00Z",
+          "window_end": "2026-01-15T10:45:00Z",
+          "revenue_absolute": 3587000,
+          "orders_absolute": 12,
+          "revenue_expected": 3587000,
+          "orders_expected": 12,
+          "revenue_actual": 3587000,
+          "orders_actual": 12,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:45:00Z",
+          "window_end": "2026-01-15T10:50:00Z",
+          "revenue_absolute": 4867000,
+          "orders_absolute": 19,
+          "revenue_expected": 4867000,
+          "orders_expected": 19,
+          "revenue_actual": 4867000,
+          "orders_actual": 19,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:50:00Z",
+          "window_end": "2026-01-15T10:55:00Z",
+          "revenue_absolute": 3291000,
+          "orders_absolute": 11,
+          "revenue_expected": 3291000,
+          "orders_expected": 11,
+          "revenue_actual": 3291000,
+          "orders_actual": 11,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:55:00Z",
+          "window_end": "2026-01-15T11:00:00Z",
+          "revenue_absolute": 5301000,
+          "orders_absolute": 20,
+          "revenue_expected": 5301000,
+          "orders_expected": 20,
+          "revenue_actual": 5301000,
+          "orders_actual": 20,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        }
+      ]
+    },
+    "wm20": {
+      "watermark_minutes": 20,
+      "late_events_expected": 0,
+      "late_purchases_expected": 0,
+      "late_purchases_actual": 0,
+      "num_rows_dropped_by_watermark_total": 0,
+      "num_rows_dropped_by_watermark_per_batch": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      },
+      "revenue_actual_total": 55622000,
+      "orders_actual_total": 208,
+      "revenue_absolute_total": 55622000,
+      "revenue_gap_to_absolute": 0,
+      "revenue_gap_pct": 0.0,
+      "windows": [
+        {
+          "window_start": "2026-01-15T10:00:00Z",
+          "window_end": "2026-01-15T10:05:00Z",
+          "revenue_absolute": 3598000,
+          "orders_absolute": 18,
+          "revenue_expected": 3598000,
+          "orders_expected": 18,
+          "revenue_actual": 3598000,
+          "orders_actual": 18,
+          "dropped_purchases": 0,
+          "close_batch_expected": 6,
+          "close_batch_actual": 6,
+          "close_epoch_id": 11
+        },
+        {
+          "window_start": "2026-01-15T10:05:00Z",
+          "window_end": "2026-01-15T10:10:00Z",
+          "revenue_absolute": 4700000,
+          "orders_absolute": 16,
+          "revenue_expected": 4700000,
+          "orders_expected": 16,
+          "revenue_actual": 4700000,
+          "orders_actual": 16,
+          "dropped_purchases": 0,
+          "close_batch_expected": 7,
+          "close_batch_actual": 7,
+          "close_epoch_id": 13
+        },
+        {
+          "window_start": "2026-01-15T10:10:00Z",
+          "window_end": "2026-01-15T10:15:00Z",
+          "revenue_absolute": 6269000,
+          "orders_absolute": 23,
+          "revenue_expected": 6269000,
+          "orders_expected": 23,
+          "revenue_actual": 6269000,
+          "orders_actual": 23,
+          "dropped_purchases": 0,
+          "close_batch_expected": 8,
+          "close_batch_actual": 8,
+          "close_epoch_id": 15
+        },
+        {
+          "window_start": "2026-01-15T10:15:00Z",
+          "window_end": "2026-01-15T10:20:00Z",
+          "revenue_absolute": 3564000,
+          "orders_absolute": 15,
+          "revenue_expected": 3564000,
+          "orders_expected": 15,
+          "revenue_actual": 3564000,
+          "orders_actual": 15,
+          "dropped_purchases": 0,
+          "close_batch_expected": 9,
+          "close_batch_actual": 9,
+          "close_epoch_id": 17
+        },
+        {
+          "window_start": "2026-01-15T10:20:00Z",
+          "window_end": "2026-01-15T10:25:00Z",
+          "revenue_absolute": 4004000,
+          "orders_absolute": 14,
+          "revenue_expected": 4004000,
+          "orders_expected": 14,
+          "revenue_actual": 4004000,
+          "orders_actual": 14,
+          "dropped_purchases": 0,
+          "close_batch_expected": 10,
+          "close_batch_actual": 10,
+          "close_epoch_id": 19
+        },
+        {
+          "window_start": "2026-01-15T10:25:00Z",
+          "window_end": "2026-01-15T10:30:00Z",
+          "revenue_absolute": 5819000,
+          "orders_absolute": 25,
+          "revenue_expected": 5819000,
+          "orders_expected": 25,
+          "revenue_actual": 5819000,
+          "orders_actual": 25,
+          "dropped_purchases": 0,
+          "close_batch_expected": 11,
+          "close_batch_actual": 11,
+          "close_epoch_id": 21
+        },
+        {
+          "window_start": "2026-01-15T10:30:00Z",
+          "window_end": "2026-01-15T10:35:00Z",
+          "revenue_absolute": 5774000,
+          "orders_absolute": 18,
+          "revenue_expected": 5774000,
+          "orders_expected": 18,
+          "revenue_actual": 5774000,
+          "orders_actual": 18,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:35:00Z",
+          "window_end": "2026-01-15T10:40:00Z",
+          "revenue_absolute": 4848000,
+          "orders_absolute": 17,
+          "revenue_expected": 4848000,
+          "orders_expected": 17,
+          "revenue_actual": 4848000,
+          "orders_actual": 17,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:40:00Z",
+          "window_end": "2026-01-15T10:45:00Z",
+          "revenue_absolute": 3587000,
+          "orders_absolute": 12,
+          "revenue_expected": 3587000,
+          "orders_expected": 12,
+          "revenue_actual": 3587000,
+          "orders_actual": 12,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:45:00Z",
+          "window_end": "2026-01-15T10:50:00Z",
+          "revenue_absolute": 4867000,
+          "orders_absolute": 19,
+          "revenue_expected": 4867000,
+          "orders_expected": 19,
+          "revenue_actual": 4867000,
+          "orders_actual": 19,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:50:00Z",
+          "window_end": "2026-01-15T10:55:00Z",
+          "revenue_absolute": 3291000,
+          "orders_absolute": 11,
+          "revenue_expected": 3291000,
+          "orders_expected": 11,
+          "revenue_actual": 3291000,
+          "orders_actual": 11,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        },
+        {
+          "window_start": "2026-01-15T10:55:00Z",
+          "window_end": "2026-01-15T11:00:00Z",
+          "revenue_absolute": 5301000,
+          "orders_absolute": 20,
+          "revenue_expected": 5301000,
+          "orders_expected": 20,
+          "revenue_actual": 5301000,
+          "orders_actual": 20,
+          "dropped_purchases": 0,
+          "close_batch_expected": 12,
+          "close_batch_actual": 12,
+          "close_epoch_id": 23
+        }
+      ]
+    }
+  },
+  "per_batch": [
+    {
+      "batch_no": 1,
+      "records_sent": 138,
+      "row_counts": {
+        "bronze": 138,
+        "silver": 133,
+        "gold": 0,
+        "gold_wm20": 0
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:34:57.000Z",
+      "gold_watermark_after": "2026-01-15T09:54:57.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T09:44:57.000Z",
+      "gold_watermark_after_expected": "2026-01-15T09:54:57Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T09:44:57Z",
+      "silver_watermark_after_expected": "2026-01-15T09:34:57Z"
+    },
+    {
+      "batch_no": 2,
+      "records_sent": 215,
+      "row_counts": {
+        "bronze": 353,
+        "silver": 328,
+        "gold": 0,
+        "gold_wm20": 0
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:39:57.000Z",
+      "gold_watermark_after": "2026-01-15T09:59:57.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T09:49:57.000Z",
+      "gold_watermark_after_expected": "2026-01-15T09:59:57Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T09:49:57Z",
+      "silver_watermark_after_expected": "2026-01-15T09:39:57Z"
+    },
+    {
+      "batch_no": 3,
+      "records_sent": 166,
+      "row_counts": {
+        "bronze": 519,
+        "silver": 479,
+        "gold": 0,
+        "gold_wm20": 0
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:44:52.000Z",
+      "gold_watermark_after": "2026-01-15T10:04:52.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T09:54:52.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:04:52Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T09:54:52Z",
+      "silver_watermark_after_expected": "2026-01-15T09:44:52Z"
+    },
+    {
+      "batch_no": 4,
+      "records_sent": 169,
+      "row_counts": {
+        "bronze": 688,
+        "silver": 631,
+        "gold": 1,
+        "gold_wm20": 0
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:49:51.000Z",
+      "gold_watermark_after": "2026-01-15T10:09:51.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T09:59:51.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:09:51Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T09:59:51Z",
+      "silver_watermark_after_expected": "2026-01-15T09:49:51Z"
+    },
+    {
+      "batch_no": 5,
+      "records_sent": 171,
+      "row_counts": {
+        "bronze": 859,
+        "silver": 784,
+        "gold": 2,
+        "gold_wm20": 0
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:54:55.000Z",
+      "gold_watermark_after": "2026-01-15T10:14:55.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:04:55.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:14:55Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:04:55Z",
+      "silver_watermark_after_expected": "2026-01-15T09:54:55Z"
+    },
+    {
+      "batch_no": 6,
+      "records_sent": 192,
+      "row_counts": {
+        "bronze": 1051,
+        "silver": 961,
+        "gold": 3,
+        "gold_wm20": 1
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T09:59:55.000Z",
+      "gold_watermark_after": "2026-01-15T10:19:55.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:09:55.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:19:55Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:09:55Z",
+      "silver_watermark_after_expected": "2026-01-15T09:59:55Z"
+    },
+    {
+      "batch_no": 7,
+      "records_sent": 184,
+      "row_counts": {
+        "bronze": 1235,
+        "silver": 1132,
+        "gold": 4,
+        "gold_wm20": 2
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T10:04:51.000Z",
+      "gold_watermark_after": "2026-01-15T10:24:51.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:14:51.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:24:51Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:14:51Z",
+      "silver_watermark_after_expected": "2026-01-15T10:04:51Z"
+    },
+    {
+      "batch_no": 8,
+      "records_sent": 186,
+      "row_counts": {
+        "bronze": 1421,
+        "silver": 1298,
+        "gold": 5,
+        "gold_wm20": 3
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T10:09:56.000Z",
+      "gold_watermark_after": "2026-01-15T10:29:56.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:19:56.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:29:56Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:19:56Z",
+      "silver_watermark_after_expected": "2026-01-15T10:09:56Z"
+    },
+    {
+      "batch_no": 9,
+      "records_sent": 177,
+      "row_counts": {
+        "bronze": 1598,
+        "silver": 1457,
+        "gold": 6,
+        "gold_wm20": 4
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T10:14:49.000Z",
+      "gold_watermark_after": "2026-01-15T10:34:49.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:24:49.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:34:49Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:24:49Z",
+      "silver_watermark_after_expected": "2026-01-15T10:14:49Z"
+    },
+    {
+      "batch_no": 10,
+      "records_sent": 186,
+      "row_counts": {
+        "bronze": 1784,
+        "silver": 1626,
+        "gold": 7,
+        "gold_wm20": 5
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T10:19:56.000Z",
+      "gold_watermark_after": "2026-01-15T10:39:56.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:29:56.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:39:56Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:29:56Z",
+      "silver_watermark_after_expected": "2026-01-15T10:19:56Z"
+    },
+    {
+      "batch_no": 11,
+      "records_sent": 193,
+      "row_counts": {
+        "bronze": 1977,
+        "silver": 1797,
+        "gold": 8,
+        "gold_wm20": 6
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T10:24:55.000Z",
+      "gold_watermark_after": "2026-01-15T10:44:55.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T10:34:55.000Z",
+      "gold_watermark_after_expected": "2026-01-15T10:44:55Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T10:34:55Z",
+      "silver_watermark_after_expected": "2026-01-15T10:24:55Z"
+    },
+    {
+      "batch_no": 12,
+      "records_sent": 224,
+      "row_counts": {
+        "bronze": 2201,
+        "silver": 2001,
+        "gold": 12,
+        "gold_wm20": 12
+      },
+      "micro_batch_counts": {
+        "bronze": 1,
+        "silver": 2,
+        "gold": 2,
+        "gold_wm20": 2
+      },
+      "bronze_watermark_after": null,
+      "silver_watermark_after": "2026-01-15T11:00:00.000Z",
+      "gold_watermark_after": "2026-01-15T11:20:00.000Z",
+      "gold_wm20_watermark_after": "2026-01-15T11:10:00.000Z",
+      "gold_watermark_after_expected": "2026-01-15T11:20:00Z",
+      "gold_wm20_watermark_after_expected": "2026-01-15T11:10:00Z",
+      "silver_watermark_after_expected": "2026-01-15T11:00:00Z"
+    }
+  ],
+  "experiments": {
+    "exp_a": {
+      "experiment": "exp_a",
+      "expected_rows": 2001,
+      "actual_rows": 2001,
+      "difference": 0,
+      "layer": "silver",
+      "bronze_rows": 2201,
+      "expected_bronze_rows": 2201,
+      "fail_round": 6,
+      "failed_batch_id": 10,
+      "delta_version_written_by_failed_batch": 6,
+      "new_delta_versions_by_failed_run": 1,
+      "rows_written_by_failed_batch": 177,
+      "silver_rows_after_failure": 961,
+      "offsets_before_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "commits_before_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "offsets_after_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "commits_after_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "delta_commits_by_rerun": [],
+      "evidence_files": [
+        "results/evidence/exp_a_before.txt",
+        "results/evidence/exp_a_after.txt"
+      ],
+      "description": "Silver lỗi sau khi MERGE xong, chạy lại cùng checkpoint; MERGE chỉ chèn nên batch chạy lại không sinh dòng thừa"
+    },
+    "exp_b": {
+      "experiment": "exp_b",
+      "expected_rows": 2001,
+      "actual_rows": 2178,
+      "difference": 177,
+      "layer": "silver",
+      "bronze_rows": 2201,
+      "expected_bronze_rows": 2201,
+      "fail_round": 6,
+      "failed_batch_id": 10,
+      "delta_version_written_by_failed_batch": 6,
+      "new_delta_versions_by_failed_run": 1,
+      "rows_written_by_failed_batch": 177,
+      "silver_rows_after_failure": 961,
+      "offsets_before_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "commits_before_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "offsets_after_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "commits_after_rerun": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "delta_commits_by_rerun": [
+        {
+          "version": 7,
+          "operation": "WRITE",
+          "rows_written": "177"
+        }
+      ],
+      "evidence_files": [
+        "results/evidence/exp_b_before.txt",
+        "results/evidence/exp_b_after.txt"
+      ],
+      "replayed_batch_id": 10,
+      "replayed_batch_rows": 177,
+      "excess_equals_replayed_batch_rows": true,
+      "description": "Silver ghi append (không MERGE, không txnAppId); batch 10 (177 dòng) bị chạy lại nên được ghi hai lần"
+    },
+    "exp_c": {
+      "experiment": "exp_c",
+      "expected_rows": 4402,
+      "actual_rows": 4402,
+      "difference": 0,
+      "layer": "bronze",
+      "bronze_rows_before": 2201,
+      "bronze_rows_after": 4402,
+      "bronze_rows_reread": 2201,
+      "bronze_micro_batches_after_delete": [
+        0
+      ],
+      "silver_expected_rows": 2001,
+      "silver_rows_before": 2001,
+      "silver_rows_after": 2001,
+      "silver_difference": 0,
+      "silver_new_delta_versions": [],
+      "silver_micro_batches": [
+        {
+          "batch_id": 24,
+          "num_input_rows": 2201,
+          "watermark": "2026-01-15T11:00:00.000Z",
+          "rows_dropped_by_watermark": 2200,
+          "rows_removed_as_duplicate": 1,
+          "state_rows_total": 1003,
+          "rejected_rows": 0
+        }
+      ],
+      "observation": [
+        "Bronze: 2201 dòng trước, 4402 dòng sau khi xóa checkpoint và chạy lại (đọc lại 2201 message từ earliest). Delta sink của Bronze chống ghi trùng theo (queryId, batchId) lưu trong checkpoint, nên checkpoint mới không nhận ra dữ liệu đã ghi.",
+        "Silver: 2001 dòng trước, 2001 dòng sau (chênh lệch so với số event_id duy nhất: 0).",
+        "Micro-batch Silver 24: đầu vào 2201 dòng, watermark 2026-01-15T11:00:00.000Z, bị loại vì quá muộn 2200, bị loại vì trùng trong state 1, số dòng trong state 1003.",
+        "Giải thích: checkpoint Silver còn nguyên nên Silver đọc tiếp phiên bản Bronze mới (toàn bản sao). Watermark Silver đã ở mức event time lớn nhất trừ 30 phút, nên mọi bản sao có event_time cũ hơn bị dropDuplicatesWithinWatermark loại như dữ liệu quá muộn; bản sao còn lại (sự kiện đẩy watermark) còn event_id trong state nên bị loại vì trùng. foreachBatch nhận batch rỗng, MERGE không phải chặn dòng nào. MERGE chỉ chèn là lớp chặn cuối cùng khi state không giúp được: checkpoint Silver bị mất, hoặc một batch đã ghi bị chạy lại (thí nghiệm A)."
+      ]
+    }
+  },
+  "evidence": {
+    "standard_run": {
+      "bronze": {
+        "offsets": {
+          "10": "v1\n{\"batchWatermarkMs\":0,\"batchTimestampMs\":1793815619830,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"shop_events\":{\"0\":800,\"1\":449,\"2\":728}}",
+          "11": "v1\n{\"batchWatermarkMs\":0,\"batchTimestampMs\":1793815712674,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"shop_events\":{\"0\":889,\"1\":492,\"2\":820}}"
+        },
+        "commits": {
+          "10": "v1\n{\"nextBatchWatermarkMs\":0}",
+          "11": "v1\n{\"nextBatchWatermarkMs\":0}"
+        },
+        "delta_log": {
+          "00000000000000000011.json": "{\"commitInfo\":{\"timestamp\":1793815720259,\"operation\":\"STREAMING UPDATE\",\"operationParameters\":{\"outputMode\":\"Append\",\"queryId\":\"cd5b883e-d942-4f15-a59a-b4132b6a127f\",\"epochId\":\"11\"},\"readVersion\":10,\"isolationLevel\":\"Serializable\",\"isBlindAppend\":true,\"operationMetrics\":{\"numRemovedFiles\":\"0\",\"numAddedFiles\":\"3\",\"numOutputRows\":\"224\",\"numOutputBytes\":\"20982\"},\"engineInfo\":\"Apache-Spark/4.1.0 Delta-Lake/4.1.0\",\"txnId\":\"b1c1eb81-7e28-4a28-abdf-31254ecaf1dc\"}}\n{\"txn\":{\"appId\":\"cd5b883e-d942-4f15-a59a-b4132b6a127f\",\"version\":11,\"lastUpdated\":1793815720234}}\n{\"add\":{\"path\":\"part-00000-04a0f1f4-80cf-40ae-8218-268b783bcbfe-c000.snappy.parquet\",\"partitionValues\":{},\"size\":7880,\"modificationTime\":1793815720163,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":92,\\\"minValues\\\":{\\\"kafka_key\\\":\\\"U003\\\",\\\"value\\\":\\\"{\\\\\\\"event_id\\\\\\\": \\\\\\\"0372989f-03bf-4d14\\\",\\\"kafka_partition\\\":2,\\\"kafka_offset\\\":728,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.052Z\\\",\\\"ingest_time\\\":\\\"2026-11-04T18:08:32.674Z\\\"},\\\"maxValues\\\":{\\\"kafka_key\\\":\\\"U050\\\",\\\"value\\\":\\\"{\\\\\\\"event_id\\\\\\\": \\\\\\\"ff19a117-d643-4249\\\",\\\"kafka_partition\\\":2,\\\"kafka_offset\\\":819,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.064Z\\\",\\\"ingest_time\\\":\\\"2026-11-04T18:08:32.674Z\\\"},\\\"nullCount\\\":{\\\"kafka_key\\\":0,\\\"value\\\":0,\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":0,\\\"kafka_timestamp\\\":0,\\\"ingest_time\\\":0}}\"}}\n{\"add\":{\"path\":\"part-00001-e7cdf467-5cdb-4512-8570-ec9339677dbf-c000.snappy.parquet\",\"partitionValues\":{},\"size\":7883,\"modificationTime\":1793815720163,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":89,\\\"minValues\\\":{\\\"kafka_key\\\":\\\"U001\\\",\\\"value\\\":\\\"{\\\\\\\"event_id\\\\\\\": \\\\\\\"00922246-25f1-4564\\\",\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":800,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.052Z\\\",\\\"ingest_time\\\":\\\"2026-11-04T18:08:32.674Z\\\"},\\\"maxValues\\\":{\\\"kafka_key\\\":\\\"U048\\\",\\\"value\\\":\\\"{\\\\\\\"event_id\\\\\\\": \\\\\\\"fff7df38-2405-40a6\\\",\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":888,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.064Z\\\",\\\"ingest_time\\\":\\\"2026-11-04T18:08:32.674Z\\\"},\\\"nullCount\\\":{\\\"kafka_key\\\":0,\\\"value\\\":0,\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":0,\\\"kafka_timestamp\\\":0,\\\"ingest_time\\\":0}}\"}}\n{\"add\":{\"path\":\"part-00002-0f1b7604-ba05-421f-bb76-370a2373f1e8-c000.snappy.parquet\",\"partitionValues\":{},\"size\":5219,\"modificationTime\":1793815720167,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":43,\\\"minValues\\\":{\\\"kafka_key\\\":\\\"U004\\\",\\\"value\\\":\\\"{\\\\\\\"event_id\\\\\\\": \\\\\\\"0c255e32-bf32-46de\\\",\\\"kafka_partition\\\":1,\\\"kafka_offset\\\":449,\\\"kafka_timestamp\\\":\\\"20"
+        }
+      },
+      "silver": {
+        "offsets": {
+          "22": "v1\n{\"batchWatermarkMs\":1768472695000,\"batchTimestampMs\":1793815732970,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"sourceVersion\":1,\"reservoirId\":\"fb7ccb68-0846-4933-a9ae-db05bf9fc583\",\"reservoirVersion\":12,\"index\":-1,\"isStartingVersion\":false}",
+          "23": "v1\n{\"batchWatermarkMs\":1768474800000,\"batchTimestampMs\":1793815743404,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"sourceVersion\":1,\"reservoirId\":\"fb7ccb68-0846-4933-a9ae-db05bf9fc583\",\"reservoirVersion\":12,\"index\":-1,\"isStartingVersion\":false}"
+        },
+        "commits": {
+          "22": "v1\n{\"nextBatchWatermarkMs\":1768474800000}",
+          "23": "v1\n{\"nextBatchWatermarkMs\":1768474800000}"
+        },
+        "delta_log": {
+          "00000000000000000012.json": "{\"commitInfo\":{\"timestamp\":1793815742869,\"operation\":\"MERGE\",\"operationParameters\":{\"predicate\":\"[\\\"(event_id#130 = event_id#14)\\\"]\",\"matchedPredicates\":\"[]\",\"notMatchedPredicates\":\"[{\\\"actionType\\\":\\\"insert\\\"}]\",\"notMatchedBySourcePredicates\":\"[]\"},\"readVersion\":11,\"isolationLevel\":\"Serializable\",\"isBlindAppend\":false,\"operationMetrics\":{\"numTargetRowsCopied\":\"0\",\"numTargetRowsDeleted\":\"0\",\"numTargetBytesRemoved\":\"0\",\"numTargetDeletionVectorsAdded\":\"0\",\"numTargetRowsMatchedUpdated\":\"0\",\"numTargetRowsMatchedDeleted\":\"0\",\"numTargetRowsUpdated\":\"0\",\"numTargetChangeFilesAdded\":\"0\",\"numTargetRowsNotMatchedBySourceDeleted\":\"0\",\"rewriteTimeMs\":\"5333\",\"numTargetFilesAdded\":\"4\",\"numTargetBytesAdded\":\"23185\",\"executionTimeMs\":\"5361\",\"materializeSourceTimeMs\":\"1\",\"numTargetRowsInserted\":\"204\",\"numTargetDeletionVectorsUpdated\":\"0\",\"scanTimeMs\":\"0\",\"numOutputRows\":\"204\",\"numTargetDeletionVectorsRemoved\":\"0\",\"numTargetRowsNotMatchedBySourceUpdated\":\"0\",\"numSourceRows\":\"204\",\"numTargetFilesRemoved\":\"0\"},\"engineInfo\":\"Apache-Spark/4.1.0 Delta-Lake/4.1.0\",\"txnId\":\"6b48cf24-a3eb-4ad3-b07d-7c17e8dbc3e3\"}}\n{\"add\":{\"path\":\"part-00000-1da39453-0965-4fc8-a782-39ee2ab64687-c000.snappy.parquet\",\"partitionValues\":{},\"size\":5856,\"modificationTime\":1793815742739,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":52,\\\"minValues\\\":{\\\"event_id\\\":\\\"03b46420-e982-4559-8e5b-8ad1a196\\\",\\\"user_id\\\":\\\"U001\\\",\\\"event_type\\\":\\\"add_to_cart\\\",\\\"product_id\\\":\\\"P01\\\",\\\"amount\\\":169000,\\\"event_time\\\":\\\"2026-01-15T10:37:43.000Z\\\",\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":452,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.052Z\\\"},\\\"maxValues\\\":{\\\"event_id\\\":\\\"fff7df38-2405-40a6-b7d7-2017e43a\\\",\\\"user_id\\\":\\\"U048\\\",\\\"event_type\\\":\\\"view\\\",\\\"product_id\\\":\\\"P20\\\",\\\"amount\\\":487000,\\\"event_time\\\":\\\"2026-01-15T10:59:55.000Z\\\",\\\"kafka_partition\\\":2,\\\"kafka_offset\\\":886,\\\"kafka_timestamp\\\":\\\"2026-11-04T18:08:24.059Z\\\"},\\\"nullCount\\\":{\\\"event_id\\\":0,\\\"user_id\\\":0,\\\"event_type\\\":0,\\\"product_id\\\":0,\\\"amount\\\":45,\\\"event_time\\\":0,\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":0,\\\"kafka_timestamp\\\":0}}\"}}\n{\"add\":{\"path\":\"part-00001-507f07e8-1b25-4053-8002-b29cc459c4a7-c000.snappy.parquet\",\"partitionValues\":{},\"size\":5626,\"modificationTime\":1793815742739,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":48,\\\"minValues\\\":{\\\"event_id\\\":\\\"0372989f-03bf-4d14-b62f-9ff36cd9\\\",\\\"user_id\\\":\\\"U001\\\",\\\"event_type\\\":\\\"add_to_cart\\\",\\\"product_id\\\":\\\"P01\\\",\\\"amount\\\":66000,\\\"event_time\\\":\\\"2026-01-15T10:38:17.000Z\\\",\\\"kafka_partition\\\":0,\\\"kafka_offset\\\":"
+        }
+      },
+      "gold": {
+        "offsets": {
+          "22": "v1\n{\"batchWatermarkMs\":1768473895000,\"batchTimestampMs\":1793815755679,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"sourceVersion\":1,\"reservoirId\":\"467e9a63-109d-46c1-b447-6741605832f7\",\"reservoirVersion\":13,\"index\":-1,\"isStartingVersion\":false}",
+          "23": "v1\n{\"batchWatermarkMs\":1768476000000,\"batchTimestampMs\":1793815763118,\"conf\":{\"spark.sql.streaming.stateStore.providerClass\":\"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider\",\"spark.sql.streaming.stateStore.rocksdb.formatVersion\":\"5\",\"spark.sql.streaming.stateStore.encodingFormat\":\"unsaferow\",\"spark.sql.streaming.statefulOperator.useStrictDistribution\":\"true\",\"spark.sql.streaming.flatMapGroupsWithState.stateFormatVersion\":\"2\",\"spark.sql.streaming.multipleWatermarkPolicy\":\"min\",\"spark.sql.streaming.aggregation.stateFormatVersion\":\"2\",\"spark.sql.shuffle.partitions\":\"4\",\"spark.sql.streaming.join.stateFormatVersion\":\"2\",\"spark.sql.streaming.stateStore.compression.codec\":\"lz4\",\"spark.sql.optimizer.pruneFiltersCanPruneStreamingSubplan\":\"false\"}}\n{\"sourceVersion\":1,\"reservoirId\":\"467e9a63-109d-46c1-b447-6741605832f7\",\"reservoirVersion\":13,\"index\":-1,\"isStartingVersion\":false}"
+        },
+        "commits": {
+          "22": "v1\n{\"nextBatchWatermarkMs\":1768476000000}",
+          "23": "v1\n{\"nextBatchWatermarkMs\":1768476000000}"
+        },
+        "delta_log": {
+          "00000000000000000023.json": "{\"commitInfo\":{\"timestamp\":1793815765357,\"operation\":\"STREAMING UPDATE\",\"operationParameters\":{\"outputMode\":\"Append\",\"queryId\":\"33c27ae4-84ed-477d-b6f6-708be25d0e39\",\"epochId\":\"23\"},\"readVersion\":22,\"isolationLevel\":\"Serializable\",\"isBlindAppend\":true,\"operationMetrics\":{\"numRemovedFiles\":\"0\",\"numAddedFiles\":\"3\",\"numOutputRows\":\"4\",\"numOutputBytes\":\"4526\"},\"engineInfo\":\"Apache-Spark/4.1.0 Delta-Lake/4.1.0\",\"txnId\":\"7f64547f-fad9-44d9-849b-b2b61c4739fe\"}}\n{\"txn\":{\"appId\":\"33c27ae4-84ed-477d-b6f6-708be25d0e39\",\"version\":23,\"lastUpdated\":1793815765356}}\n{\"add\":{\"path\":\"part-00001-76185625-4729-47c2-ad30-07bcdcc40979-c000.snappy.parquet\",\"partitionValues\":{},\"size\":1273,\"modificationTime\":1793815765339,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":2,\\\"minValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:40:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T10:45:00.000Z\\\",\\\"revenue\\\":3587000,\\\"orders\\\":12},\\\"maxValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:55:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T11:00:00.000Z\\\",\\\"revenue\\\":5301000,\\\"orders\\\":20},\\\"nullCount\\\":{\\\"window_start\\\":0,\\\"window_end\\\":0,\\\"revenue\\\":0,\\\"orders\\\":0}}\"}}\n{\"add\":{\"path\":\"part-00002-9d09cf52-944e-4fc0-b3f1-6b603d516e20-c000.snappy.parquet\",\"partitionValues\":{},\"size\":1341,\"modificationTime\":1793815765339,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":1,\\\"minValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:45:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T10:50:00.000Z\\\",\\\"revenue\\\":4867000,\\\"orders\\\":19},\\\"maxValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:45:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T10:50:00.000Z\\\",\\\"revenue\\\":4867000,\\\"orders\\\":19},\\\"nullCount\\\":{\\\"window_start\\\":0,\\\"window_end\\\":0,\\\"revenue\\\":0,\\\"orders\\\":0}}\"}}\n{\"add\":{\"path\":\"part-00003-18cbbe2f-c4a7-45db-877c-9039d84720ab-c000.snappy.parquet\",\"partitionValues\":{},\"size\":1341,\"modificationTime\":1793815765335,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\":1,\\\"minValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:50:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T10:55:00.000Z\\\",\\\"revenue\\\":3291000,\\\"orders\\\":11},\\\"maxValues\\\":{\\\"window_start\\\":\\\"2026-01-15T10:50:00.000Z\\\",\\\"window_end\\\":\\\"2026-01-15T10:55:00.000Z\\\",\\\"revenue\\\":3291000,\\\"orders\\\":11},\\\"nullCount\\\":{\\\"window_start\\\":0,\\\"window_end\\\":0,\\\"revenue\\\":0,\\\"orders\\\":0}}\"}}\n"
+        }
+      }
+    },
+    "experiment_files": [
+      "results/evidence/exp_a_after.txt",
+      "results/evidence/exp_a_before.txt",
+      "results/evidence/exp_b_after.txt",
+      "results/evidence/exp_b_before.txt"
+    ]
+  },
+  "anomalies": [
+    {
+      "title": "V1. Optimizer đẩy filter purchase xuống dưới watermark ở Gold (đã giải quyết, task 30)",
+      "details": "- Hiện tượng: chạy Gold sau đợt 1, Spark báo watermark 09:53:59, mô phỏng tính 09:54:57. Event time lớn nhất trong Silver là 10:04:57 (một view), còn purchase lớn nhất là 10:03:59.\n- Đã thử: in plan đã tối ưu của micro-batch có dữ liệu. Code viết `withWatermark` rồi mới `filter(event_type = 'purchase')`, nhưng plan tối ưu là `EventTimeWatermark` nằm TRÊN `Filter (event_type = purchase)`. Quy tắc `PushPredicateThroughNonJoin` của Spark đẩy mọi điều kiện tất định không tham chiếu cột event time xuống dưới `EventTimeWatermark`.\n- Kết quả: lưu ý ở task 30 (\"đặt withWatermark TRƯỚC khi lọc purchase\") không đủ trên Spark 4.1.0. Watermark chỉ tính trên purchase, view đẩy watermark mất tác dụng.\n- Cách xử lý: bỏ filter trước khi tổng hợp, đưa điều kiện purchase vào hàm tổng hợp (`sum(when(purchase, amount))`, `count(when(purchase, 1))`), rồi lọc `orders > 0` sau khi tổng hợp. Thiết kế giữ nguyên (chỉ tính purchase, watermark 10 phút, cửa sổ 5 phút). Sau khi sửa, watermark sau đợt 1 là 09:54:57, khớp mô phỏng. Hệ quả phụ: `numRowsDroppedByWatermark` giờ đếm cả dòng không phải purchase (xem task 35)."
+    },
+    {
+      "title": "V2. Xác nhận hai lưu ý của task 14 và việc chốt cửa sổ cuối (task 34)",
+      "details": "- Hiện tượng cần xác nhận: (a) watermark tính trên mọi loại sự kiện, (b) Spark loại dòng theo `window_end <= watermark`, (c) cửa sổ cuối được chốt khi `availableNow` kết thúc ở đợt 12.\n- Kết quả chạy thật: (a) đúng sau khi sửa V1, watermark Gold sau từng đợt khớp mô phỏng. (b) đúng: doanh thu, số đơn và đợt chốt của cả 12 cửa sổ khớp mô phỏng theo `window_end`. (c) đúng: mỗi lần chạy `availableNow` gồm hai micro-batch (một có dữ liệu, một không dữ liệu để dọn state theo watermark mới), nên 4 cửa sổ cuối được ghi ngay trong lần chạy đợt 12.\n- Không cần xử lý thêm."
+    },
+    {
+      "title": "V3. numRowsDroppedByWatermark không bằng số sự kiện bị loại (task 35)",
+      "details": "- Hiện tượng: theo đáp án vàng có 50 sự kiện quá ngưỡng (18 purchase), nhưng tổng `numRowsDroppedByWatermark` của Gold là 8.\n- Nguyên nhân (đã dự đoán trước khi chạy từ physical plan, rồi đo khớp): metric đếm dòng ở đầu vào toán tử có trạng thái `StateStoreRestore`, nằm sau partial aggregation và shuffle. Mỗi cửa sổ quá muộn trong một micro-batch chỉ còn một dòng. Đáp án vàng ghi `late_windows_wm10` theo từng đợt (8 đợt, mỗi đợt 1 cửa sổ) và khớp từng đợt.\n- Cách xử lý: `check_results.py` đối chiếu metric này với số cửa sổ quá muộn, và đo số purchase bị loại bằng cách so bảng Gold với đáp án tuyệt đối (18, khớp)."
+    },
+    {
+      "title": "V4. Độ trễ của nhóm muộn quá ngưỡng thực tế là 16 đến 20 phút (thiết kế dữ liệu, đã báo người dùng ở điểm dừng task 18)",
+      "details": "- Hiện tượng: watermark chỉ cập nhật giữa các đợt 5 phút và Spark loại dòng theo `window_end <= watermark`, nên sự kiện ở cửa sổ thứ k chỉ bị loại khi được gửi từ đợt k+4 trở đi. Sự kiện trễ 12 đến 15 phút thường KHÔNG rơi vào cửa sổ đã chốt.\n- Cách xử lý: bộ sinh chọn độ trễ trong [max(12, 20 − vị trí trong cửa sổ) + 5 giây, 20] phút, vẫn nằm trong 12 đến 20 phút của đặc tả. Độ trễ thực tế của 50 sự kiện là 16,04 đến 19,99 phút, thuộc 8 cửa sổ đầu (10:00 đến 10:40). Người dùng đã duyệt."
+    },
+    {
+      "title": "V5. Thí nghiệm C: Silver không thay đổi dù Bronze gấp đôi (quan sát, không phải lỗi)",
+      "details": "- Quan sát: Silver đọc 2201 dòng bản sao trong một micro-batch; 2200 dòng bị watermark Silver (11:00) loại như dữ liệu quá muộn, 1 dòng (sự kiện đẩy watermark 11:30) bị loại vì event_id còn trong state. foreachBatch nhận batch rỗng, Silver giữ nguyên 2001 dòng. Chi tiết trong `results/exp_c.json`."
+    }
+  ],
+  "checks": {
+    "all_ok": true,
+    "row_count": 68,
+    "failed_rows": 0
+  },
+  "time_travel": {
+    "table": "silver",
+    "old_version": 1,
+    "old_row_count": 133,
+    "latest_version": 12,
+    "latest_row_count": 2001
+  }
+}

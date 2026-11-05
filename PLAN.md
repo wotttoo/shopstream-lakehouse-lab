@@ -37,50 +37,50 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
 
 ### Giai đoạn 1: Môi trường
 
-- [ ] **1. Khởi tạo repo và khung thư mục**
+- [x] **1. Khởi tạo repo và khung thư mục**
   - Việc cần làm: `git init` ở thư mục gốc, tạo `shopstream-lab/` với các thư mục con, viết `.gitignore`.
   - File: `shopstream-lab/.gitignore`.
   - Hoàn thành khi (chạy ở thư mục gốc): `git check-ignore shopstream-lab/lakehouse/x shopstream-lab/checkpoints/x shopstream-lab/.venv/x` in đủ ba dòng.
 
-- [ ] **2. Cài môi trường Python và Java**
+- [x] **2. Cài môi trường Python và Java**
   - Việc cần làm: viết `requirements.txt` có ghim phiên bản, tạo `.venv` theo mục 3 của `CLAUDE.md`.
   - File: `requirements.txt`.
   - Hoàn thành khi: `java -version` là 17, `python --version` là 3.11, và `python -c "import pyspark, delta; print(pyspark.__version__)"` in `4.1.0`.
 
-- [ ] **3. Dựng Kafka bằng Docker Compose** (nhóm A)
+- [x] **3. Dựng Kafka bằng Docker Compose** (nhóm A)
   - Việc cần làm: một broker KRaft, advertised listener qua `localhost:9092`.
   - File: `docker-compose.yml`.
   - Hoàn thành khi: `docker compose up -d` rồi `docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list` thoát với mã 0.
 
-- [ ] **4. Kiểm tra Spark ghi đọc được Delta** (nhóm A)
+- [x] **4. Kiểm tra Spark ghi đọc được Delta** (nhóm A)
   - Việc cần làm: script ghi rồi đọc một bảng Delta nhỏ trong thư mục project. Đây cũng là phép thử đường dẫn có dấu cách và ký tự `→`.
   - File: `verify/smoke_env.py`.
   - Hoàn thành khi: `python verify/smoke_env.py --delta` thoát với mã 0 và in đúng số dòng đã ghi.
 
-- [ ] **5. Kiểm tra Spark đọc được Kafka**
+- [x] **5. Kiểm tra Spark đọc được Kafka**
   - Việc cần làm: thêm chế độ gửi một message vào topic tạm, đọc lại bằng Spark, xóa topic tạm.
   - File: `verify/smoke_env.py`.
   - Phụ thuộc: 3, 4.
   - Hoàn thành khi: `python verify/smoke_env.py --kafka` thoát với mã 0 và in lại đúng message.
 
-- [ ] **6. Ghi bộ phiên bản chạy được**
+- [x] **6. Ghi bộ phiên bản chạy được**
   - Việc cần làm: tạo `README.md` bản đầu với bộ phiên bản đã chạy thật. Nếu phải lùi về Spark 4.0.1 thì cập nhật cả `requirements.txt` và mục 2 của `CLAUDE.md`.
   - File: `README.md`, `requirements.txt`.
   - Hoàn thành khi: `grep -F "$(python -c 'import pyspark; print(pyspark.__version__)')" README.md` tìm thấy.
 
 ### Giai đoạn 2: Phần dùng chung
 
-- [ ] **7. Viết file cấu hình** (nhóm B)
+- [x] **7. Viết file cấu hình** (nhóm B)
   - Việc cần làm: đường dẫn, tên topic, ngưỡng watermark Gold và Silver, kích thước cửa sổ, seed. Đường dẫn tính theo vị trí file, không phụ thuộc thư mục đang đứng.
   - File: `common/config.py`, `tests/test_config.py`.
   - Hoàn thành khi: `pytest tests/test_config.py` pass, kiểm tra được 5 phút, 10 phút, 30 phút và `shop_events`.
 
-- [ ] **8. Viết schema sự kiện** (nhóm B)
+- [x] **8. Viết schema sự kiện** (nhóm B)
   - Việc cần làm: schema Spark của sáu trường sự kiện, `event_time` để dạng chuỗi.
   - File: `common/schema.py`, `tests/test_schema.py`.
   - Hoàn thành khi: `pytest tests/test_schema.py` pass.
 
-- [ ] **9. Viết hàm tạo SparkSession dùng chung**
+- [x] **9. Viết hàm tạo SparkSession dùng chung**
   - Việc cần làm: múi giờ UTC, 4 partition shuffle, hai cấu hình Delta, jar Kafka. Chuyển `smoke_env.py` sang dùng hàm này.
   - File: `common/spark_session.py`, `verify/smoke_env.py`.
   - Phụ thuộc: 7.
@@ -90,63 +90,63 @@ Mỗi nhóm chỉ làm song song sau khi các task phụ thuộc của nhóm đ�
 
 Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/test_generate_events.py`, không cần Spark hay Kafka.
 
-- [ ] **10. Sinh sự kiện gốc**
+- [x] **10. Sinh sự kiện gốc**
   - Việc cần làm: khoảng 2.000 sự kiện, 50 user, 20 sản phẩm, tỷ lệ 70/20/10, amount đúng luật, event_id tất định theo seed 42.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k base_events` pass.
 
-- [ ] **11. Cài bẫy trùng lặp**
+- [x] **11. Cài bẫy trùng lặp**
   - Việc cần làm: thêm khoảng 10% bản trùng, trong đó khoảng 1/5 lệch event_time vài giây, giữ nguyên event_id.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k duplicates` pass.
 
-- [ ] **12. Cài bẫy đến muộn và tính send_time**
+- [x] **12. Cài bẫy đến muộn và tính send_time**
   - Việc cần làm: khoảng 15% muộn 1 đến 4 phút, khoảng 2 đến 3% muộn 12 đến 20 phút với ít nhất 15 purchase, send_time bằng event time cộng độ trễ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k late` pass.
 
-- [ ] **13. Chia đợt và thêm sự kiện đẩy watermark**
+- [x] **13. Chia đợt và thêm sự kiện đẩy watermark**
   - Việc cần làm: sắp theo send_time, gán `batch_no` 1 đến 12, thêm một view khoảng 11:30 ở đợt 12.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k batches` pass.
 
-- [ ] **14. Viết hàm mô phỏng watermark theo đợt**
+- [x] **14. Viết hàm mô phỏng watermark theo đợt**
   - Việc cần làm: watermark của một đợt bằng event time lớn nhất ở các đợt TRƯỚC trừ ngưỡng.
   - Lưu ý cần xác nhận ở task 34: (a) tính max trên MỌI loại sự kiện, vì view đẩy watermark phải có tác dụng; (b) với aggregation theo cửa sổ, nhiều khả năng Spark loại dòng theo `window_end <= watermark`, không phải theo event time của dòng, nên mô phỏng theo cửa sổ.
   - Hoàn thành khi: `pytest tests/test_generate_events.py -k watermark_simulation` pass với ví dụ nhỏ tính tay.
 
-- [ ] **15. Tính thống kê tổng của đáp án vàng**
+- [x] **15. Tính thống kê tổng của đáp án vàng**
   - Việc cần làm: mọi con số tổng ở mục 8 của `CLAUDE.md`. Với bản trùng lệch thời gian, event_time có hiệu lực là của bản gửi trước.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/events.jsonl`, `data/golden_answer.json`, và `pytest tests/test_generate_events.py -k golden_answer` pass.
 
-- [ ] **16. Tính đáp án vàng theo cửa sổ**
+- [x] **16. Tính đáp án vàng theo cửa sổ**
   - Việc cần làm: doanh thu và số đơn tuyệt đối, kỳ vọng ngưỡng 10 phút, kỳ vọng ngưỡng 20 phút, danh sách cửa sổ được xuất, đợt chốt mỗi cửa sổ.
   - Hoàn thành khi: `python data/generate_events.py` tạo `data/golden_windows.csv`, và `pytest tests/test_generate_events.py -k golden_windows` pass.
 
-- [ ] **17. Kiểm tra toàn bộ dữ liệu sinh ra**
+- [x] **17. Kiểm tra toàn bộ dữ liệu sinh ra**
   - Việc cần làm: kiểm tra bằng code rằng nhóm quá ngưỡng thực sự rơi vào cửa sổ đã chốt, chạy lại cho cùng kết quả, thêm tùy chọn in tóm tắt.
   - Hoàn thành khi: `pytest tests/test_generate_events.py` pass và `python data/generate_events.py --summary` in đủ thống kê.
 
-- [ ] **18. ĐIỂM DỪNG: người dùng duyệt thống kê**
+- [x] **18. ĐIỂM DỪNG: người dùng duyệt thống kê**
   - Việc cần làm: tóm tắt thống kê cho người dùng. Không làm task nào từ 19 trở đi khi chưa được duyệt.
   - Hoàn thành khi: người dùng xác nhận đồng ý (không kiểm chứng bằng lệnh được).
 
 ### Giai đoạn 4: Producer
 
-- [ ] **19. Viết hàm tạo value gửi Kafka** (nhóm C)
+- [x] **19. Viết hàm tạo value gửi Kafka** (nhóm C)
   - Việc cần làm: hàm thuần tách `batch_no`, `send_time` khỏi value, key là user_id, lọc theo đợt.
   - File: `producer/produce.py`, `tests/test_produce.py`.
   - Hoàn thành khi: `pytest tests/test_produce.py` pass.
 
-- [ ] **20. Thêm lệnh tạo và xóa topic**
+- [x] **20. Thêm lệnh tạo và xóa topic**
   - Việc cần làm: `--create-topic` với 3 partition, `--delete-topic`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 19.
   - Hoàn thành khi: sau `python producer/produce.py --create-topic`, lệnh `docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic shop_events` cho thấy 3 partition.
 
-- [ ] **21. Thêm lệnh gửi theo đợt**
+- [x] **21. Thêm lệnh gửi theo đợt**
   - Việc cần làm: `--batch N` và `--all`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 20.
   - Hoàn thành khi: `python producer/produce.py --batch 1` thoát với mã 0 và in đúng số bản ghi của đợt 1.
 
-- [ ] **22. Thêm lệnh đếm message và chạy thử trọn vẹn**
+- [x] **22. Thêm lệnh đếm message và chạy thử trọn vẹn**
   - Việc cần làm: `--count` in tổng message trong topic. Chạy thử bằng cách xóa, tạo lại topic rồi gửi `--all`.
   - File: `producer/produce.py`.
   - Phụ thuộc: 21.
@@ -154,104 +154,105 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 ### Giai đoạn 5: Ba truy vấn streaming
 
-- [ ] **23. Viết truy vấn Bronze**
+- [x] **23. Viết truy vấn Bronze**
   - Việc cần làm: đọc Kafka earliest, giữ value chuỗi kèm partition, offset, timestamp, thời điểm nạp, ghi append, có `--continuous`.
   - File: `streaming/01_kafka_to_bronze.py`.
   - Phụ thuộc: 9, 22.
   - Hoàn thành khi: sau khi gửi đợt 1, `python streaming/01_kafka_to_bronze.py` thoát với mã 0 và `lakehouse/bronze/_delta_log` tồn tại.
 
-- [ ] **24. Thêm kiểm tra Bronze**
+- [x] **24. Thêm kiểm tra Bronze**
   - Việc cần làm: so số dòng với số bản ghi đến đợt chỉ định.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 23.
   - Hoàn thành khi: `python verify/check_results.py --layer bronze --up-to-batch 1` thoát với mã 0.
 
-- [ ] **25. Viết phần parse và lọc của Silver**
+- [x] **25. Viết phần parse và lọc của Silver**
   - Việc cần làm: parse JSON theo schema, đổi event_time sang timestamp, lọc bản ghi lỗi và ghi số bị loại vào log. Tách thành hàm để test được.
   - File: `common/transforms.py`, `tests/test_transforms.py`.
   - Phụ thuộc: 8.
   - Hoàn thành khi: `pytest tests/test_transforms.py -k parse` pass. Test này được phép dùng Spark local, là ngoại lệ duy nhất của quy ước unit test.
 
-- [ ] **26. Viết hàm lọc trùng trong batch** (nhóm C)
+- [x] **26. Viết hàm lọc trùng trong batch** (nhóm C)
   - Việc cần làm: hàm trên DataFrame giữ một dòng cho mỗi event_id, dùng trước MERGE.
   - File: `common/transforms.py`, `tests/test_transforms.py`.
   - Hoàn thành khi: `pytest tests/test_transforms.py -k dedup` pass.
 
-- [ ] **27. Viết truy vấn Silver với MERGE**
+- [x] **27. Viết truy vấn Silver với MERGE**
   - Việc cần làm: watermark 30 phút, `dropDuplicatesWithinWatermark`, foreachBatch MERGE chỉ chèn, tạo bảng nếu chưa có.
   - File: `streaming/02_bronze_to_silver.py`.
   - Phụ thuộc: 23, 25, 26.
   - Hoàn thành khi: `python streaming/02_bronze_to_silver.py` thoát với mã 0 và `lakehouse/silver/_delta_log` tồn tại.
 
-- [ ] **28. Thêm điểm chèn lỗi FAIL_AT_BATCH**
+- [x] **28. Thêm điểm chèn lỗi FAIL_AT_BATCH**
   - Việc cần làm: ném ngoại lệ sau khi MERGE xong, trước khi foreachBatch kết thúc, mặc định tắt.
   - File: `streaming/02_bronze_to_silver.py`.
   - Phụ thuộc: 27.
   - Hoàn thành khi: dùng một checkpoint thử, `FAIL_AT_BATCH=0 python streaming/02_bronze_to_silver.py --suffix _failtest` thoát với mã khác 0. Không đặt biến thì thoát với mã 0.
 
-- [ ] **29. Thêm kiểm tra Silver**
+- [x] **29. Thêm kiểm tra Silver**
   - Việc cần làm: so số dòng với số event_id duy nhất đến đợt chỉ định, kiểm tra không có event_id trùng.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 27.
   - Hoàn thành khi: `python verify/check_results.py --layer silver --up-to-batch 1` thoát với mã 0.
 
-- [ ] **30. Viết truy vấn Gold**
+- [x] **30. Viết truy vấn Gold**
   - Việc cần làm: tumbling window 5 phút, `revenue`, `orders`, append, tách `window_start`, `window_end`, tham số `--watermark`, `--suffix`.
   - Lưu ý: đặt `withWatermark` TRƯỚC khi lọc purchase. Nếu lọc trước, view đẩy watermark bị loại trước khi tới toán tử watermark, các cửa sổ cuối sẽ không được chốt.
   - File: `streaming/03_silver_to_gold.py`.
   - Phụ thuộc: 27.
   - Hoàn thành khi: `python streaming/03_silver_to_gold.py` thoát với mã 0 và `lakehouse/gold/_delta_log` tồn tại.
 
-- [ ] **31. Viết vòng lặp chạy một đợt**
+- [x] **31. Viết vòng lặp chạy một đợt**
   - Việc cần làm: gửi một đợt rồi chạy Bronze, Silver, Gold bằng subprocess, có `--up-to-batch`.
   - File: `streaming/run_all_batches.py`.
   - Phụ thuộc: 30.
   - Hoàn thành khi: từ trạng thái sạch, `python streaming/run_all_batches.py --up-to-batch 2` thoát với mã 0 và `python verify/check_results.py --layer silver --up-to-batch 2` thoát với mã 0.
 
-- [ ] **32. Ghi số dòng và tiến trình theo đợt**
+- [x] **32. Ghi số dòng và tiến trình theo đợt**
   - Việc cần làm: mỗi truy vấn lưu `lastProgress` của mọi micro-batch, vòng lặp gom thành file của đợt. Ghi cả số micro-batch thực tế của mỗi lần chạy, vì có thể có thêm batch không dữ liệu.
   - File: `streaming/run_all_batches.py`, ba file truy vấn.
   - Phụ thuộc: 31.
   - Hoàn thành khi: từ trạng thái sạch, chạy đến đợt 2 tạo được `results/progress/batch_02.json` có số dòng ba tầng.
 
-- [ ] **33. Thêm so sánh ngưỡng 20 phút vào vòng lặp**
+- [x] **33. Thêm so sánh ngưỡng 20 phút vào vòng lặp**
   - Việc cần làm: `--compare-wm20` chạy thêm một Gold `--watermark "20 minutes" --suffix _wm20` ở MỖI đợt. Không chạy một lần sau cùng, vì khi đó toàn bộ Silver vào một batch và sẽ không có dòng nào bị loại, phép so sánh mất ý nghĩa.
   - File: `streaming/run_all_batches.py`.
   - Phụ thuộc: 32.
   - Hoàn thành khi: từ trạng thái sạch, chạy với `--compare-wm20 --up-to-batch 2` tạo được `lakehouse/gold_wm20/_delta_log`.
 
-- [ ] **34. Chạy đủ 12 đợt và đối chiếu Gold từng cửa sổ**
+- [x] **34. Chạy đủ 12 đợt và đối chiếu Gold từng cửa sổ**
   - Việc cần làm: thêm kiểm tra Gold vào `check_results.py` (cửa sổ thiếu, thừa, lệch). Chạy trọn từ trạng thái sạch. Xác nhận hai lưu ý ở task 14, và rằng cửa sổ cuối được chốt khi `availableNow` kết thúc ở đợt 12. Nếu không, ghi vào Vướng mắc.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 33.
   - Hoàn thành khi: `python streaming/run_all_batches.py --compare-wm20` rồi `python verify/check_results.py --layer gold` thoát với mã 0.
 
-- [ ] **35. Đối chiếu số dòng bị loại vì quá muộn**
+- [x] **35. Đối chiếu số dòng bị loại vì quá muộn**
   - Việc cần làm: lấy `numRowsDroppedByWatermark` từ tiến trình, so với số purchase bị loại trong đáp án vàng. Metric này chỉ đếm dòng tới toán tử có trạng thái, nên so với purchase, không so với mọi sự kiện.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 34.
   - Hoàn thành khi: `python verify/check_results.py` chạy đủ các tầng và thoát với mã 0.
 
-- [ ] **36. So sánh kết quả ngưỡng 10 phút và 20 phút**
+- [x] **36. So sánh kết quả ngưỡng 10 phút và 20 phút**
   - Việc cần làm: tham số `--watermark-suffix`, in chênh lệch doanh thu mỗi ngưỡng so với đáp án tuyệt đối.
   - File: `verify/check_results.py`.
   - Phụ thuộc: 35.
   - Hoàn thành khi: `python verify/check_results.py --watermark-suffix _wm20` thoát với mã 0, và chênh lệch của 20 phút nhỏ hơn của 10 phút.
 
-- [ ] **37. Kiểm tra chạy lại tái lập được**
+- [x] **37. Kiểm tra chạy lại tái lập được**
   - Việc cần làm: lưu bảng Gold đã sắp xếp, chạy lại từ trạng thái sạch, so sánh.
   - File: không thêm file mới, chỉ chạy.
   - Phụ thuộc: 36.
   - Hoàn thành khi: hai lần chạy cho cùng một `sha256sum` trên bản CSV của Gold. Lưu ý sinh bản CSV có sắp xếp theo `window_start`.
+  - Kết quả: hai lần chạy từ trạng thái sạch cho cùng sha256: Gold 10 phút `15b8d045…ece574`, Gold 20 phút `9522238…cc6280`; số dòng, watermark và số dòng bị loại theo từng đợt cũng giống hệt.
 
 ### Giai đoạn 6: Giám sát
 
-- [ ] **38. In tiến trình truy vấn** (nhóm D)
+- [x] **38. In tiến trình truy vấn** (nhóm D)
   - Việc cần làm: số dòng đầu vào, tốc độ, watermark, số dòng trong state, số dòng bị loại.
   - File: `verify/inspect_progress.py`.
   - Hoàn thành khi: `python verify/inspect_progress.py --progress` thoát với mã 0 và lưu `results/progress_summary.json`.
 
-- [ ] **39. Minh họa lịch sử Delta và time travel** (nhóm D)
+- [x] **39. Minh họa lịch sử Delta và time travel** (nhóm D)
   - Việc cần làm: in `DESCRIBE HISTORY`, đọc Silver ở một phiên bản cũ.
   - File: `verify/inspect_progress.py`.
   - Hoàn thành khi: `python verify/inspect_progress.py --history` in số dòng Silver ở phiên bản cũ nhỏ hơn phiên bản mới nhất.
@@ -260,63 +261,87 @@ Toàn bộ giai đoạn này chỉ sửa `data/generate_events.py` và `tests/te
 
 Thí nghiệm dùng `lakehouse/exp_a/`, `checkpoints/exp_a/` (tương tự với b, c) để không chạm vào kết quả chuẩn. Topic được tạo lại ở đầu mỗi thí nghiệm, nên muốn chạy lại luồng chuẩn sau đó phải chạy từ trạng thái sạch.
 
-- [ ] **40. Cho truy vấn nhận thư mục gốc của thí nghiệm**
+- [x] **40. Cho truy vấn nhận thư mục gốc của thí nghiệm**
   - Việc cần làm: thêm tham số chọn thư mục bảng và checkpoint vào ba truy vấn, giá trị mặc định giữ nguyên hành vi cũ.
   - File: ba file truy vấn.
   - Phụ thuộc: 37.
   - Hoàn thành khi: `python verify/check_results.py` vẫn thoát với mã 0 sau khi chạy lại `python streaming/run_all_batches.py --compare-wm20` từ trạng thái sạch.
 
-- [ ] **41. Viết tiện ích dùng chung cho thí nghiệm**
+- [x] **41. Viết tiện ích dùng chung cho thí nghiệm**
   - Việc cần làm: dọn trạng thái của thí nghiệm, tạo lại topic, chụp nội dung `offsets`, `commits`, `_delta_log` ra file văn bản, ghi ba con số kỳ vọng, thực tế, chênh lệch. Việc dọn chỉ được chạm vào thư mục `exp_*`.
   - File: `experiments/lab_utils.py`, `tests/test_lab_utils.py`.
   - Phụ thuộc: 40.
   - Hoàn thành khi: `pytest tests/test_lab_utils.py` pass, có test xác nhận không dọn được đường dẫn ngoài `exp_*`.
 
-- [ ] **42. Viết thí nghiệm A** (nhóm E)
+- [x] **42. Viết thí nghiệm A** (nhóm E)
   - Việc cần làm: gây lỗi ở một batch Silver, chạy lại cùng checkpoint, ghi idempotent.
   - File: `experiments/exp_a_rerun_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_a.json`, và chênh lệch bằng 0 hoặc đã ghi vào Vướng mắc nếu khác.
 
-- [ ] **43. Lưu bằng chứng thí nghiệm A**
+- [x] **43. Lưu bằng chứng thí nghiệm A**
   - Việc cần làm: chụp checkpoint và `_delta_log` trước và sau khi chạy lại.
   - File: `experiments/exp_a_rerun_idempotent.py`.
   - Phụ thuộc: 42.
   - Hoàn thành khi: có `results/evidence/exp_a_before.txt` và `exp_a_after.txt`, trong đó `before` có offsets của batch lỗi nhưng không có commits tương ứng.
 
-- [ ] **44. Viết thí nghiệm B** (nhóm E)
+- [x] **44. Viết thí nghiệm B** (nhóm E)
   - Việc cần làm: biến thể Silver append thẳng, không MERGE, không txnAppId, gây lỗi rồi chạy lại, kèm chụp bằng chứng như task 43.
   - File: `experiments/exp_b_non_idempotent.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_b.json` ghi rõ batch nào, bao nhiêu dòng, và có hai file bằng chứng. Số dòng dư được so với số dòng của batch chạy lại, lệch thì ghi vào Vướng mắc.
 
-- [ ] **45. Viết thí nghiệm C** (nhóm E)
+- [x] **45. Viết thí nghiệm C** (nhóm E)
   - Việc cần làm: chạy xong, xóa `checkpoints/exp_c/bronze`, chạy lại Bronze, đo số dòng, rồi chạy Silver và đo. Ghi nhận xét theo số đo thật.
   - File: `experiments/exp_c_delete_checkpoint.py`.
   - Hoàn thành khi: chạy script tạo `results/exp_c.json` có số dòng Bronze và Silver trước và sau. Bronze gấp đôi hoặc đã ghi vào Vướng mắc nếu khác.
 
 ### Giai đoạn 8: Báo cáo và bàn giao
 
-- [ ] **46. Tổng hợp `run_report.json`**
+- [x] **46. Tổng hợp `run_report.json`**
   - Việc cần làm: gom bộ phiên bản, thống kê dữ liệu, so sánh hai ngưỡng, ba thí nghiệm, mẫu checkpoint và `_delta_log`, bất thường. Mọi số đọc từ file kết quả, không gõ tay. Viết `verify/check_report.py` kiểm tra đủ khóa.
   - File: `verify/build_report.py`, `verify/check_report.py`, `results/run_report.json`.
   - Phụ thuộc: 39, 43, 44, 45.
   - Hoàn thành khi: `python verify/build_report.py` rồi `python verify/check_report.py` thoát với mã 0.
 
-- [ ] **47. Sinh `run_report.md`**
+- [x] **47. Sinh `run_report.md`**
   - Việc cần làm: dựng các bảng 4, 9, 10 và bảng phần III.4 của reading từ `run_report.json`.
   - File: `verify/build_report.py`, `results/run_report.md`.
   - Phụ thuộc: 46.
   - Hoàn thành khi: `grep -c '^|' results/run_report.md` lớn hơn 0 và `python verify/check_report.py --markdown` thoát với mã 0.
 
-- [ ] **48. Hoàn thiện `README.md`**
+- [x] **48. Hoàn thiện `README.md`**
   - Việc cần làm: cài đặt, cách chạy, cách test, khắc phục lỗi thường gặp, gồm các lỗi đã gặp thật.
   - File: `README.md`.
   - Phụ thuộc: 47.
   - Hoàn thành khi: `grep -c 'Khắc phục' README.md` lớn hơn 0 và mọi lệnh trong README đã được chạy ít nhất một lần.
 
-- [ ] **49. Chạy nghiệm thu từ bản sao sạch**
+- [x] **49. Chạy nghiệm thu từ bản sao sạch**
   - Việc cần làm: `git clone` repo sang thư mục mới, làm theo `README.md`, không dùng file ngoài repo.
   - Phụ thuộc: 48.
   - Hoàn thành khi: trong bản sao, `pytest tests/` pass và `python verify/check_results.py` thoát với mã 0. So sánh `run_report.json` với bản gốc: số liệu dữ liệu và Gold phải giống hệt.
+  - Kết quả: bản sao từ commit `a0d872e`, làm theo README (tạo `.venv`, `pytest` 69 test pass, `smoke_env.py --delta --kafka` OK, sinh dữ liệu cho cùng sha256 `ed6703a6…`, `run_all_batches.py --reset --compare-wm20`, `check_results.py --watermark-suffix _wm20` thoát mã 0, `build_report.py`, `check_report.py --markdown` OK). Các mục `versions`, `dataset`, `watermark_comparison`, `per_batch`, `experiments`, `checks` của `run_report.json` giống hệt bản gốc.
 
 ## 5. Vướng mắc
 
+
+### V1. Optimizer đẩy filter purchase xuống dưới watermark ở Gold (đã giải quyết, task 30)
+- Hiện tượng: chạy Gold sau đợt 1, Spark báo watermark 09:53:59, mô phỏng tính 09:54:57. Event time lớn nhất trong Silver là 10:04:57 (một view), còn purchase lớn nhất là 10:03:59.
+- Đã thử: in plan đã tối ưu của micro-batch có dữ liệu. Code viết `withWatermark` rồi mới `filter(event_type = 'purchase')`, nhưng plan tối ưu là `EventTimeWatermark` nằm TRÊN `Filter (event_type = purchase)`. Quy tắc `PushPredicateThroughNonJoin` của Spark đẩy mọi điều kiện tất định không tham chiếu cột event time xuống dưới `EventTimeWatermark`.
+- Kết quả: lưu ý ở task 30 ("đặt withWatermark TRƯỚC khi lọc purchase") không đủ trên Spark 4.1.0. Watermark chỉ tính trên purchase, view đẩy watermark mất tác dụng.
+- Cách xử lý: bỏ filter trước khi tổng hợp, đưa điều kiện purchase vào hàm tổng hợp (`sum(when(purchase, amount))`, `count(when(purchase, 1))`), rồi lọc `orders > 0` sau khi tổng hợp. Thiết kế giữ nguyên (chỉ tính purchase, watermark 10 phút, cửa sổ 5 phút). Sau khi sửa, watermark sau đợt 1 là 09:54:57, khớp mô phỏng. Hệ quả phụ: `numRowsDroppedByWatermark` giờ đếm cả dòng không phải purchase (xem task 35).
+
+### V2. Xác nhận hai lưu ý của task 14 và việc chốt cửa sổ cuối (task 34)
+- Hiện tượng cần xác nhận: (a) watermark tính trên mọi loại sự kiện, (b) Spark loại dòng theo `window_end <= watermark`, (c) cửa sổ cuối được chốt khi `availableNow` kết thúc ở đợt 12.
+- Kết quả chạy thật: (a) đúng sau khi sửa V1, watermark Gold sau từng đợt khớp mô phỏng. (b) đúng: doanh thu, số đơn và đợt chốt của cả 12 cửa sổ khớp mô phỏng theo `window_end`. (c) đúng: mỗi lần chạy `availableNow` gồm hai micro-batch (một có dữ liệu, một không dữ liệu để dọn state theo watermark mới), nên 4 cửa sổ cuối được ghi ngay trong lần chạy đợt 12.
+- Không cần xử lý thêm.
+
+### V3. numRowsDroppedByWatermark không bằng số sự kiện bị loại (task 35)
+- Hiện tượng: theo đáp án vàng có 50 sự kiện quá ngưỡng (18 purchase), nhưng tổng `numRowsDroppedByWatermark` của Gold là 8.
+- Nguyên nhân (đã dự đoán trước khi chạy từ physical plan, rồi đo khớp): metric đếm dòng ở đầu vào toán tử có trạng thái `StateStoreRestore`, nằm sau partial aggregation và shuffle. Mỗi cửa sổ quá muộn trong một micro-batch chỉ còn một dòng. Đáp án vàng ghi `late_windows_wm10` theo từng đợt (8 đợt, mỗi đợt 1 cửa sổ) và khớp từng đợt.
+- Cách xử lý: `check_results.py` đối chiếu metric này với số cửa sổ quá muộn, và đo số purchase bị loại bằng cách so bảng Gold với đáp án tuyệt đối (18, khớp).
+
+### V4. Độ trễ của nhóm muộn quá ngưỡng thực tế là 16 đến 20 phút (thiết kế dữ liệu, đã báo người dùng ở điểm dừng task 18)
+- Hiện tượng: watermark chỉ cập nhật giữa các đợt 5 phút và Spark loại dòng theo `window_end <= watermark`, nên sự kiện ở cửa sổ thứ k chỉ bị loại khi được gửi từ đợt k+4 trở đi. Sự kiện trễ 12 đến 15 phút thường KHÔNG rơi vào cửa sổ đã chốt.
+- Cách xử lý: bộ sinh chọn độ trễ trong [max(12, 20 − vị trí trong cửa sổ) + 5 giây, 20] phút, vẫn nằm trong 12 đến 20 phút của đặc tả. Độ trễ thực tế của 50 sự kiện là 16,04 đến 19,99 phút, thuộc 8 cửa sổ đầu (10:00 đến 10:40). Người dùng đã duyệt.
+
+### V5. Thí nghiệm C: Silver không thay đổi dù Bronze gấp đôi (quan sát, không phải lỗi)
+- Quan sát: Silver đọc 2201 dòng bản sao trong một micro-batch; 2200 dòng bị watermark Silver (11:00) loại như dữ liệu quá muộn, 1 dòng (sự kiện đẩy watermark 11:30) bị loại vì event_id còn trong state. foreachBatch nhận batch rỗng, Silver giữ nguyên 2001 dòng. Chi tiết trong `results/exp_c.json`.

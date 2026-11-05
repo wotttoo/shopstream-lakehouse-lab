@@ -1,0 +1,35 @@
+{
+  "experiment": "exp_c",
+  "expected_rows": 4402,
+  "actual_rows": 4402,
+  "difference": 0,
+  "layer": "bronze",
+  "bronze_rows_before": 2201,
+  "bronze_rows_after": 4402,
+  "bronze_rows_reread": 2201,
+  "bronze_micro_batches_after_delete": [
+    0
+  ],
+  "silver_expected_rows": 2001,
+  "silver_rows_before": 2001,
+  "silver_rows_after": 2001,
+  "silver_difference": 0,
+  "silver_new_delta_versions": [],
+  "silver_micro_batches": [
+    {
+      "batch_id": 24,
+      "num_input_rows": 2201,
+      "watermark": "2026-01-15T11:00:00.000Z",
+      "rows_dropped_by_watermark": 2200,
+      "rows_removed_as_duplicate": 1,
+      "state_rows_total": 1003,
+      "rejected_rows": 0
+    }
+  ],
+  "observation": [
+    "Bronze: 2201 dòng trước, 4402 dòng sau khi xóa checkpoint và chạy lại (đọc lại 2201 message từ earliest). Delta sink của Bronze chống ghi trùng theo (queryId, batchId) lưu trong checkpoint, nên checkpoint mới không nhận ra dữ liệu đã ghi.",
+    "Silver: 2001 dòng trước, 2001 dòng sau (chênh lệch so với số event_id duy nhất: 0).",
+    "Micro-batch Silver 24: đầu vào 2201 dòng, watermark 2026-01-15T11:00:00.000Z, bị loại vì quá muộn 2200, bị loại vì trùng trong state 1, số dòng trong state 1003.",
+    "Giải thích: checkpoint Silver còn nguyên nên Silver đọc tiếp phiên bản Bronze mới (toàn bản sao). Watermark Silver đã ở mức event time lớn nhất trừ 30 phút, nên mọi bản sao có event_time cũ hơn bị dropDuplicatesWithinWatermark loại như dữ liệu quá muộn; bản sao còn lại (sự kiện đẩy watermark) còn event_id trong state nên bị loại vì trùng. foreachBatch nhận batch rỗng, MERGE không phải chặn dòng nào. MERGE chỉ chèn là lớp chặn cuối cùng khi state không giúp được: checkpoint Silver bị mất, hoặc một batch đã ghi bị chạy lại (thí nghiệm A)."
+  ]
+}
